@@ -1,0 +1,15 @@
+ish ke backend ka hosting "cyclic.sh" pe karna hai
+
+
+0.creat order page:- ek page banana hai jismai user ne jo order kiya hai or sare item with details dikhega.
+
+1. jab "Order now" button pe click ho to order data database mai ja ke save ho jaye or ush ke baad o data "your order page" pe dikhai de.
+
+2. "order page" pe jo product dikha raha hai ush ke "view" button pe click karne pe "view order details" page pe order ka pura details dikhai de .
+
+
+5. "oreder now" karne pe data server tak ja raha hai or server se ek dummy response bhi aa raha hai. or ish mai karna ye hai jo data server tak gya hai ush ko data base mai store karna hao or fir jab user "order history" mai jaye to ush data ko nikal kar user ko dikha diya jaye.
+
+
+6. server mai ek new model create karna hai jis mai sare order ka data store hoga.
+

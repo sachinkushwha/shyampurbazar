@@ -1,0 +1,9 @@
+3. "menu page" ke sare data ko dynamic karna hai.
+
+4. "deshbord page" pe 2 button lagani hai 
+    (i). rahega home page ke product ka button:- ish button pe click karne pe sare product dikhai denge jaha pe product ko manage kiya jayega like (update,delete,) and ishi page pe ek or button rahega jis pe click kar ke product add kiya jayega
+    (ii). ish button pe click karne pe "menu page" ka product page khulega jaha ush ko manage kiya jayega and ishi page pe ek button hoga jis pe click kar ke products ko add kiya jayega 
+
+7. jo owner deshbord pe "home page product" button hai ush pe click karne pe home page ke sare product dikhai de sath mai upper right side mai product add karne ka ek button ho
+
+8. jo owner deshbord pe "add new items" button hai ush pe click karne pe menu page ke sare product dikhai de sath mai upper right side mai product add karne ka ek button ho
