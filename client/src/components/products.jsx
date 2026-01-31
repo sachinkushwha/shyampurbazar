@@ -4,7 +4,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
-import  {BASE_URL}  from "./config";
+import { BASE_URL } from "./config";
 export const Product = () => {
     const { setitem } = useContext(userContext);
     const navigate = useNavigate();
@@ -38,19 +38,26 @@ export const Product = () => {
 
                     {
                         data?.Homepageproduct?.slice(0, 3).map((product, p) => (
-                            <div key={p} onClick={() => handleproduct(product.name)} class=" cursor-pointer bg-white rounded-lg overflow-hidden shadow-md drink-card transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                            <div
+                                key={p}
+                                onClick={() => handleproduct(product.name)}
+                                class="cursor-pointer bg-white rounded-lg overflow-hidden shadow-md drink-card transition duration-300 hover:shadow-lg sm:hover:shadow-xl"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                            >
                                 <div class="relative">
-                                    <img src={product.imagelink} alt="Pepsi" class="w-full h-64 object-cover" />
-                                    <div class="offer-badge bg-pepsi-red">10% OFF</div>
+                                    <img
+                                        src={product.imagelink}
+                                        alt={product.name}
+                                        class="w-full h-35 sm:h-56 md:h-64 object-cover"
+                                    />
+                                    <div class="offer-badge bg-pepsi-red text-xs sm:text-sm">10% OFF</div>
                                 </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-semibold text-gray-800">{product.name}</h3>
-                                    <p class="text-gray-600 mt-2">{product.dis}</p>
-                                    <div class="mt-4 flex justify-between items-center">
-                                        <span class="text-xl font-bold text-pepsi-blue">₹{product.price}</span>
-                                        {/* <button class="bg-pepsi-blue text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
-                                            Add to Cart
-                                        </button> */}
+                                <div class="p-2 sm:p-5 md:p-6">
+                                    <h3 class="text-sm sm:text-xl font-semibold text-gray-800">Product name : <span className="text-gray-500 text-sm">{product.name}</span></h3>
+                                    <p class="text-gray-600 text-sm sm:text-base mt-2"><span className="font-semibold text-gray-800">Discription : </span>{product.dis}</p>
+                                    <div class="mt-3 sm:mt-4 flex justify-between items-center">
+                                        <span class="text-lg sm:text-xl font-bold text-pepsi-blue"><span className="font-semibold text-gray-800">Price : </span>₹{product.price}</span>
                                     </div>
                                 </div>
                             </div>
