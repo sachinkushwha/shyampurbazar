@@ -15,7 +15,7 @@ export const Product = () => {
     }
 
     const fetchalldata = async () => {
-        const response = await axios.get('http://localhost:3000' || 'https://shyampurbazar.onrender.com/');
+        const response = await axios.get('https://shyampurbazar.onrender.com/');
         return response.data;
     }
 
