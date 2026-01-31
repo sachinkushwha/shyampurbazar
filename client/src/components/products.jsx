@@ -4,6 +4,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
+import  {BASE_URL}  from "./config";
 export const Product = () => {
     const { setitem } = useContext(userContext);
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Product = () => {
     }
 
     const fetchalldata = async () => {
-        const response = await axios.get('https://shyampurbazar.onrender.com/');
+        const response = await axios.get(BASE_URL);
         return response.data;
     }
 
