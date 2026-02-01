@@ -40,28 +40,28 @@ const router = createBrowserRouter([
                 index: true, element: <HomeDeshbord />
               },
               {
-                path: '/owner/update/:id', element: <AddingMenuItem />
+                path: 'update/:id', element: <AddingMenuItem />
               },
               {
-                path: '/owner/Home', element: <Homepageproducts />
+                path: 'Home', element: <Homepageproducts />
               },
               {
-                path: '/owner/Home/update/:id', element: <AddHomePageProduct />
+                path: 'Home/update/:id', element: <AddHomePageProduct />
               },
               {
-                path: '/owner/addproduct', element: <AddHomePageProduct />
+                path: 'addproduct', element: <AddHomePageProduct />
               },
               {
-                path: '/owner/menuitem', element: <MenuItem />
+                path: 'menuitem', element: <MenuItem />
               },
               {
-                path: '/owner/orders', element: <OwnerOrders />
+                path: 'orders', element: <OwnerOrders />
               },
               {
-                path: '/owner/login', element: <Login role={'seller'} />
+                path: 'login', element: <Login role={'seller'} />
               },
               {
-                path: '/owner/addmenuitem', element: <AddingMenuItem />
+                path: 'addmenuitem', element: <AddingMenuItem />
               }
             ]
           },
@@ -104,16 +104,16 @@ const router = createBrowserRouter([
           {
             element: <Protected />, children: [
               {
-                path: '/placeorder', element: <PlaceOrder />
+                path: 'placeorder', element: <PlaceOrder />
               },
               {
-                path: '/orderhistory', element: <OrderHistory />
+                path: 'orderhistory', element: <OrderHistory />
               },
               {
-                path: '/orderhistory/:id', element: <ViewOrder />
+                path: 'orderhistory/:id', element: <ViewOrder />
               },
               {
-                path: '/payment', element: <PaymentMethod />
+                path: 'payment', element: <PaymentMethod />
               }
             ]
           },
