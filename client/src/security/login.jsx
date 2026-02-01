@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import { userContext } from "../Context Api/userManagment";
 import { useContext } from "react";
-
+import { BASE_URL } from "../components/config";
 
 
 export const Login = () => {
@@ -24,7 +24,7 @@ export const Login = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/login', formdata, {
+      const res = await axios.post(`${BASE_URL}/login`, formdata, {
         headers: { "Content-Type": "application/json" }
       });
 

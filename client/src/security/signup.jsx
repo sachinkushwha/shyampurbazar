@@ -1,14 +1,15 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field } from 'formik';
+import { BASE_URL } from "../components/config";
 export const Signup = () => {
     const { role } = useParams();
     const navigate = useNavigate();
 
 
     const signupFormdata = async (FormData) => {
-        const res = await axios.post('http://localhost:3000/signup', FormData, {
+        const res = await axios.post(`${BASE_URL}/signup`, FormData, {
             headers: { 'Content-Type': 'application/json' }
         });
         return res.data;
