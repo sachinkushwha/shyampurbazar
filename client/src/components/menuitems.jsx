@@ -3,13 +3,14 @@ import { userContext } from '../Context Api/userManagment'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "./config";
 export const Categorie = () => {
     const navigate = useNavigate();
     const { User } = useContext(userContext);
     const [selectcategori, setselectcategori] = useState("");
 
     const fetchalldata = async () => {
-        const response = await axios.get('http://localhost:3000/item/menuitem');
+        const response = await axios.get(`${BASE_URL}/item/menuitem`);
         return response.data;
     }
     const { data } = useQuery({
