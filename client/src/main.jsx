@@ -75,30 +75,30 @@ const router = createBrowserRouter([
           },
 
           {
-            path: '/about', element: <About />
+            path: 'about', element: <About />
           },
 
           {
-            path: '/menu', element: <Menu />
+            path: 'menu', element: <Menu />
           },
 
           {
-            path: '/about', element: <Menu />
+            path: 'about', element: <Menu />
           },
 
           {
-            path: '/viewcart', element: <>
+            path: 'viewcart', element: <>
               <ViewCart />
               <PlaceOrderbtn />
             </>
           },
 
           {
-            path: '/login/:role', element: <Login />
+            path: 'login/:role', element: <Login />
           },
 
           {
-            path: '/signup/:role', element: <Signup />
+            path: 'signup/:role', element: <Signup />
           },
 
           {
