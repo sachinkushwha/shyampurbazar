@@ -37,7 +37,7 @@ const router = createBrowserRouter([
           {
             path: '/owner', element: <OwnerDeshbord />, children: [
               {
-                path: '/owner', element: <HomeDeshbord />
+                index: true, element: <HomeDeshbord />
               },
               {
                 path: '/owner/update/:id', element: <AddingMenuItem />
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: '/', element: <App />, children: [
           {
-            path: '/', element: <Home />
+            index: true, element: <Home />
           },
 
           {
