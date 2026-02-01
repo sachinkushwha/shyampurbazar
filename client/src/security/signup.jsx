@@ -3,7 +3,10 @@ import axios from "axios";
 import { useMutation } from '@tanstack/react-query'
 import { Formik, Form, Field } from 'formik';
 import { BASE_URL } from "../components/config";
+import { useContext } from "react";
+import { userContext } from "../Context Api/userManagment";
 export const Signup = () => {
+    const {User}=useContext(userContext);
     const { role } = useParams();
     const navigate = useNavigate();
 
@@ -113,7 +116,7 @@ export const Signup = () => {
                         >
                             Sign Up
                         </button>
-                        <p className="mt-5">if already have account <Link to="/login" className="text-blue-500 cursor-pointer">login</Link></p>
+                        <p className="mt-5">if already have account <Link to={`/login/${role}`} className="text-blue-500 cursor-pointer">login</Link></p>
                     </Form>
                 </Formik>
 

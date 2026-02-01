@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home } from './pages/home.jsx'
@@ -27,112 +27,112 @@ import { MenuItem } from './ownerComponents/menuItem.jsx';
 import { OwnerOrders } from './ownerComponents/orderpage.jsx'
 import { CheckRole } from './security/checking user role.jsx'
 
-const queryClient=new QueryClient();
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    element: <CheckRole />, children: [
+
+    path: '/', element: <App />, children: [
       {
-        element: <Protected role={'seller'} />, children: [
-          {
-            path: '/owner', element: <OwnerDeshbord />, children: [
-              {
-                index: true, element: <HomeDeshbord />
-              },
-              {
-                path: 'update/:id', element: <AddingMenuItem />
-              },
-              {
-                path: 'Home', element: <Homepageproducts />
-              },
-              {
-                path: 'Home/update/:id', element: <AddHomePageProduct />
-              },
-              {
-                path: 'addproduct', element: <AddHomePageProduct />
-              },
-              {
-                path: 'menuitem', element: <MenuItem />
-              },
-              {
-                path: 'orders', element: <OwnerOrders />
-              },
-              {
-                path: 'login', element: <Login role={'seller'} />
-              },
-              {
-                path: 'addmenuitem', element: <AddingMenuItem />
-              }
-            ]
-          },
-        ]
+        index: true, element: <Home />
       },
 
       {
-        path: '/', element: <App />, children: [
-          {
-            index: true, element: <Home />
-          },
+        path: 'about', element: <About />
+      },
 
-          {
-            path: 'about', element: <About />
-          },
+      {
+        path: 'menu', element: <Menu />
+      },
 
-          {
-            path: 'menu', element: <Menu />
-          },
+      {
+        path: 'about', element: <Menu />
+      },
 
-          {
-            path: 'about', element: <Menu />
-          },
+      {
+        path: 'viewcart', element: <>
+          <ViewCart />
+          <PlaceOrderbtn />
+        </>
+      },
 
-          {
-            path: 'viewcart', element: <>
-              <ViewCart />
-              <PlaceOrderbtn />
-            </>
-          },
+      {
+        path: 'login/:role', element: <Login />
+      },
 
-          {
-            path: 'login/:role', element: <Login />
-          },
+      {
+        path: 'signup/:role', element: <Signup />
+      },
 
+      {
+        element: <Protected />, children: [
           {
-            path: 'signup/:role', element: <Signup />
+            path: 'placeorder', element: <PlaceOrder />
           },
-
           {
-            element: <Protected />, children: [
-              {
-                path: 'placeorder', element: <PlaceOrder />
-              },
-              {
-                path: 'orderhistory', element: <OrderHistory />
-              },
-              {
-                path: 'orderhistory/:id', element: <ViewOrder />
-              },
-              {
-                path: 'payment', element: <PaymentMethod />
-              }
-            ]
+            path: 'orderhistory', element: <OrderHistory />
           },
-
+          {
+            path: 'orderhistory/:id', element: <ViewOrder />
+          },
+          {
+            path: 'payment', element: <PaymentMethod />
+          }
         ]
-      }
+      },
+
     ]
   },
+  {
+  element: <CheckRole />, children: [
+    {
+      element: <Protected role={'seller'} />, children: [
+        {
+          path: '/owner', element: <OwnerDeshbord />, children: [
+            {
+              index: true, element: <HomeDeshbord />
+            },
+            {
+              path: 'update/:id', element: <AddingMenuItem />
+            },
+            {
+              path: 'Home', element: <Homepageproducts />
+            },
+            {
+              path: 'Home/update/:id', element: <AddHomePageProduct />
+            },
+            {
+              path: 'addproduct', element: <AddHomePageProduct />
+            },
+            {
+              path: 'menuitem', element: <MenuItem />
+            },
+            {
+              path: 'orders', element: <OwnerOrders />
+            },
+            
+            {
+              path: 'addmenuitem', element: <AddingMenuItem />
+            }
+          ]
+        },
+      ]
+    },
+
+
+  ]
+  }
 ])
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <UserProvider>
-      <OrderDataProvider>
-        <RouterProvider router={router} />
-      </OrderDataProvider>
-    </UserProvider>
+      <UserProvider>
+        <OrderDataProvider>
+          <RouterProvider router={router} />
+        </OrderDataProvider>
+      </UserProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

@@ -38,17 +38,17 @@ export const Categorie = () => {
         },
     ]
 
-
+// const userRole=User?.role || 'user';
 
     const { item } = useContext(userContext);
     // console.log("context data", item);
-    console.log("menu data", data);
+    // console.log("menu data", data);
 
 
     const [count, setcount] = useState(JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {});
     const handlecount = (id, name, price) => {
         if (!User) {
-            navigate('/login');
+            navigate(`/login/user`);
             return
         }
         setcount(pre => ({
