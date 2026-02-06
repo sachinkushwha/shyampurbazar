@@ -42,20 +42,23 @@ export const Categorie = () => {
 
     const { item } = useContext(userContext);
     // console.log("context data", item);
-    // console.log("menu data", data);
+    console.log("menu data", data);
 
 
     const [count, setcount] = useState(JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {});
-    const handlecount = (id, name, price) => {
+    const handlecount = (id, name, price,ownerid) => {
+        console.log("handle pe",ownerid);
         if (!User) {
             navigate(`/login/user`);
             return
         }
         setcount(pre => ({
             ...pre, [id]: {
+                ownerid:ownerid,
                 name: name,
                 price: price,
-                qty: (pre[id]?.qty || 0) + 1
+                qty: (pre[id]?.qty || 0) + 1,
+                
             }
         }));
     }
@@ -207,7 +210,7 @@ export const Categorie = () => {
                                         {!count[item._id] ? (
                                             <button
                                                 onClick={() =>
-                                                    handlecount(item._id, item.name, item.price)
+                                                    handlecount(item._id, item.name, item.price,item.ownerId)
                                                 }
                                                 className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg text-sm font-medium transition"
                                             >

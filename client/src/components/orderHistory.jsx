@@ -1,8 +1,7 @@
-import { useContext} from "react"
+import { useContext } from "react"
 import { userContext } from "../Context Api/userManagment";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { OrderDataContext } from "../Context Api/orderDataManagement";
 import { useQuery } from "@tanstack/react-query";
 
 export const OrderHistory = () => {
@@ -14,12 +13,12 @@ export const OrderHistory = () => {
         });
         return response.data;
     }
-    const{data}=useQuery({
-        queryKey:['orderdata'],
-        queryFn:fetchallOrderdata
+    const { data } = useQuery({
+        queryKey: ['orderdata'],
+        queryFn: fetchallOrderdata
     });
-    console.log("order history data",data);
-    
+    console.log("order history data", data);
+
     return (
         <>
             <h1 className="text-2xl font-semibold mb-4">Your Active Order</h1>
@@ -33,6 +32,7 @@ export const OrderHistory = () => {
                             <th className="p-3 text-left">Delivery</th>
                         </tr>
                     </thead>
+
 
                     <tbody>
                         {
@@ -48,32 +48,37 @@ export const OrderHistory = () => {
                         }
                     </tbody>
                 </table>
+                <div className="flex justify-center">
+                    {
+                        !data && <p className="text-xl mt-5 mb-5">You Have No Active Order  <Link to='/menu' className="font-bold underline text-blue-500">Order Now</Link></p>
+                    }
+                </div>
             </div>
 
             {/* Mobile Responsive Card Layout */}
-           <div className="md:hidden space-y-3">
-        {data?.orderdata?.map((dat) => (
-          <div key={dat._id} className="bg-white shadow p-4 rounded-lg">
-            <p>
-              <span className="font-semibold">Item:</span>{" "}
-              {dat.item[0]?.name}
-            </p>
-            <p>
-              <span className="font-semibold">Date:</span>{" "}
-              {dat.orderdate}
-            </p>
-            <p className="flex justify-between items-center mt-2">
-              <span>{dat.orderstatus}</span>
-              <Link
-                to={`/orderhistory/${dat._id}`}
-                className="bg-blue-100 px-3 py-1 rounded-lg text-sm"
-              >
-                👁️ view
-              </Link>
-            </p>
-          </div>
-        ))}
-      </div>
+            <div className="md:hidden space-y-3">
+                {data?.orderdata?.map((dat) => (
+                    <div key={dat._id} className="bg-white shadow p-4 rounded-lg">
+                        <p>
+                            <span className="font-semibold">Item:</span>{" "}
+                            {dat.item[0]?.name}
+                        </p>
+                        <p>
+                            <span className="font-semibold">Date:</span>{" "}
+                            {dat.orderdate}
+                        </p>
+                        <p className="flex justify-between items-center mt-2">
+                            <span>{dat.orderstatus}</span>
+                            <Link
+                                to={`/orderhistory/${dat._id}`}
+                                className="bg-blue-100 px-3 py-1 rounded-lg text-sm"
+                            >
+                                👁️ view
+                            </Link>
+                        </p>
+                    </div>
+                ))}
+            </div>
         </>
     );
 };

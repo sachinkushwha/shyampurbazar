@@ -6,6 +6,7 @@ const OwnerRouter=express.Router();
 
 OwnerRouter.post('/addmenuitem',jwtauth,MenuItemController.AddMenuItem);
 OwnerRouter.get('/menuitem',MenuItemController.MenuItem);
+OwnerRouter.get('/Ownermenuitem',jwtauth,MenuItemController.Ownermenuitem);
 OwnerRouter.put('/update/:id',jwtauth,MenuItemController.UpdateItem);
 OwnerRouter.delete('/delete/:id',jwtauth,MenuItemController.DeleteItem);
 OwnerRouter.put('/homepageproduct/update/:id',jwtauth,homepageproductController.UpdateHomePageProduct);

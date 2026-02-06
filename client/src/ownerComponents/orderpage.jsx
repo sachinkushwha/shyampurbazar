@@ -1,11 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { userContext } from '../Context Api/userManagment';
 
 export const OwnerOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
-  
+  const {User}=useContext(userContext);
+
+  const getorderData=async()=>{
+    const response =await axios.get('http://localhost:3000/protected/ownergetOrder',{
+      headers:{'authorization':User?.token}
+    });
+    return response.data;
+  }
+
+  const {data}=useQuery({
+    queryKey:['orderData'],
+    queryFn:getorderData
+  })
+  console.log(data);
   // Sample data - Replace with API call
   const sampleOrders = [
     {

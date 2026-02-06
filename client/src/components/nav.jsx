@@ -46,7 +46,7 @@ export const Nav = ({navdata}) => {
                     </div>
                     <a href={navdata.homelink} className="flex items-center py-2 px-2">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pepsi_2023.svg/1200px-Pepsi_2023.svg.png" alt="Pepsi Logo" className="h-10" />
-                        <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Drinks Shop</i>
+                        <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Shyampur Bazar</i>
                     </a>
 
                     {/* Desktop menu */}

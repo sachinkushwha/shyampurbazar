@@ -1,5 +1,6 @@
 const MenuItemdb = require('../model/menuItem');
 const user = require('../model/user');
+// for all user 
 exports.MenuItem = async (req, res) => {
     try {
         const result = await MenuItemdb.find().sort({ _id: -1 });
@@ -9,11 +10,21 @@ exports.MenuItem = async (req, res) => {
     }
 
 }
+// for owner 
+exports.Ownermenuitem = async (req, res) => {
+    try {
+        const result = await MenuItemdb.find({ownerId:req.user.id}).sort({ _id: -1 });
+        return res.status(200).json({ itemdata: result });
+    } catch (err) {
+        return res.status(200).json({ message: "internal server error" });
+    }
+
+}
+
 exports.AddMenuItem = async (req, res) => {
     try {
         const ownerId=req.user.id;
         const {name,price,Quantity,ImageLink,dis}=req.body;
-        console.log(name,price,Quantity,ImageLink,ownerId,dis);
         const result = new MenuItemdb({name,price,Quantity,ImageLink,ownerId,dis});
         await result.save();
         // await user.findByIdAndUpdate(req.user.id, { $push: { menuitem: result._id } });

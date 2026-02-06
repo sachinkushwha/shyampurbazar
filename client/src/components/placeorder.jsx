@@ -13,9 +13,9 @@ export const PlaceOrder = () => {
         const storedCart = JSON.parse(localStorage.getItem(User?.username + "pepsicart")) || {};
         setCart(storedCart);
     }, [User]);
-
+console.log('final check',cart)
     const cartItems = Object.entries(cart);
-    console.log(cartItems);
+    console.log("cart entris", cartItems);
 
     // Calculate total
     let total = 0;
@@ -29,20 +29,35 @@ export const PlaceOrder = () => {
                 alert("Cart is empty!");
                 return;
             }
-            
-            console.log("cart",cart);
-            const items = Object.values(cart).map((n) => ({ name: n.name, qty: n.qty,price:n.price }));
-            let finalorder={
-                user:User?.username,
-                ownerid:User?.userid,
-                item:items,
-                address:Address,
-                totalPayment:total
+
+            console.log("cart", cart);
+            const items = Object.values(cart).map((n) => (
+                {
+                    ownerid: n.ownerid,
+                    name: n.name,
+                    qty: n.qty,
+                    price: n.price
+                }
+            ));
+            console.log("ready data",items);
+            // const items =Object.entries(cart).map(([key,value])=>({
+            //     ownerid:key,
+            //     name:value.name,
+            //     qty:value.qty,
+            //     price:value.price,
+            // }));
+
+            let finalorder = {
+                user: User?.username,
+                // ownerid: User?.userid,
+                item: items,
+                address: Address,
+                totalPayment: total
             }
             console.log("New order:", cart);
-            localStorage.setItem(User?.username+"orderpepsicart",JSON.stringify(finalorder));
-            console.log(User?.username+"pepsicart");
-           
+            localStorage.setItem(User?.username + "orderpepsicart", JSON.stringify(finalorder));
+            console.log(User?.username + "pepsicart");
+
             navigate("/payment");
         } else {
             alert("Please select an address");

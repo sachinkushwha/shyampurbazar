@@ -12,12 +12,14 @@ export const MenuItem = () => {
     const navigate = useNavigate();
 
     const getMenuItem = async () => {
-        const response = await axios.get('http://localhost:3000/item/menuitem');
+        const response = await axios.get('http://localhost:3000/item/Ownermenuitem',{
+            headers:{'authorization':User?.token}
+        });
         return response.data;
     }
 
     const { data } = useQuery({
-        queryKey: ['menuItem'],
+        queryKey: ['Ownermenuitem'],
         queryFn: getMenuItem
     });
 
@@ -35,7 +37,7 @@ export const MenuItem = () => {
         mutationFn: handlDelete,
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey:['menuItem']
+                queryKey:['Ownermenuitem']
             })
             alert('item delete successfuly');
         }
