@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { useNavigate } from "react-router-dom";
+import {BASE_URL} from './config';
 import axios from 'axios';
 export const PaymentMethod = () => {
   const { User } = useContext(userContext);
@@ -13,7 +14,7 @@ export const PaymentMethod = () => {
       console.log("cash on delivery");
       const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
       item.paymentmode = paymentmode;
-      const response=await axios.post('http://localhost:3000/protected/order',item,{
+      const response=await axios.post(`${BASE_URL}/protected/order`,item,{
         headers:{"authorization":User?.token}
       })
       if(response.data.status){
