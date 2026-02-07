@@ -49,14 +49,16 @@ export const Product = () => {
                                     <img
                                         src={product.imagelink}
                                         alt={product.name}
-                                        class="w-full h-35 sm:h-56 md:h-64 object-cover"
+                                        class="w-full h-32 sm:h-45 md:h-45 object-contain"
                                     />
-                                    <div class="offer-badge bg-pepsi-red text-xs sm:text-sm">10% OFF</div>
+                                    
                                 </div>
-                                <div class="p-2 sm:p-5 md:p-6">
-                                    <h3 class="text-sm sm:text-xl font-semibold text-gray-800">Product name : <span className="text-gray-500 text-sm">{product.name}</span></h3>
-                                    <p class="text-gray-600 text-sm sm:text-base mt-2"><span className="font-semibold text-gray-800">Discription : </span>{product.dis}</p>
-                                    <div class="mt-3 sm:mt-4 flex justify-between items-center">
+                                <div class="p-2 sm:p-4 md:p-4">
+                                <div class=" bg-green-500 inline text-xs sm:text-sm">10% OFF</div>
+
+                                    <h3 class="text-sm sm:text-lg font-semibold text-gray-800">Product name : <span className="text-gray-500 text-sm">{product.name}</span></h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm mt-1"><span className="font-semibold text-gray-800">Discription : </span>{product.dis}</p>
+                                    <div class="mt-2 sm:mt-3 flex justify-between items-center">
                                         <span class="text-lg sm:text-xl font-bold text-pepsi-blue"><span className="font-semibold text-gray-800">Price : </span>₹{product.price}</span>
                                     </div>
                                 </div>
