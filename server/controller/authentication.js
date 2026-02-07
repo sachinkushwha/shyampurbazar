@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken');
 
 
 exports.Login = async (req, res) => {
-    console.log(req.body);
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
         return res.status(404).json({ message: "user not found", status: false });
     }
+    
     const ispassword = await bcrypt.compare(password, user.password);
     if (ispassword) {
         const token = jwt.sign(
@@ -33,6 +33,7 @@ exports.Login = async (req, res) => {
     }
 
 }
+
 exports.Signup = async (req, res) => {
     const { name, email, password, role } = req.body;
     const user = await User.findOne({ email });

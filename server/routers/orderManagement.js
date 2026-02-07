@@ -4,6 +4,7 @@ const userProtectedController=require('../controller/orderManagement');
 const {jwtauth}=require('../middleware/jwtMiddleware');
 
 orderManagementRouter.post('/order',jwtauth,userProtectedController.Order);
+orderManagementRouter.post('/updatestatus',jwtauth,userProtectedController.UpdateOrderStatus);
 orderManagementRouter.get('/order',jwtauth,userProtectedController.getorder);
 orderManagementRouter.get('/ownergetOrder',jwtauth,userProtectedController.ownergetOrder);
 

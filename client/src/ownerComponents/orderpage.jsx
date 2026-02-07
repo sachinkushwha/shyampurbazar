@@ -1,120 +1,57 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import  { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../Context Api/userManagment';
+import { BASE_URL } from '../components/config';
 
 export const OwnerOrders = () => {
-  const [orders, setOrders] = useState([]);
+   const queryClient=useQueryClient();
   const [filter, setFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
   const {User}=useContext(userContext);
+  
+
+  const OrderstatusMutation=async({orderId,newStatus})=>{
+    const response=await axios.post(`${BASE_URL}/protected/updatestatus`,{orderId,newStatus},{
+      headers:{'authorization':User.token}
+    });
+    return response.data;
+  }
+
+  const OrderMutation=useMutation({
+    mutationKey:['orderstatus'],
+    mutationFn:OrderstatusMutation,
+    onSuccess:()=>{
+      queryClient.invalidateQueries(['orderData'])
+    }
+  });
+
+  const updateOrderStatus = (orderId, newStatus) => {
+    OrderMutation.mutate({
+      orderId:orderId,
+      newStatus:newStatus});
+    
+  };
 
   const getorderData=async()=>{
-    const response =await axios.get('http://localhost:3000/protected/ownergetOrder',{
+    const response =await axios.get(`${BASE_URL}/protected/ownergetOrder`,{
       headers:{'authorization':User?.token}
     });
     return response.data;
   }
 
-  const {data}=useQuery({
+  const {data,isLoading}=useQuery({
     queryKey:['orderData'],
     queryFn:getorderData
-  })
-  console.log(data);
-  // Sample data - Replace with API call
-  const sampleOrders = [
-    {
-      id: 'ORD-001',
-      customerName: 'John Doe',
-      email: 'john@example.com',
-      phone: '+1 234 567 8900',
-      items: [
-        { name: 'Burger', quantity: 2, price: 10 },
-        { name: 'Pizza', quantity: 1, price: 15 },
-        { name: 'Coke', quantity: 2, price: 3 }
-      ],
-      total: 41,
-      status: 'completed',
-      paymentMethod: 'Credit Card',
-      date: '2024-01-15 14:30',
-      address: '123 Main St, New York, NY'
-    },
-    {
-      id: 'ORD-002',
-      customerName: 'Jane Smith',
-      email: 'jane@example.com',
-      phone: '+1 234 567 8901',
-      items: [
-        { name: 'Pasta', quantity: 1, price: 12 },
-        { name: 'Salad', quantity: 1, price: 8 }
-      ],
-      total: 20,
-      status: 'pending',
-      paymentMethod: 'Cash',
-      date: '2024-01-15 15:45',
-      address: '456 Oak Ave, Los Angeles, CA'
-    },
-    {
-      id: 'ORD-003',
-      customerName: 'Robert Johnson',
-      email: 'robert@example.com',
-      phone: '+1 234 567 8902',
-      items: [
-        { name: 'Steak', quantity: 1, price: 25 },
-        { name: 'Wine', quantity: 1, price: 18 },
-        { name: 'Dessert', quantity: 1, price: 8 }
-      ],
-      total: 51,
-      status: 'processing',
-      paymentMethod: 'Debit Card',
-      date: '2024-01-14 19:20',
-      address: '789 Pine Rd, Chicago, IL'
-    },
-    {
-      id: 'ORD-004',
-      customerName: 'Sarah Williams',
-      email: 'sarah@example.com',
-      phone: '+1 234 567 8903',
-      items: [
-        { name: 'Sushi Platter', quantity: 1, price: 30 },
-        { name: 'Green Tea', quantity: 2, price: 4 }
-      ],
-      total: 38,
-      status: 'cancelled',
-      paymentMethod: 'Credit Card',
-      date: '2024-01-14 12:15',
-      address: '321 Elm St, Miami, FL'
-    },
-    {
-      id: 'ORD-005',
-      customerName: 'Michael Brown',
-      email: 'michael@example.com',
-      phone: '+1 234 567 8904',
-      items: [
-        { name: 'Chicken Wings', quantity: 3, price: 12 },
-        { name: 'Fries', quantity: 2, price: 5 },
-        { name: 'Beer', quantity: 2, price: 6 }
-      ],
-      total: 58,
-      status: 'pending',
-      paymentMethod: 'Online Payment',
-      date: '2024-01-13 20:10',
-      address: '654 Maple Dr, Seattle, WA'
-    }
-  ];
+  });
 
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setOrders(sampleOrders);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const filterdOrders=data?.result?.filter(orders=>filter==='all'?orders:orders.orderstatus===filter);
 
-  const filteredOrders = filter === 'all' 
-    ? orders 
-    : orders.filter(order => order.status === filter);
+
+  const sum=data?.result?.reduce((acc,result)=>{
+    return acc+Number(result.orderstatus==="completed"?result.totalPayment:0);
+  },0);
+
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -136,27 +73,11 @@ export const OwnerOrders = () => {
     }
   };
 
-  const updateOrderStatus = (orderId, newStatus) => {
-    setOrders(orders.map(order => 
-      order.id === orderId ? { ...order, status: newStatus } : order
-    ));
-  };
-
-  const calculateTotalRevenue = () => {
-    return orders
-      .filter(order => order.status === 'completed')
-      .reduce((sum, order) => sum + order.total, 0);
-  };
-
-  const calculateTotalOrders = () => {
-    return orders.length;
-  };
-
   const calculateAverageOrderValue = () => {
-    const completedOrders = orders.filter(order => order.status === 'completed');
-    if (completedOrders.length === 0) return 0;
-    const total = completedOrders.reduce((sum, order) => sum + order.total, 0);
-    return (total / completedOrders.length).toFixed(2);
+    const completedOrders = data?.result?.filter(order => order.orderstatus === 'completed');
+    if (completedOrders?.length === 0) return 0;
+    const total = completedOrders?.reduce((sum, order) => sum + Number(order.totalPayment), 0);
+    return (total / completedOrders?.length).toFixed(2);
   };
 
   return (
@@ -195,7 +116,7 @@ export const OwnerOrders = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-600">Total Orders</p>
-                  <p className="text-2xl font-bold text-gray-800">{calculateTotalOrders()}</p>
+                  <p className="text-2xl font-bold text-gray-800">{data?.result?.length}</p>
                 </div>
               </div>
             </div>
@@ -209,7 +130,7 @@ export const OwnerOrders = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-600">Total Revenue</p>
-                  <p className="text-2xl font-bold text-gray-800">${calculateTotalRevenue()}</p>
+                  <p className="text-2xl font-bold text-gray-800">${sum}</p>
                 </div>
               </div>
             </div>
@@ -224,7 +145,7 @@ export const OwnerOrders = () => {
                 <div className="ml-4">
                   <p className="text-sm text-gray-600">Completed</p>
                   <p className="text-2xl font-bold text-gray-800">
-                    {orders.filter(o => o.status === 'completed').length}
+                    {data?.result?.filter(o => o.orderstatus === 'completed').length}
                   </p>
                 </div>
               </div>
@@ -296,7 +217,7 @@ export const OwnerOrders = () => {
 
         {/* Orders Table */}
         <div className="bg-white rounded-xl shadow overflow-hidden">
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
             </div>
@@ -329,70 +250,70 @@ export const OwnerOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50">
+                  {filterdOrders?.map((order) => (
+                    <tr key={order._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-purple-600">{order.id}</div>
+                        <div className="text-sm font-medium text-purple-600">{order._id}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{order.customerName}</div>
+                          <div className="text-sm font-medium text-gray-900">{order.username}</div>
                           <div className="text-sm text-gray-500">{order.email}</div>
                           <div className="text-sm text-gray-500">{order.phone}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-900">
-                          {order.items.map((item, index) => (
+                          {order?.item?.map((item, index) => (
                             <div key={index} className="flex justify-between">
-                              <span>{item.name} x{item.quantity}</span>
-                              <span className="text-gray-600">${item.price * item.quantity}</span>
+                              <span>{item.name} x{item.qty}</span>
+                              <span className="text-gray-600">${item.price * item.qty}</span>
                             </div>
                           ))}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-lg font-bold text-gray-900">${order.total}</div>
-                        <div className="text-sm text-gray-500">{order.paymentMethod}</div>
+                        <div className="text-lg font-bold text-gray-900">${order.totalPayment}</div>
+                        <div className="text-sm text-gray-500">{order.paymentmode}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-                          {getStatusText(order.status)}
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.orderstatus)}`}>
+                          {getStatusText(order.orderstatus)}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {order.date}
+                        {order.orderdate}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <button
                             onClick={() => {
                               // Show order details modal
-                              alert(`Order Details for ${order.id}\nCustomer: ${order.customerName}\nAddress: ${order.address}\nItems: ${order.items.map(i => `${i.name} x${i.quantity}`).join(', ')}`);
+                              alert(`Order Details for ${order._id}\nCustomer: ${order.username}\nAddress: ${order.address}\nItems: ${order?.item?.map(i => `${i.name} x${i.qty}`).join(', ')}`);
                             }}
                             className="text-blue-600 hover:text-blue-900"
                           >
                             View
                           </button>
-                          {order.status === 'pending' && (
+                          {order.orderstatus === 'pending' && (
                             <>
                               <button
-                                onClick={() => updateOrderStatus(order.id, 'processing')}
+                                onClick={() => updateOrderStatus(order._id, 'processing')}
                                 className="text-green-600 hover:text-green-900"
                               >
                                 Accept
                               </button>
                               <button
-                                onClick={() => updateOrderStatus(order.id, 'cancelled')}
+                                onClick={() => updateOrderStatus(order._id, 'cancelled')}
                                 className="text-red-600 hover:text-red-900"
                               >
                                 Cancel
                               </button>
                             </>
                           )}
-                          {order.status === 'processing' && (
+                          {order.orderstatus === 'processing' && (
                             <button
-                              onClick={() => updateOrderStatus(order.id, 'completed')}
+                              onClick={() => updateOrderStatus(order._id, 'completed')}
                               className="text-green-600 hover:text-green-900"
                             >
                               Complete
@@ -407,7 +328,7 @@ export const OwnerOrders = () => {
             </div>
           )}
           
-          {!loading && filteredOrders.length === 0 && (
+          {!isLoading && data?.result?.length === 0 && (
             <div className="text-center py-12">
               <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -425,18 +346,18 @@ export const OwnerOrders = () => {
           <div className="bg-white rounded-xl shadow p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
             <div className="space-y-4">
-              {orders.slice(0, 3).map((order) => (
-                <div key={order.id} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
+              {data?.result?.slice(0, 3).map((order) => (
+                <div key={order._id} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
                   <div>
                     <p className="text-sm font-medium text-gray-900">
-                      Order {order.id} - {order.customerName}
+                      Order {order._id} - {order.username}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {order.items.length} items • ${order.total}
+                      {order?.item?.length} items • ${order.totalPayment}
                     </p>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs ${getStatusColor(order.status)}`}>
-                    {getStatusText(order.status)}
+                  <span className={`px-2 py-1 rounded text-xs ${getStatusColor(order.orderstatus)}`}>
+                    {getStatusText(order.orderstatus)}
                   </span>
                 </div>
               ))}
