@@ -10,13 +10,13 @@ export const Nav = ({navdata}) => {
     const [selected, setselected] = useState(path.pathname.slice(1));
     const [mobilemenu, setmobilemenu] = useState(false);
     const [itemno, setitemno] = useState();
-    console.log("nav", itemno);
+    // console.log("nav", itemno);
     useEffect(() => {
         setselected(path.pathname.slice(1));
     }, [path]);
 
     useEffect(() => {
-        console.log('nav');
+        // console.log('nav');
         const cartitem = () => {
             const cartitem = JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {};
             const cartitems = Object.keys(cartitem).length;
@@ -45,7 +45,7 @@ export const Nav = ({navdata}) => {
                     </button>
                     </div>
                     <a href={navdata.homelink} className="flex items-center py-2 px-2">
-                        <img src="image.png" alt="Pepsi Logo" className="h-10" />
+                        <img src="/image.png" alt="Pepsi Logo" className="h-10" />
                         <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Shyampur Bazar</i>
                     </a>
 
