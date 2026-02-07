@@ -106,7 +106,7 @@ export const OwnerOrders = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="bg-white rounded-xl shadow p-4">
               <div className="flex items-center">
                 <div className="p-3 bg-blue-100 rounded-lg">
@@ -170,7 +170,7 @@ export const OwnerOrders = () => {
         {/* Filters */}
         <div className="bg-white rounded-xl shadow p-4 mb-6">
           <div className="flex flex-wrap items-center justify-between">
-            <div className="flex space-x-2 mb-4 md:mb-0">
+            <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
               <button
                 onClick={() => setFilter('all')}
                 className={`px-4 py-2 rounded-lg ${filter === 'all' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
@@ -197,12 +197,12 @@ export const OwnerOrders = () => {
               </button>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search orders..."
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full sm:w-auto pl-10 pr-4 py-2 border border-gray-300 rounded-lg"
                 />
                 <svg className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -222,7 +222,7 @@ export const OwnerOrders = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto w-full">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -285,7 +285,7 @@ export const OwnerOrders = () => {
                         {order.orderdate}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                           <button
                             onClick={() => {
                               // Show order details modal
