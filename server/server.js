@@ -16,8 +16,8 @@ app.use(protectedRoute);
 app.use('/item',OwnerRouter);
 app.use('/protected',orderManagementRoute);
 mongoose.connect(process.env.MONGO_URL).then(() => {
-    app.listen(3000, () => {
-        console.log('server runing on http://localhost:3000');
+    app.listen(3001, () => {
+        console.log('server runing on http://localhost:3001');
     })
 }).catch(err=>{
     console.log("mongodb connection error" ,err);
