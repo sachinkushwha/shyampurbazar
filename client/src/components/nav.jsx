@@ -44,10 +44,10 @@ export const Nav = ({navdata}) => {
                         <FiMenu className="w-6 h-6 text-gray-500 cursor-pointer" />
                     </button>
                     </div>
-                    <a href={navdata.homelink} className="flex items-center py-2 px-2">
+                    <Link to={navdata.homelink} className="flex items-center py-2 px-2">
                         <img src="/image.png" alt="Pepsi Logo" className="h-10" />
                         <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Shyampur Bazar</i>
-                    </a>
+                    </Link>
 
                     {/* Desktop menu */}
                     <div className="hidden md:flex items-center space-x-1">
