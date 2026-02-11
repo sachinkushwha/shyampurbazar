@@ -17,6 +17,8 @@ exports.getorder = async (req, res) => {
         const orderdata = await Orderdb.find({ userid: req.user.id }).sort({ _id: -1 });
         if (orderdata.length !== 0) {
             return res.status(200).json({ orderdata: orderdata });
+        }else{
+            return res.status(200).json({message:'order not found',orderdata:orderdata});
         }
     } catch (err) {
         return res.status(500).json({ message: "internal server error", err });
@@ -43,6 +45,11 @@ exports.ownergetOrder = async (req, res) => {
                             }
                         }
                     }
+                }
+            },
+            {
+                $sort:{
+                    _id:-1
                 }
             }
         ]);

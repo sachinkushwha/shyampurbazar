@@ -10,15 +10,15 @@ export const OrderHistory = () => {
 
     const fetchallOrderdata = async () => {
         const response = await axios.get(`${BASE_URL}/protected/order`, {
-            headers: { 'authorization': User.token }
+            headers: { 'authorization': User?.token }
         });
         return response.data;
     }
-    const { data } = useQuery({
-        queryKey: ['orderdata'],
-        queryFn: fetchallOrderdata
+    const { data ,isLoading} = useQuery({
+        queryKey: ['orderhistorydata'],
+        queryFn: fetchallOrderdata,
     });
-    console.log("order history data", data);
+
 
     return (
         <>
@@ -51,7 +51,7 @@ export const OrderHistory = () => {
                 </table>
                 <div className="flex justify-center">
                     {
-                        !data && <p className="text-xl mt-5 mb-5">You Have No Active Order  <Link to='/menu' className="font-bold underline text-blue-500">Order Now</Link></p>
+                        data?.orderdata?.length===0 && <p className="text-xl mt-5 mb-5">You Have No Active Order  <Link to='/menu' className="font-bold underline text-blue-500">Order Now</Link></p>
                     }
                 </div>
             </div>

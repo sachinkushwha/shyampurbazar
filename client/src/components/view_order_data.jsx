@@ -16,13 +16,14 @@ import {
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "./config";
 
 export const ViewOrder = () => {
   const { id } = useParams();
   const { User } = useContext(userContext);
 
   const fetchallOrderdata = async () => {
-    const response = await axios.get('http://localhost:3000/protected/order', {
+    const response = await axios.get(`${BASE_URL}/protected/order`, {
       headers: { 'authorization': User.token }
     });
     return response.data;

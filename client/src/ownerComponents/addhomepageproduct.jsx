@@ -12,7 +12,7 @@ export const AddHomePageProduct = () => {
     const { id } = useParams();
     const { User } = useContext(userContext)
     const OneHomePageData = HomePageData.find(hpd => hpd._id === id);
-    console.log(OneHomePageData);
+    
     const handleCancel = () => {
         navigate('/owner/home');
     }

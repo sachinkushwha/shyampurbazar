@@ -101,6 +101,7 @@ export const Nav = ({navdata}) => {
                     <button onClick={() => setmobilemenu(false)} className="cursor-pointer text-gray-500 font-bold">X</button>
                 </div>
                 <ul className="flex flex-col mt-4 space-y-2">
+                    <li><Link to="/" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
                     <li><Link to="/orderhistory" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
                     <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li>
                     <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>

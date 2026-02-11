@@ -18,7 +18,7 @@ export const PlaceOrderbtn=()=>{
     },[])
     return<>
     {
-            order>0?(<div class="fixed bottom-8 right-2 sm:bottom-15 sm:right-15 z-50">
+            order>0?(<div className="fixed bottom-8 right-2 sm:bottom-15 sm:right-15 z-50">
             <Link to="/placeorder" className="py-3 px-3 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">Place Order ({order})</Link>
         </div>):('')
         }

@@ -6,11 +6,36 @@ import { BASE_URL } from "../components/config";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
 export const Signup = () => {
-    const {User}=useContext(userContext);
+    const {User,logingUser}=useContext(userContext);
     const { role } = useParams();
     const navigate = useNavigate();
 
+// become a seller
+    const becomeSeller=async(FormData)=>{
+        const response=await axios.post(`${BASE_URL}/bcoomeseller`,FormData,{
+            headers:{
+                'authorization':User.token
+            }
+        });
+        return response.data;
+    }
+    const becomesellerMutaion=useMutation({
+        mutationKey:['becomeseller'],
+        mutationFn:becomeSeller,
+        onSuccess:(data)=>{
+            alert(data.message)
+            const userdata=JSON.parse(localStorage.getItem('pepsiUserLoginData'));
+            userdata.role=data.userrole;
+            logingUser(userdata);
+            navigate('/owner')
+        }
+    });
 
+    const handleBecomeseller=(value)=>{
+        becomesellerMutaion.mutate(value)
+    }
+
+ // normal user signup
     const signupFormdata = async (FormData) => {
         const res = await axios.post(`${BASE_URL}/signup`, FormData, {
             headers: { 'Content-Type': 'application/json' }
@@ -43,13 +68,14 @@ export const Signup = () => {
                         role: role
                     }}
                     onSubmit={(value) => {
-                        handlesubmit(value)
+                        {role==='seller'?handleBecomeseller(value): handlesubmit(value)}
+                       
                     }}
                     className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md"
                 >
                     <Form>
                         <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-                           {role==='seller'?'Upgrade to Seller':'Create Account'}
+                           {role==='seller'?'Ab Becho, Aur Kamao.':'Create Account'}
                         </h2>
 
                         <label
@@ -114,7 +140,7 @@ export const Signup = () => {
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300"
                         >
-                            Sign Up
+                            {role?'Become a Seller':'Signup'}
                         </button>
                         <p className="mt-5">if already have account <Link to={`/login/${role}`} className="text-blue-500 cursor-pointer">login</Link></p>
                     </Form>

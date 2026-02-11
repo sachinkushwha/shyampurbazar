@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { default: mongoose } = require('mongoose');
 
 
 exports.Login = async (req, res) => {
@@ -37,10 +38,6 @@ exports.Login = async (req, res) => {
 exports.Signup = async (req, res) => {
     const { name, email, password, role } = req.body;
     const user = await User.findOne({ email });
-
-    // if (role === 'seller' && storename) {
-    //     return res.status(200).json({ message: "seller baneke ba ka", status: true });
-    // }
     if (user) {
         return res.status(409).json({ message: "user already exists", status: false });
     }
@@ -48,4 +45,13 @@ exports.Signup = async (req, res) => {
     const newuser = new User({ name, email, password: incryptpassword, role });
     await newuser.save();
     res.status(200).json({ message: "registration successfull", status: true });
+}
+
+exports.BecomeSeller=async(req,res)=>{
+    const {name,role}=req.body;
+    const user=await User.findOneAndUpdate(new mongoose.Types.ObjectId( req.user.id),{'role':role},{new:true,runValidators:true});
+    if(name && role==='seller',user){
+        return res.status(200).json({message:"congratulation your are now a seller ",'userrole':user.role});
+    }
+    return res.status(500).json({message:"kuch to garbad hai bhai"});
 }

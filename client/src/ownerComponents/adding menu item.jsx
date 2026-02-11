@@ -45,7 +45,7 @@ export const AddingMenuItem = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         if (id) {
-            const response = await axios.put(`http://localhost:3000/item/update/${id}`, formdata, { headers: { 'authorization': User.token } });
+            const response = await axios.put(`http://localhost:3001/item/update/${id}`, formdata, { headers: { 'authorization': User.token } });
             if (response.data.message) {
                 alert(response.data.message);
                 const newdata=MenuData.filter(md=>md._id!==id);
@@ -55,7 +55,7 @@ export const AddingMenuItem = () => {
                 alert("something is worong");
             }
         } else {
-            const response = await axios.post('http://localhost:3000/item/addmenuitem', formdata, {
+            const response = await axios.post('http://localhost:3001/item/addmenuitem', formdata, {
                 headers: { 'authorization': User.token }
             });
             setMenuData([...MenuData,response.data.newitem]);

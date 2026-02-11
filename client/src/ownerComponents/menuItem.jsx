@@ -2,18 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
-import {useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../components/config";
 
 
 
 export const MenuItem = () => {
-    const queryClient=useQueryClient();
+    const queryClient = useQueryClient();
     const { User } = useContext(userContext);
     const navigate = useNavigate();
 
     const getMenuItem = async () => {
-        const response = await axios.get('http://localhost:3000/item/Ownermenuitem',{
-            headers:{'authorization':User?.token}
+        const response = await axios.get(`${BASE_URL}/item/Ownermenuitem`, {
+            headers: { 'authorization': User?.token }
         });
         return response.data;
     }
@@ -27,8 +28,8 @@ export const MenuItem = () => {
         navigate(`/owner/update/${id}`);
     }
 
-    const handlDelete = async ({id}) => {
-        const response = await axios.delete(`http://localhost:3000/item/delete/${id}`, {
+    const handlDelete = async ({ id }) => {
+        const response = await axios.delete(`${BASE_URL}/item/delete/${id}`, {
             headers: { 'authorization': User.token }
         });
     }
@@ -37,7 +38,7 @@ export const MenuItem = () => {
         mutationFn: handlDelete,
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey:['Ownermenuitem']
+                queryKey: ['Ownermenuitem']
             })
             alert('item delete successfuly');
         }
@@ -50,11 +51,16 @@ export const MenuItem = () => {
     }
 
 
-
     return (
 
         <div className="container mx-auto px-4 py-8">
             {/* Add Item Button (Side) */}
+
+            
+                <div className="flex justify-center mt-30">
+                    {!data && <h1 className="text-3xl font-bold">No Data Available Please Add Some Product Useing Add Item Buttom</h1>}
+                </div>
+            
 
             <Link
                 to="/owner/addmenuitem"

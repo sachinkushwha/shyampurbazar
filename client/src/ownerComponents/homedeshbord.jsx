@@ -10,7 +10,7 @@ export const HomeDeshbord = () => {
           </h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link 
+            {/* <Link 
               to="/owner/Home" 
               className="group block p-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md hover:shadow-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1"
             >
@@ -38,7 +38,7 @@ export const HomeDeshbord = () => {
                   Manage and view all products on home page
                 </p>
               </div>
-            </Link>
+            </Link> */}
             
             <Link 
               to="/owner/menuitem" 

@@ -3,7 +3,11 @@ import { userContext } from "../Context Api/userManagment";
 import { useNavigate } from "react-router-dom";
 import {BASE_URL} from './config';
 import axios from 'axios';
+import { useQueryClient } from "@tanstack/react-query";
+
+
 export const PaymentMethod = () => {
+  const queryClient=useQueryClient();
   const { User } = useContext(userContext);
   const [paymentmode, setpaymentmode] = useState();
   const navigate = useNavigate();
@@ -11,18 +15,19 @@ export const PaymentMethod = () => {
   const handlsubmit =async (e) => {
     e.preventDefault();
     if (paymentmode) {
-      console.log("cash on delivery");
+      // console.log("cash on delivery");
       const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
       item.paymentmode = paymentmode;
       const response=await axios.post(`${BASE_URL}/protected/order`,item,{
         headers:{"authorization":User?.token}
       })
-      if(response.data.status){
-        console.log("order ka response data",response.data);
-      }
+      // if(response.data.status){
+        // console.log("order ka response data",response.data);
+      // }
       localStorage.removeItem(User?.username + "orderpepsicart");
       localStorage.removeItem(User?.username + "pepsicart");
       alert("Congratulations! Your order has been submitted 🎉");
+
       navigate("/orderhistory");
     } else {
       alert("Please select a payment mode");
