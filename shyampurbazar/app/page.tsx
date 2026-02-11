@@ -82,7 +82,7 @@ export default async function Home() {
         <section className="text-center py-12 bg-orange-300 rounded-lg shadow-md">
           <h2 className="text-3xl font-bold mb-4 text-black">Support Your Local Market</h2>
           <p className="mb-6 text-black">Go digital, stay local, and empower Shyampur Bazar vendors.</p>
-          <button className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition ">Start Shopping</button>
+          <Link href='https://shyampurbazar.vercel.app/' className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition ">Start Shopping</Link>
         </section>
 
       </main>
