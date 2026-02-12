@@ -20,14 +20,14 @@ export default async function Home() {
             Bringing your favorite local market to your fingertips. Groceries, daily essentials, and more — delivered straight to your home in Shyampur, Bihar.
           </p>
           <div className="flex justify-center gap-4">
-            <Link href='https://shyampurbazar.vercel.app/' className="bg-white text-black px-6 py-2 rounded hover:bg-green-700 transition">Shop Now</Link>
-            <Link href='https://shyampurbazar.vercel.app/menu' className="bg-gray-200 px-6 py-2 rounded text-black hover:bg-gray-300 transition">View Vendors</Link>
+            <Link href='https://shyampurbazar.vercel.app/' className="bg-white text-black px-6 py-2 rounded hover:bg-orange-500 transition">Shop Now</Link>
+            <Link href='https://shyampurbazar.vercel.app/menu' className="bg-gray-200 px-6 py-2 rounded text-black hover:bg-orange-500 transition">View Vendors</Link>
           </div>
         </section>
 
         {/* Features Section */}
         <section className="grid md:grid-cols-3 gap-8 text-center py-12">
-          <div className="p-6 border rounded shadow hover:shadow-lg transition">
+          <div className="p-6 border rounded shadow hover:shadow-lg  transition">
             <h3 className="text-xl font-semibold mb-2">Fresh & Local Products</h3>
             <p>Direct from Shyampur Bazar shops to your doorstep.</p>
           </div>
@@ -70,7 +70,7 @@ export default async function Home() {
         <section className="text-center py-12 bg-orange-300 rounded-lg shadow-md">
           <h2 className="text-3xl font-bold mb-4 text-black">Support Your Local Market</h2>
           <p className="mb-6 text-black">Go digital, stay local, and empower Shyampur Bazar vendors.</p>
-          <Link href='https://shyampurbazar.vercel.app/' className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition ">Start Shopping</Link>
+          <Link href='https://shyampurbazar.vercel.app/' className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-orange-500 transition ">Start Shopping</Link>
         </section>
 
       </main>
