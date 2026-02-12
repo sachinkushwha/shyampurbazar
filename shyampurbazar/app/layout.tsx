@@ -3,12 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/component/footer";
 
-const navdata={
-    pagetype:'client',
-    homelink:'/',
-    loginlink:`login/${'user'}`,
-    menulink:'/menu'
-  }
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "shyampur bazar",
   description: "devloped by jynetra",
+  verification:{
+    google:"qj3MB0JokgeDaOQ0NKzzzEJiEZDMIyiaZBK4RPz3guQ"
+  }
 };
 
 export default function RootLayout({

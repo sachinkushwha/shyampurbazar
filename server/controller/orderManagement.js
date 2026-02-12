@@ -53,7 +53,6 @@ exports.ownergetOrder = async (req, res) => {
                 }
             }
         ]);
-        // console.log(result);
         return res.status(200).json({ message: "data find", result });
     } catch (err) {
         return res.status(500).json({ message: "internal server error ", err });

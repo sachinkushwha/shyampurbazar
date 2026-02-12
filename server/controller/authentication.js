@@ -49,8 +49,10 @@ exports.Signup = async (req, res) => {
 
 exports.BecomeSeller=async(req,res)=>{
     const {name,role}=req.body;
-    const user=await User.findOneAndUpdate(new mongoose.Types.ObjectId( req.user.id),{'role':role},{new:true,runValidators:true});
-    if(name && role==='seller',user){
+    const isuser=await User.exists(new mongoose.Types.ObjectId(req.user.id));
+    console.log(isuser);
+    if(name && role==='seller',isuser){
+         const user=await User.findOneAndUpdate(new mongoose.Types.ObjectId( req.user.id),{'role':role,'storeName':name},{new:true,runValidators:true});
         return res.status(200).json({message:"congratulation your are now a seller ",'userrole':user.role});
     }
     return res.status(500).json({message:"kuch to garbad hai bhai"});

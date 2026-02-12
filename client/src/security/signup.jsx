@@ -14,7 +14,7 @@ export const Signup = () => {
     const becomeSeller=async(FormData)=>{
         const response=await axios.post(`${BASE_URL}/bcoomeseller`,FormData,{
             headers:{
-                'authorization':User.token
+                'authorization':User?.token
             }
         });
         return response.data;
@@ -28,10 +28,15 @@ export const Signup = () => {
             userdata.role=data.userrole;
             logingUser(userdata);
             navigate('/owner')
+        },
+        onError:(err)=>{
+            alert(err?.response?.data?.message);
+            
         }
     });
 
     const handleBecomeseller=(value)=>{
+        console.log('kya huaa')
         becomesellerMutaion.mutate(value)
     }
 
