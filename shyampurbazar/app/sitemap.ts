@@ -6,5 +6,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: "https://shyampurbazar-s.vercel.app",
       lastModified: new Date(),
     },
+    {
+      url: "https://shyampurbazar-s.vercel.app/about",
+      lastModified: new Date(),
+    },
   ];
 }
