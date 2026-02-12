@@ -7,8 +7,6 @@ export default async function Home() {
       'Content-Type':'application/json'
     }
   });
-  const data= await give_a_request_to_server_for_wakeup.json();
-  // console.log(data);
   return (
     <>
       <Head>
