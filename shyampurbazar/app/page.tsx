@@ -9,17 +9,7 @@ export default async function Home() {
   });
   return (
     <>
-      <Head>
-        <title>Shyampur Bazar Online – Local Market Shopping in Bihar</title>
-        <meta
-          name="description"
-          content="Shop online from Shyampur Bazar, Bihar 841438. Fresh groceries, vegetables, daily essentials, and local products from trusted local vendors. Easy, fast, and budget-friendly."
-        />
-        <meta
-          name="keywords"
-          content="Shyampur Bazar Online, Local Market Bihar, Online Grocery Shyampur, Buy Local Products Bihar, Shyampur Bazar Delivery, Digital Market Shyampur"
-        />
-      </Head>
+      
 
       <main className="max-w-6xl mx-auto p-6">
 

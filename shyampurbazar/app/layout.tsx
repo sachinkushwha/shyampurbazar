@@ -15,10 +15,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "shyampur bazar",
-  description: "devloped by jynetra",
-  verification:{
-    google:"qj3MB0JokgeDaOQ0NKzzzEJiEZDMIyiaZBK4RPz3guQ"
+  title: {
+    default: "Shyampur Bazar Online",
+    template: "%s | Shyampur Bazar",
+  },
+  description:
+    "Shop groceries, vegetables, daily essentials and local products online from Shyampur Bazar, Bihar 841438.",
+  keywords: [
+    "Shyampur Bazar",
+    "Online Grocery Bihar",
+    "Local Market Bihar",
+    "Shyampur Online Shopping",
+  ],
+  openGraph: {
+    title: "Shyampur Bazar Online",
+    description:
+      "Fresh groceries and local products delivered in Shyampur, Bihar.",
+    url: "https://shyampurbazar.vercel.app",
+    siteName: "Shyampur Bazar",
+    type: "website",
+  },
+  verification: {
+    google: "qj3MB0JokgeDaOQ0NKzzzEJiEZDMIyiaZBK4RPz3guQ"
   }
 };
 
@@ -33,7 +51,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
