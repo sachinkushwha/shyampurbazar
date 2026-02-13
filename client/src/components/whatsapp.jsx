@@ -5,10 +5,10 @@ export const Whatsapp=()=>{
 
     return<>
     
-    <div class="fixed bottom-8 right-8 z-50">
-        <a href="https://wa.me/1234567890" class="bg-green-500 hover:bg-green-600 text-white rounded-full sm:p-4 p-2 shadow-lg flex items-center justify-center transition duration-300">
+    <div className="fixed bottom-8 right-8 z-50">
+        <a href="https://wa.me/1234567890" className="bg-green-500 hover:bg-green-600 text-white rounded-full sm:p-4 p-2 shadow-lg flex items-center justify-center transition duration-300">
             <FaWhatsapp size={30} color="white" />
-           <span class="ml-2 hidden sm:inline">Order via WhatsApp</span>
+           <span className="ml-2 hidden sm:inline">Order via WhatsApp</span>
         </a>
     </div>
     </>
