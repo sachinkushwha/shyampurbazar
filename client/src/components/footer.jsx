@@ -5,7 +5,7 @@ export const Footer=()=>{
         <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 className="text-xl font-bold mb-4">shyampur bazar - Ab kharido Ghar Bethe .</h3>
+                    <h3 className="text-xl font-bold mb-4">Shyampur bazar - Ab kharido Ghar Bethe .</h3>
                     <p className="text-gray-400">Shop Everything Online in Shyampur Bazar – Groceries, Daily Needs & More.</p>
                 </div>
                 <div>
