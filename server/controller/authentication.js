@@ -46,7 +46,7 @@ exports.Signup = async (req, res) => {
     await newuser.save();
     res.status(200).json({ message: "registration successfull", status: true });
 }
-
+ 
 exports.BecomeSeller=async(req,res)=>{
     const {name,role}=req.body;
     const isuser=await User.exists(new mongoose.Types.ObjectId(req.user.id));

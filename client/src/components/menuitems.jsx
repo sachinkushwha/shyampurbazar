@@ -38,7 +38,7 @@ export const Categorie = () => {
         },
     ]
 
-// const userRole=User?.role || 'user';
+    // const userRole=User?.role || 'user';
 
     const { item } = useContext(userContext);
     // console.log("context data", item);
@@ -46,19 +46,19 @@ export const Categorie = () => {
 
 
     const [count, setcount] = useState(JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {});
-    const handlecount = (id, name, price,ownerid) => {
-        console.log("handle pe",ownerid);
+    const handlecount = (id, name, price, ownerid) => {
+        console.log("handle pe", ownerid);
         if (!User) {
             navigate(`/login/user`);
             return
         }
         setcount(pre => ({
             ...pre, [id]: {
-                ownerid:ownerid,
+                ownerid: ownerid,
                 name: name,
                 price: price,
                 qty: (pre[id]?.qty || 0) + 1,
-                
+
             }
         }));
     }
@@ -120,15 +120,15 @@ export const Categorie = () => {
                     </div>
 
                     {/* Products */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                         {data?.itemdata?.map((item) => (
                             <div
                                 key={item._id}
-                                className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+                                className="bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden text-sm"
                             >
                                 {/* Image */}
                                 <div className="relative">
-                                    <div className="h-48 bg-gray-100 flex items-center justify-center p-2">
+                                    <div className="h-28 bg-gray-100 flex items-center justify-center p-1">
                                         <img
                                             src={item.ImageLink}
                                             alt={item.name}
@@ -136,108 +136,75 @@ export const Categorie = () => {
                                         />
                                     </div>
 
-
-                                    {/* Discount */}
                                     {item.discount && (
-                                        <span className="absolute top-3 left-3 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                                        <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">
                                             {item.discount}% OFF
                                         </span>
                                     )}
 
-                                    {/* Cold */}
                                     {item.isCold && (
-                                        <span className="absolute top-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
+                                        <span className="absolute top-2 right-2 bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">
                                             ❄ Cold
                                         </span>
                                     )}
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-5 space-y-2">
+                                <div className="p-2 space-y-1">
 
-                                    {/* Brand + Category */}
-                                    <div className="flex justify-between text-xs text-gray-500">
-                                        <span>{item.brand}</span>
-                                        <span className="bg-gray-100 px-2 py-0.5 rounded">
-                                            {item.category}
-                                        </span>
-                                    </div>
-
-                                    {/* Name */}
-                                    <h3 className="text-lg font-semibold text-gray-800">
+                                    <h3 className="font-medium text-gray-800 truncate">
                                         {item.name}
                                     </h3>
 
-                                    {/* Size */}
-                                    <p className="text-sm text-gray-500">
-                                        Quantity: {item.Quantity}
+                                    <p className="text-xs text-gray-500">
+                                        {item.Quantity}
                                     </p>
 
-                                    {/* Description */}
-                                    <p className="text-sm text-gray-500 line-clamp-2">
-                                        {item.dis}
-                                    </p>
-
-                                    {/* Price */}
                                     <div className="flex items-center gap-2">
-                                        <span className="text-xl font-bold text-blue-700">
+                                        <span className="font-semibold text-blue-700">
                                             ₹{item.price}
                                         </span>
 
                                         {item.mrp && (
-                                            <span className="text-sm text-gray-400 line-through">
+                                            <span className="text-xs text-gray-400 line-through">
                                                 ₹{item.mrp}
                                             </span>
                                         )}
                                     </div>
 
-                                    {/* Stock + Delivery */}
-                                    <div className="flex justify-between text-xs">
-                                        <span
-                                            className={`font-medium ${item.stock > 0 ? "text-green-600" : "text-red-600"
-                                                }`}
-                                        >
-                                            {item.stock > 0 ? "In Stock" : "Out of Stock"}
-                                        </span>
-
-                                        <span className="text-gray-500">
-                                            🚚 {item.deliveryTime || "30 mins"}
-                                        </span>
-                                    </div>
-
-                                    {/* Cart Buttons */}
-                                    <div className="pt-3 flex justify-between items-center">
+                                    <div className="pt-2">
                                         {!count[item._id] ? (
                                             <button
                                                 onClick={() =>
-                                                    handlecount(item._id, item.name, item.price,item.ownerId)
+                                                    handlecount(item._id, item.name, item.price, item.ownerId)
                                                 }
-                                                className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg text-sm font-medium transition"
+                                                className="cursor-pointer w-full bg-blue-700 hover:bg-blue-800 text-white py-1.5 rounded text-xs transition"
                                             >
-                                                Add to Cart
+                                                Add
                                             </button>
                                         ) : (
-                                            <div className="flex items-center gap-4 mx-auto">
+                                            <div className="flex items-center justify-center gap-3">
                                                 <button
                                                     onClick={() => handleDecrement(item._id)}
-                                                    className="w-9 h-9 bg-red-500 text-white rounded-full hover:bg-red-600"
+                                                    className="w-7 h-7 bg-red-500 text-white rounded-full text-sm"
                                                 >
                                                     −
                                                 </button>
 
-                                                <span className="font-semibold">
+                                                <span className="text-sm font-medium">
                                                     {count[item._id].qty}
                                                 </span>
 
                                                 <button
                                                     onClick={() => handleIncrement(item._id)}
-                                                    className="w-9 h-9 bg-green-500 text-white rounded-full hover:bg-green-600"
+                                                    className="w-7 h-7 bg-green-500 text-white rounded-full text-sm"
                                                 >
                                                     +
                                                 </button>
                                             </div>
                                         )}
                                     </div>
+
                                 </div>
                             </div>
 

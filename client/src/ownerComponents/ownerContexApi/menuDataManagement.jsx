@@ -8,7 +8,7 @@ export const MenuDataProvider=({children})=>{
     useEffect(()=>{
         const fetchalldata = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/item/menuitem');
+                const response = await axios.get('http://localhost:3001/item/menuitem');
                 console.log(response.data.itemdata);
                 setMenuData(response.data.itemdata);
             } catch (error) {

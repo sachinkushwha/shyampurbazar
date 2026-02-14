@@ -12,12 +12,11 @@ export const Homepageproducts = () => {
     const queryClient = useQueryClient();
 
     const handlupdate = (id) => {
-        console.log("update id", id);
         navigate(`/owner/Home/update/${id}`);
     }
 
     const deleteFunction = async (id) => {
-        const response = await axios.delete(`http://localhost:3000/item/home/delete/${id}`,
+        const response = await axios.delete(`http://localhost:3001/item/home/delete/${id}`,
             { headers: { "authorization": User.token } });
         return response.data;
     }
@@ -37,8 +36,7 @@ export const Homepageproducts = () => {
 
     const getHomePageData = async () => {
         try {
-            const response = await axios.get('http://localhost:3000');
-            setHomePageData(response.data.Homepageproduct);
+            const response = await axios.get('http://localhost:3001');
             return response.data;
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -49,7 +47,6 @@ export const Homepageproducts = () => {
         queryKey: ['homepagedata'],
         queryFn: getHomePageData
     });
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
 

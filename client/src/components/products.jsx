@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios";
 import { useContext } from "react";
@@ -29,15 +28,16 @@ export const Product = () => {
     return <>
         <section className="py-16 bg-white">
             <div className="container mx-auto px-6">
-                <h2 className="text-3xl font-bold text-center text-pepsi-blue mb-12" data-aos="fade-up">Our Popular Drinks</h2>
+                <h2 className="text-3xl font-bold text-center text-pepsi-blue mb-12" data-aos="fade-up">Our Popular Products</h2>
                 {/* <!-- Products --> */}{
                     isLoading && <div className="flex justify-center "> <div className="flex justify-center border border-t-blue-500 border-4 border-gray-400 animate-spin rounded-full w-8 h-8 bg-blue">
                     </div></div>
                 }
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
 
                     {
                         data?.Homepageproduct?.slice(0, 3).map((product, p) => (
+
                             <div
                                 key={p}
                                 onClick={() => handleproduct(product.name)}
@@ -46,21 +46,24 @@ export const Product = () => {
                                 data-aos-delay="100"
                             >
                                 <div className="relative">
-                                    <img
-                                        src={product.imagelink}
-                                        alt={product.name}
-                                        className="w-full h-32 sm:h-45 md:h-45 object-contain"
-                                    />
-                                    
+                                    <Link to='/menu'>
+                                        <img
+                                            src={product.imagelink}
+                                            alt={product.name}
+                                            className="w-full h-32 sm:h-45 md:h-45 object-contain"
+                                        />
+                                    </Link>
+
+
                                 </div>
                                 <div className="p-2 sm:p-4 md:p-4">
-                                <div className=" bg-green-500 inline text-xs sm:text-sm">10% OFF</div>
+                                    <div className=" bg-green-500 inline text-xs sm:text-sm">10% OFF</div>
 
                                     <h3 className="text-sm sm:text-lg font-semibold text-gray-800">Product name : <span className="text-gray-500 text-sm">{product.name}</span></h3>
                                     <p className="text-gray-600 text-xs sm:text-sm mt-1"><span className="font-semibold text-gray-800">Discription : </span>{product.dis}</p>
-                                    <div className="mt-2 sm:mt-3 flex justify-between items-center">
+                                    {/* <div className="mt-2 sm:mt-3 flex justify-between items-center">
                                         <span className="text-lg sm:text-xl font-bold text-pepsi-blue"><span className="font-semibold text-gray-800">Price : </span>₹{product.price}</span>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         ))

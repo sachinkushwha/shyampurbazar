@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const ProductDatabase = require('../model/homepageproduct');
 const user = require('../model/user');
 exports.Homepageproduct = async (req, res) => {
@@ -17,7 +18,6 @@ exports.Homepageproduct = async (req, res) => {
 exports.AddProductToHomePage = async (req, res) => {
     try {
         const { name, price,imagelink, dis } = req.body.value;
-        // console.log(name, price,imagelink, dis ,req.body) ;
         const result = new ProductDatabase({ name, price,imagelink, dis });
         await result.save();
         await user.findByIdAndUpdate(req.user.id, { $push: { homepageproducts: result._id } });
@@ -40,4 +40,10 @@ exports.HomePageProductDelete = async (req, res) => {
     }catch(err){
         return res.status(500).json({"message":"internal server error"});
     }
+}
+
+exports.getOneProduct=async(req,res)=>{
+    const id=req.params.id;
+    const product =await ProductDatabase.findOne(new mongoose.Types.ObjectId(id));
+    res.status(200).json({message:'product find successfuly',product});
 }

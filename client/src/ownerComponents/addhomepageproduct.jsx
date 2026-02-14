@@ -1,29 +1,40 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext} from "react"
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { useNavigate, useParams } from "react-router-dom";
-import { HomePageContext } from "./ownerContexApi/HomePageDataManagement";
 import { Formik, Form, Field } from 'formik';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast'
+import { BASE_URL } from "../components/config";
 export const AddHomePageProduct = () => {
-    const { HomePageData } = useContext(HomePageContext);
     const navigate = useNavigate();
     const { id } = useParams();
     const { User } = useContext(userContext)
-    const OneHomePageData = HomePageData.find(hpd => hpd._id === id);
-    
+const OneHomePageData=async()=>{
+    const response =await axios.get(`${BASE_URL}/OneHomepagedata/${id}`,{
+        headers:{
+            'authorization':User?.token
+        }
+    });
+    return response.data;
+}
+    const {data}=useQuery({
+        queryFn:OneHomePageData
+    });
+    console.log(data);
+
     const handleCancel = () => {
         navigate('/owner/home');
     }
+
     const handlesubmitdata = async (value) => {
         if (id) {
-            const response = await axios.put(`http://localhost:3000/item/homepageproduct/update/${id}`, value, {
+            const response = await axios.put(`http://localhost:3001/item/homepageproduct/update/${id}`, value, {
                 headers: { 'authorization': User.token }
             });
             return response.data;
         } else {
-            const response = await axios.post('http://localhost:3000/addhomepageproduct', value, {
+            const response = await axios.post('http://localhost:3001/addhomepageproduct', value, {
                 headers: { 'authorization': User.token }
             });
             return response.data;
@@ -49,10 +60,10 @@ export const AddHomePageProduct = () => {
                 enableReinitialize
                 initialValues={
                     {
-                        name: OneHomePageData?.name || "",
-                        price: OneHomePageData?.price || "",
-                        imagelink: OneHomePageData?.imagelink || "",
-                        dis: OneHomePageData?.dis || ""
+                        name: data?.product?.name || "",
+                        price: data?.product?.price || "",
+                        imagelink: data?.product?.imagelink || "",
+                        dis: data?.product?.dis || ""
                     }
                 }
                 onSubmit={(value, { resetForm }) => {
