@@ -11,4 +11,5 @@ OwnerRouter.put('/update/:id',jwtauth,MenuItemController.UpdateItem);
 OwnerRouter.delete('/delete/:id',jwtauth,MenuItemController.DeleteItem);
 OwnerRouter.put('/homepageproduct/update/:id',jwtauth,homepageproductController.UpdateHomePageProduct);
 OwnerRouter.delete('/home/delete/:id',jwtauth,homepageproductController.HomePageProductDelete);
+OwnerRouter.get('/onemenuitem/:id',jwtauth,MenuItemController.OneMenuItem);
 module.exports=OwnerRouter;

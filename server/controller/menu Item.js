@@ -1,6 +1,7 @@
+const { default: mongoose } = require('mongoose');
 const MenuItemdb = require('../model/menuItem');
 const user = require('../model/user');
-// for all user 
+// for all user frontend ke liye
 exports.MenuItem = async (req, res) => {
     try {
         const result = await MenuItemdb.find().sort({ _id: -1 });
@@ -21,6 +22,7 @@ exports.Ownermenuitem = async (req, res) => {
 
 }
 
+// owner item add karega
 exports.AddMenuItem = async (req, res) => {
     try {
         const ownerId=req.user.id;
@@ -34,7 +36,7 @@ exports.AddMenuItem = async (req, res) => {
     }
 
 }
-
+// owner product ko update karega
 exports.UpdateItem = async (req, res) => {
     try {
         const result = await MenuItemdb.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -44,12 +46,27 @@ exports.UpdateItem = async (req, res) => {
     }
     
 }
-
+// owner product delete hoga
 exports.DeleteItem=async(req,res)=>{
     try{
         const result=await MenuItemdb.findByIdAndDelete(req.params.id);
         return res.status(200).json({status:true});
     }catch(err){
         return res.status(500).json({status:false});
+    }
+}
+
+// owner ko product mai se ek product nikal kar jayega update ke liye
+exports.OneMenuItem=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const OneProduct =await MenuItemdb.findOne(new mongoose.Types.ObjectId(id));
+        if(!OneProduct){
+            return res.status(404).json({message:'Product not find'});
+        }
+        return res.status(200).json({message:'data fatched',OneProduct});
+    }catch(err){
+        console.log('OneMenuItem handler mai error aaya hai');
+        return res.status(500).json({message:'internal server error'});
     }
 }

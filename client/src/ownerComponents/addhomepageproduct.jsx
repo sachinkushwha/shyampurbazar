@@ -1,4 +1,4 @@
-import { useContext} from "react"
+import { useContext } from "react"
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,16 +10,18 @@ export const AddHomePageProduct = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { User } = useContext(userContext)
-const OneHomePageData=async()=>{
-    const response =await axios.get(`${BASE_URL}/OneHomepagedata/${id}`,{
-        headers:{
-            'authorization':User?.token
-        }
-    });
-    return response.data;
-}
-    const {data}=useQuery({
-        queryFn:OneHomePageData
+    const getOneHomePageData = async () => {
+        if(!id) return null;
+        const response = await axios.get(`${BASE_URL}/OneHomepagedata/${id}`, {
+            headers: {
+                'authorization': User?.token
+            }
+        });
+        return response.data;
+    }
+    const { data } = useQuery({
+        queryKey:['OneHomePageData'],
+        queryFn:getOneHomePageData
     });
     console.log(data);
 
@@ -70,7 +72,7 @@ const OneHomePageData=async()=>{
                     handlesubmit(value);
                     if (!OneHomePageData) {
                         resetForm();
-                    } 
+                    }
                 }
                 }
                 className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl border border-gray-200"

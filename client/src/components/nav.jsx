@@ -4,7 +4,7 @@ import { FiMenu } from 'react-icons/fi';
 import { FiShoppingCart } from "react-icons/fi";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
-export const Nav = ({navdata}) => {
+export const Nav = ({ navdata }) => {
     const { User, logOutUser } = useContext(userContext);
     const path = useLocation();
     const [selected, setselected] = useState(path.pathname.slice(1));
@@ -40,9 +40,9 @@ export const Nav = ({navdata}) => {
 
                     {/* Logo */}
                     <div className="md:block hidden">
-                    <button onClick={() => setmobilemenu(!mobilemenu)} className="outline-none">
-                        <FiMenu className="w-6 h-6 text-gray-500 cursor-pointer" />
-                    </button>
+                        <button onClick={() => setmobilemenu(!mobilemenu)} className="outline-none">
+                            <FiMenu className="w-6 h-6 text-gray-500 cursor-pointer" />
+                        </button>
                     </div>
                     <Link to={navdata.homelink} className="flex items-center py-2 px-2">
                         <img src="/image.png" alt="Pepsi Logo" className="h-10" />
@@ -52,21 +52,21 @@ export const Nav = ({navdata}) => {
                     {/* Desktop menu */}
                     <div className="hidden md:flex items-center space-x-1">
                         <Link to={navdata.homelink} className={`py-4 px-2 ${selected === "home" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("home")}>Home</Link>
-                       <Link to={navdata.menulink} className={`py-4 px-2 ${selected === "menu" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("menu")}>Menu</Link>
-                       {navdata.pagetype!=='owner' && <Link to="/about" className={`py-4 px-2 ${selected === "about" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("about")}>About</Link>}
+                        <Link to={navdata.menulink} className={`py-4 px-2 ${selected === "menu" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("menu")}>Menu</Link>
+                        {navdata.pagetype !== 'owner' && <Link to="/about" className={`py-4 px-2 ${selected === "about" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("about")}>About</Link>}
                         {/* <a href="#" className={`py-4 px-2 ${selected === "contact" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("contact")}>Contact</a> */}
                     </div>
 
                     {/* Cart + Order button (desktop) */}
                     <div className="hidden md:flex items-center space-x-3">
-                      {navdata.pagetype!=='owner' &&  <Link to="/viewcart" className="flex items-center space-x-1 text-gray-500 hover:text-pepsi-blue transition duration-300">
+                        {navdata.pagetype !== 'owner' && <Link to="/viewcart" className="flex items-center space-x-1 text-gray-500 hover:text-pepsi-blue transition duration-300">
                             <FiShoppingCart className="w-6 h-6" />
                             {
                                 User ? (<span className="bg-pepsi-red text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{itemno}</span>) : ('')
                             }
 
                         </Link>}
-                       {navdata.pagetype!=='owner' && <Link to="viewcart" className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">View Cart</Link>}
+                        {navdata.pagetype !== 'owner' && <Link to="viewcart" className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">View Cart</Link>}
 
                         {User ? (<button onClick={() => { logOutUser() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
                             :
@@ -104,8 +104,12 @@ export const Nav = ({navdata}) => {
                     <li><Link to="/" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
                     <li><Link to="/orderhistory" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
                     <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li>
-                    <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
-                    <li><Link to={User?.role==='user'?`/signup/${'seller'}`:'/owner'} className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>{User?.role==='user'?'become a seller':'your store'}</Link></li>
+                    <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>{
+                        User ? (
+                            <li><Link to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'} className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>{User?.role === 'user' ? 'become a seller' : 'your store'}</Link></li>
+                        ) : ''
+                    }
+
                 </ul>
             </div>
         </nav>

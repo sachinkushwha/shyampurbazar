@@ -36,13 +36,13 @@ exports.Login = async (req, res) => {
 }
 
 exports.Signup = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email,number, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
         return res.status(409).json({ message: "user already exists", status: false });
     }
     const incryptpassword = await bcrypt.hash(password, 10);
-    const newuser = new User({ name, email, password: incryptpassword, role });
+    const newuser = new User({ name, email,Mbnumber:number, password: incryptpassword });
     await newuser.save();
     res.status(200).json({ message: "registration successfull", status: true });
 }
