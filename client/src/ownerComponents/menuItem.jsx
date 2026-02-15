@@ -57,9 +57,7 @@ export const MenuItem = () => {
             {/* Add Item Button (Side) */}
 
             
-                <div className="flex justify-center mt-30">
-                    {!data && <h1 className="text-3xl font-bold">No Data Available Please Add Some Product Useing Add Item Buttom</h1>}
-                </div>
+                
             
 
             <Link
