@@ -104,10 +104,20 @@ export const Nav = ({ navdata }) => {
                     <li><Link to="/" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
                     <li><Link to="/orderhistory" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
                     <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li>
-                    <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>{
+                    <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
+
+                    {
                         User ? (
-                            <li><Link to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'} className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>{User?.role === 'user' ? 'become a seller' : 'your store'}</Link></li>
-                        ) : ''
+                            <>
+                                <li><Link to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'} className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>{User?.role === 'user' ? 'become a seller' : 'your store'}</Link></li>
+                                <li><a href="/" className="px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold" onClick={() => {
+                                    setmobilemenu(false);
+                                    logOutUser()
+                                }}>Logout</a></li>
+                            </>
+                        ) : (
+                            <li><Link to={navdata.loginlink} className="px-4 py-3 hover:bg-gray-100 text-green-500 font-semibold" onClick={() => setmobilemenu(false)}>Login </Link></li>
+                        )
                     }
 
                 </ul>
