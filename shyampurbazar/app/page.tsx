@@ -1,30 +1,19 @@
+import { Hero } from "@/component/hero";
 import Head from "next/head";
 import Link from 'next/link'
 export default async function Home() {
-  const give_a_request_to_server_for_wakeup=await fetch('https://shyampurbazar.onrender.com/',{
-    method:'GET',
-    headers:{
-      'Content-Type':'application/json'
-    }
-  });
+
   return (
     <>
-      
 
-      <main className="max-w-6xl mx-auto p-6">
 
-        {/* Hero Section */}
-        <section className="text-center py-16 bg-orange-300 rounded-lg shadow-md">
-          <h1 className="text-4xl font-bold mb-4 text-black">Shop Shyampur Bazar Online – Fresh, Local & Fast</h1>
-          <p className="text-lg mb-6 text-black">
-            Bringing your favorite local market to your fingertips. Groceries, daily essentials, and more — delivered straight to your home in Shyampur, Bihar.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link href='https://shyampurbazar.vercel.app/' className="bg-white text-black px-6 py-2 rounded hover:bg-orange-500 transition">Shop Now</Link>
-            <Link href='https://shyampurbazar.vercel.app/menu' className="bg-gray-200 px-6 py-2 rounded text-black hover:bg-orange-500 transition">View Vendors</Link>
-          </div>
-        </section>
 
+
+      {/* Hero Section */}
+      <section  >
+        <Hero />
+      </section>
+      <main className=" mx-auto p-6 ">
         {/* Features Section */}
         <section className="grid md:grid-cols-3 gap-8 text-center py-12">
           <div className="p-6 border rounded shadow hover:shadow-lg  transition">
@@ -42,7 +31,7 @@ export default async function Home() {
         </section>
 
         {/* About / Info Section */}
-        <section className="py-12">
+        <section className="py-12 ">
           <h2 className="text-3xl font-bold mb-4 text-center">About Shyampur Bazar Online</h2>
           <p className="mb-4 text-center">
             Shyampur Bazar Online is a digital marketplace created to bring the traditional local market of Shyampur Bazar, Bihar to the online world. From groceries, vegetables, and household essentials to clothing and daily-use products — everything is now accessible online.
