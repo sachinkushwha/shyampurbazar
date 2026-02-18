@@ -10,6 +10,7 @@ const getFormatDate=()=>{
 }
 const OrderSchema=new mongoose.Schema({
     username:{type:String,required:true},
+    number:{type:Number,required:true},
     item:[{
         ownerid:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
         name:String,
@@ -21,11 +22,7 @@ const OrderSchema=new mongoose.Schema({
     paymentmode:{type:String,required:true},
     orderstatus:{type:String,required:true,default:"pending"},
     orderdate:{type:String ,default:getFormatDate},
-    // ownerid:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref:"user",
-    //     required:true
-    // },
+    
     userid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"user",

@@ -1,11 +1,11 @@
 const { default: mongoose } = require('mongoose');
 const Orderdb = require('../model/orderData');
+// create orders
 exports.Order = async (req, res) => {
-    const { user, ownerid, item, address, totalPayment, paymentmode } = req.body;
+    const { user,number, ownerid, item, address, totalPayment, paymentmode } = req.body;
     const orderData = req.body;
-    // console.log(orderData);
     if (orderData) {
-        const order = new Orderdb({ username: user, item, address, totalPayment, paymentmode, ownerid, userid: req.user.id });
+        const order = new Orderdb({ username: user,number, item, address, totalPayment, paymentmode, ownerid, userid: req.user.id });
         await order.save();
         return res.status(200).json({ "message": "order submited", "status": true });
     }

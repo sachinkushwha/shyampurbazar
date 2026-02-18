@@ -15,15 +15,12 @@ export const PaymentMethod = () => {
   const handlsubmit =async (e) => {
     e.preventDefault();
     if (paymentmode) {
-      // console.log("cash on delivery");
       const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
       item.paymentmode = paymentmode;
       const response=await axios.post(`${BASE_URL}/protected/order`,item,{
         headers:{"authorization":User?.token}
       })
-      // if(response.data.status){
-        // console.log("order ka response data",response.data);
-      // }
+      
       localStorage.removeItem(User?.username + "orderpepsicart");
       localStorage.removeItem(User?.username + "pepsicart");
       alert("Congratulations! Your order has been submitted 🎉");

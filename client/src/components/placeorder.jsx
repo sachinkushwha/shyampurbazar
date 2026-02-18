@@ -13,9 +13,7 @@ export const PlaceOrder = () => {
         const storedCart = JSON.parse(localStorage.getItem(User?.username + "pepsicart")) || {};
         setCart(storedCart);
     }, [User]);
-// console.log('final check',cart)
     const cartItems = Object.entries(cart);
-    // console.log("cart entris", cartItems);
 
     // Calculate total
     let total = 0;
@@ -30,7 +28,6 @@ export const PlaceOrder = () => {
                 return;
             }
 
-            // console.log("cart", cart);
             const items = Object.values(cart).map((n) => (
                 {
                     ownerid: n.ownerid,
@@ -39,25 +36,17 @@ export const PlaceOrder = () => {
                     price: n.price
                 }
             ));
-            // console.log("ready data",items);
-            // const items =Object.entries(cart).map(([key,value])=>({
-            //     ownerid:key,
-            //     name:value.name,
-            //     qty:value.qty,
-            //     price:value.price,
-            // }));
+           
 
             let finalorder = {
                 user: User?.username,
-                // ownerid: User?.userid,
+                number:User?.number,
                 item: items,
                 address: Address,
                 totalPayment: total
             }
-            // console.log("New order:", cart);
             localStorage.setItem(User?.username + "orderpepsicart", JSON.stringify(finalorder));
-            // console.log(User?.username + "pepsicart");
-
+           
             navigate("/payment");
         } else {
             alert("Please select an address");
