@@ -13,7 +13,7 @@ export const Categorie = () => {
         const response = await axios.get(`${BASE_URL}/item/menuitem`);
         return response.data;
     }
-    const { data } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ['menudata'],
         queryFn: fetchalldata,
     });
@@ -118,6 +118,13 @@ export const Categorie = () => {
                             </button>
                         ))}
                     </div>
+                    {
+                        isLoading && (
+                            <div className="flex justify-center "> <div className="flex justify-center border border-t-blue-500 border-4 border-gray-400 animate-spin rounded-full w-8 h-8 bg-blue">
+                            </div>
+                            </div>
+                        )
+                    }
 
                     {/* Products */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
