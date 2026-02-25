@@ -1,17 +1,16 @@
 import { Hero } from "@/component/hero";
-import Head from "next/head";
+import { News } from "@/component/News";
 import Link from 'next/link'
 export default async function Home() {
 
   return (
     <>
-
-
-
-
       {/* Hero Section */}
       <section  >
         <Hero />
+      </section>
+      <section className="md:px-35">
+        <News/>
       </section>
       <main className=" mx-auto p-6 ">
         {/* Features Section */}
@@ -40,8 +39,8 @@ export default async function Home() {
             Developed by <strong>Jynetra Company</strong>, this platform empowers local vendors and small businesses while giving customers the convenience of shopping from home.
           </p>
 
-          <h3 className="text-2xl font-semibold mb-2 mt-6">Why Choose Us?</h3>
-          <ul className="list-disc list-inside space-y-2 mb-6">
+          <h3 className="text-2xl px-10 font-semibold mb-2 mt-6">Why Choose Us?</h3>
+          <ul className="list-disc px-15 list-inside space-y-2 mb-6">
             <li>Fresh & local products directly from Shyampur Bazar</li>
             <li>Fast, reliable delivery in nearby areas</li>
             <li>User-friendly interface with no hidden fees</li>

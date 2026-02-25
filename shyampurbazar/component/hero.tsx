@@ -25,19 +25,7 @@ export const Hero = () => {
                     Shyampur ki har dukaan, ek jagah
                 </p>
                 <div className="gap-5 flex justify-center ">
-                    <Link
-                        href="https://shyampurbazar.vercel.app/menu"
-                        className="
-            bg-pepsi-red hover:bg-green-700 text-white font-bold
-            py-2.5 px-4 sm:py-2 sm:px-5 bg-green-400
-            rounded text-base sm:text-lg
-            transition duration-300 inline-flex items-center
-          "
-                        data-aos="fade-up"
-                        data-aos-delay="200"
-                    >
-                        Start Shoping 
-                    </Link>
+
                     <Link
                         href="https://shyampurbazar.vercel.app/signup/user"
                         className="
@@ -49,7 +37,20 @@ export const Hero = () => {
                         data-aos="fade-up"
                         data-aos-delay="200"
                     >
-                    Become a Vendor
+                        Become a Vendor
+                    </Link>
+                    <Link
+                        href="https://shyampurbazar.vercel.app/menu"
+                        className="
+            bg-pepsi-red hover:bg-green-700 text-white font-bold
+            py-2.5 px-4 sm:py-2 sm:px-5 bg-green-400
+            rounded text-base sm:text-lg
+            transition duration-300 inline-flex items-center
+          "
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                    >
+                        Start Shoping
                     </Link>
                 </div>
 
