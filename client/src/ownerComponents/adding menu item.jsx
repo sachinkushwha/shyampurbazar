@@ -1,71 +1,41 @@
-import { HandHelpingIcon } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+
+import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
-import { menuContex } from "./ownerContexApi/menuDataManagement";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../components/config";
 export const AddingMenuItem = () => {
 
     const { id } = useParams();
-    const { MenuData, setMenuData } = useContext(menuContex);
-    const oldmenudata = MenuData.filter(md => md._id === id);
-    console.log(oldmenudata)
-
     const { User } = useContext(userContext);
     const navigate = useNavigate()
-    const [formdata, setformdata] = useState({
-        name: "",
-        price: "",
-        Quantity: "",
-        ImageLink: "",
-        dis: ""
+    const getOneMenuItem = async () => {
+        if (!id) return null;
+        const response = await axios.get(`${BASE_URL}/item/onemenuitem/${id}`, {
+            headers: {
+                'authorization': User.token
+            }
+        });
+        return response.data;
+    }
+
+    const { data } = useQuery({
+        queryKey: ['OneMenuItem', id],
+        queryFn: getOneMenuItem,
     });
-
-    useEffect(() => {
-        if (oldmenudata) {
-            setformdata({
-                name: oldmenudata[0]?.name || "",
-                price: oldmenudata[0]?.price || "",
-                Quantity: oldmenudata[0]?.Quantity || "",
-                ImageLink: oldmenudata[0]?.ImageLink || "",
-                dis: oldmenudata[0]?.dis || ""
-            })
-        }
-    }, [id, MenuData]);
-
-
-const getOneMenuItem=async()=>{
-    if(!id) return null;
-    const response=await axios.get(`${BASE_URL}/item/onemenuitem/${id}`,{
-        headers:{
-            'authorization':User.token
-        }
-    });
-    return response.data;
-}
-
-const {data}=useQuery({
-    queryKey:['OneMenuItem',id],
-    queryFn:getOneMenuItem,
-});
-
-
     const handlesubmitFormData = async (formdata) => {
         if (id) {
             try {
-                const response = await axios.put(`http://localhost:3001/item/update/${id}`, formdata, { headers: { 'authorization': User.token } });
+                const response = await axios.put(`${BASE_URL}/item/update/${id}`, formdata, { headers: { 'authorization': User.token } });
                 return response.data;
-            }catch(err){
-                console.log('menu item update karne me error aaya hai',err);
+            } catch (err) {
+                console.log('menu item update karne me error aaya hai', err);
             }
-           
-           
         } else {
             try {
-                const response = await axios.post('http://localhost:3001/item/addmenuitem', formdata, {
+                const response = await axios.post(`${BASE_URL}/item/addmenuitem`, formdata, {
                     headers: { 'authorization': User.token }
                 });
                 return response.data;
@@ -95,14 +65,14 @@ const {data}=useQuery({
                 </h1>
 
                 <Formik
-                enableReinitialize
+                    enableReinitialize
 
                     initialValues={{
-                        name:data?.OneProduct?.name || "",
+                        name: data?.OneProduct?.name || "",
                         price: data?.OneProduct?.price || "",
-                        Quantity:data?.OneProduct?.Quantity || "",
-                        ImageLink:data?.OneProduct?.ImageLink || "",
-                        dis:data?.OneProduct?.dis || ""
+                        Quantity: data?.OneProduct?.Quantity || "",
+                        ImageLink: data?.OneProduct?.ImageLink || "",
+                        dis: data?.OneProduct?.dis || ""
                     }}
                     onSubmit={(value) => {
                         handlesubmit(value);
