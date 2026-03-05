@@ -9,9 +9,9 @@ export default async function Home() {
       <section  >
         <Hero />
       </section>
-      <section className="md:px-35">
+      {/* <section className="md:px-35">
         <News/>
-      </section>
+      </section> */}
       <main className=" mx-auto p-6 ">
         {/* Features Section */}
         <section className="grid md:grid-cols-3 gap-8 text-center py-12">
