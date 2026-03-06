@@ -5,21 +5,20 @@ const sendEmail = async (receiverEmail) => {
     try {
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
-            port: 465, // या 587
-            secure: true, // 465 के लिए true, 587 के लिए false
+            port: 587,
+            secure: false, // 587 के लिए false ही रखें
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
             },
-            tls: {
-                // यह IPv6 की समस्या को दरकिनार करने में मदद कर सकता है
-                rejectUnauthorized: false
-            }
+            connectionTimeout: 10000, // 10 सेकंड का समय दें
+            greetingTimeout: 10000,
+            socketTimeout: 10000
         });
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: receiverEmail,
+            to: 'sachinkushawaha349@gmail.com',
             subject: "New Order Received",
             html: `<p><b>A new order has been received.</b></p>
         <p>View full order details:
@@ -29,12 +28,7 @@ const sendEmail = async (receiverEmail) => {
         </p>`
         };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log('Error:', error);
-            }
-            console.log('Email sent:', info.response);
-        });
+        await transporter.sendMail(mailOptions);
     } catch (e) {
         console.log(e);
     }
