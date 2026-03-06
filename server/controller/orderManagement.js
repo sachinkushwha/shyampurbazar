@@ -1,15 +1,32 @@
 const { default: mongoose } = require('mongoose');
 const Orderdb = require('../model/orderData');
+const Userdb=require('../model/user');
+const sendEmail = require('../utils/sendEmail');
 // create orders
 exports.Order = async (req, res) => {
-    const { user,number, ownerid, item, address, totalPayment, paymentmode } = req.body;
-    const orderData = req.body;
-    if (orderData) {
-        const order = new Orderdb({ username: user,number, item, address, totalPayment, paymentmode, ownerid, userid: req.user.id });
-        await order.save();
-        return res.status(200).json({ "message": "order submited", "status": true });
+    try {
+        const { user, number, ownerid, item, address, totalPayment, paymentmode } = req.body;
+        const ids = item.map(ids => ids.ownerid);
+        console.log(ids);
+        const orderData = req.body;
+        if (orderData) {
+            const order = new Orderdb({ username: user, number, item, address, totalPayment, paymentmode, ownerid, userid: req.user.id });
+            await order.save();
+            const useremail=await Userdb.find({
+                _id:{$in:ids}
+            }).select("email");
+            const emails=useremail.map(e=>e.email);
+            console.log(emails);
+            sendEmail(emails)
+            return res.status(200).json({ "message": "order submited", "status": true });
+        } else {
+            res.status(500).json({ "message": "data is missing" });
+        }
+    } catch (e) {
+        res.status(500).json({ "message": "server error", e });
     }
-    res.status(500).json({ "message": "server error" });
+
+
 }
 //for user
 exports.getorder = async (req, res) => {
@@ -17,8 +34,8 @@ exports.getorder = async (req, res) => {
         const orderdata = await Orderdb.find({ userid: req.user.id }).sort({ _id: -1 });
         if (orderdata.length !== 0) {
             return res.status(200).json({ orderdata: orderdata });
-        }else{
-            return res.status(200).json({message:'order not found',orderdata:orderdata});
+        } else {
+            return res.status(200).json({ message: 'order not found', orderdata: orderdata });
         }
     } catch (err) {
         return res.status(500).json({ message: "internal server error", err });
@@ -48,8 +65,8 @@ exports.ownergetOrder = async (req, res) => {
                 }
             },
             {
-                $sort:{
-                    _id:-1
+                $sort: {
+                    _id: -1
                 }
             }
         ]);

@@ -130,7 +130,7 @@ export const OwnerOrders = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-600">Total Revenue</p>
-                  <p className="text-2xl font-bold text-gray-800">${sum}</p>
+                  <p className="text-2xl font-bold text-gray-800">{sum}</p>
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@ export const OwnerOrders = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-600">Avg Order Value</p>
-                  <p className="text-2xl font-bold text-gray-800">${calculateAverageOrderValue()}</p>
+                  <p className="text-2xl font-bold text-gray-800">{calculateAverageOrderValue()}</p>
                 </div>
               </div>
             </div>
