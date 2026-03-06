@@ -6,8 +6,7 @@ const orderManagementRoute=require('./routers/orderManagement');
 const OwnerRouter=require('./routers/ownerRouter');
 const cors = require('cors');
 require('dotenv').config();
-const dns = require("dns");
-dns.setDefaultResultOrder("ipv4first");
+
 const mongoose = require('mongoose');
 
 app.use(cors());

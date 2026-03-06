@@ -4,12 +4,9 @@ const sendEmail = async (receiverEmail) => {
 
     try {
         const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false,
-            family: 4,
+            service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER, 
+                user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
             }
         });
@@ -18,10 +15,6 @@ const sendEmail = async (receiverEmail) => {
             from: process.env.EMAIL_USER,
             to: receiverEmail,
             subject: "New Order Received",
-            text: `A new order has been received.
-               View full order details here:
-               ${process.env.OWNER_ORDER_PAGE}`,
-
             html: `<p><b>A new order has been received.</b></p>
         <p>View full order details:
          <a href="${process.env.OWNER_ORDER_PAGE}">
@@ -30,7 +23,12 @@ const sendEmail = async (receiverEmail) => {
         </p>`
         };
 
-        await transporter.sendMail(mailOptions);
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log('Error:', error);
+            }
+            console.log('Email sent:', info.response);
+        });
     } catch (e) {
         console.log(e);
     }
