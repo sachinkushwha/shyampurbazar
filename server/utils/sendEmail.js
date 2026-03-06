@@ -1,12 +1,13 @@
 const { Resend } = require("resend");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const sendEmail = async (receiverEmails) => {
   try {
 
-    await resend.emails.send({
-      from:process.env.EMAIL_USER, // testing ke liye
+const resend = new Resend(process.env.RESEND_API_KEY);
+    console.log(receiverEmails,'rmail');
+
+ const result=await resend.emails.send({
+     from: `ShyamPur <${process.env.EMAIL_FROM}>`,// testing ke liye
       to: receiverEmails, // yaha array pass kar sakte ho
       subject: "New Order Received",
       html: `
@@ -18,6 +19,7 @@ const sendEmail = async (receiverEmails) => {
       </p>
       `
     });
+
 
   } catch (e) {
     console.log(e);
