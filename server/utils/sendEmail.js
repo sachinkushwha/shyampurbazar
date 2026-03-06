@@ -17,7 +17,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
       </p>
       `
     });
-
+console.log(result);
 
   } catch (e) {
     console.log(e);
