@@ -4,8 +4,6 @@ const sendEmail = async (receiverEmails) => {
   try {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-    console.log(receiverEmails,'rmail');
-
  const result=await resend.emails.send({
      from: `ShyamPur <${process.env.EMAIL_FROM}>`,// testing ke liye
       to: receiverEmails, // yaha array pass kar sakte ho
