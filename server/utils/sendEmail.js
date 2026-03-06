@@ -1,38 +1,27 @@
-const nodemailer = require('nodemailer')
+const { Resend } = require("resend");
 
-const sendEmail = async (receiverEmail) => {
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-    try {
-        const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false, // 587 के लिए false ही रखें
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            },
-            connectionTimeout: 10000, // 10 सेकंड का समय दें
-            greetingTimeout: 10000,
-            socketTimeout: 10000
-        });
+const sendEmail = async (receiverEmails) => {
+  try {
 
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: 'sachinkushawaha349@gmail.com',
-            subject: "New Order Received",
-            html: `<p><b>A new order has been received.</b></p>
-        <p>View full order details:
-         <a href="${process.env.OWNER_ORDER_PAGE}">
-           Open Order Page
-         </a>
-        </p>`
-        };
+    await resend.emails.send({
+      from:process.env.EMAIL_USER, // testing ke liye
+      to: receiverEmails, // yaha array pass kar sakte ho
+      subject: "New Order Received",
+      html: `
+      <p><b>A new order has been received.</b></p>
+      <p>View full order details:
+      <a href="${process.env.OWNER_ORDER_PAGE}">
+      Open Order Page
+      </a>
+      </p>
+      `
+    });
 
-        await transporter.sendMail(mailOptions);
-    } catch (e) {
-        console.log(e);
-    }
-}
-
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 module.exports = sendEmail;
