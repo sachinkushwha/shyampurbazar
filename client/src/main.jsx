@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'menu', element: <Menu />
+        path: 'menu/:id', element: <Menu />
       },
 
       {

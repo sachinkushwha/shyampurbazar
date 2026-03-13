@@ -16,9 +16,13 @@ export const PaymentMethod = () => {
     e.preventDefault();
     if (paymentmode) {
       const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
-      console.log('test')
-      item.paymentmode = paymentmode;
-      const response=await axios.post(`${BASE_URL}/protected/order`,item,{
+      // console.log('test')
+     const finalorder= item.map(orders=>({
+        ...orders,paymentmode:paymentmode
+      }));
+      // item.paymentmode = paymentmode;
+      console.log(finalorder)
+      const response=await axios.post(`${BASE_URL}/protected/order`,finalorder,{
         headers:{"authorization":User?.token}
       })
       

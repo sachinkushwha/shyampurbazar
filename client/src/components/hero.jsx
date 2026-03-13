@@ -6,9 +6,9 @@ export const Hero=()=>{
         <div className="container mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-down">Gaon ka bazaar, ab online</h1>
             <p className="text-xl md:text-2xl mb-8" data-aos="fade-down" data-aos-delay="100">Shyampur ki har dukaan, ek jagah</p>
-            <Link to="/menu" className="bg-pepsi-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 inline-flex items-center" data-aos="fade-up" data-aos-delay="200">
+            {/* <Link to="/menu" className="bg-pepsi-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 inline-flex items-center" data-aos="fade-up" data-aos-delay="200">
                 Order Now ➜ 
-            </Link>
+            </Link> */}
         </div>
     </section>
     </>

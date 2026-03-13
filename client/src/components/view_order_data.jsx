@@ -119,7 +119,7 @@ export const ViewOrder = () => {
                 Order Items
               </h2>
               <div className="space-y-4">
-                {order.item?.map((itm, index) => (
+                {order.items?.map((itm, index) => (
                   <div
                     key={index}
                     className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors gap-4"
@@ -152,7 +152,7 @@ export const ViewOrder = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Customer Name</p>
-                    <p className="font-medium text-gray-900">{order.username}</p>
+                    <p className="font-medium text-gray-900">{order.user}</p>
                   </div>
                 </div>
               </div>

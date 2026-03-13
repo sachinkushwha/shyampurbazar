@@ -52,7 +52,7 @@ export const Nav = ({ navdata }) => {
                     {/* Desktop menu */}
                     <div className="hidden md:flex items-center space-x-1">
                         <Link to={navdata.homelink} className={`py-4 px-2 ${selected === "home" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("home")}>Home</Link>
-                        <Link to={navdata.menulink} className={`py-4 px-2 ${selected === "menu" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("menu")}>Menu</Link>
+                        {/* <Link to={navdata.menulink} className={`py-4 px-2 ${selected === "menu" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("menu")}>Menu</Link> */}
                         {navdata.pagetype !== 'owner' && <Link to="/about" className={`py-4 px-2 ${selected === "about" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("about")}>About</Link>}
                         {/* <a href="#" className={`py-4 px-2 ${selected === "contact" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("contact")}>Contact</a> */}
                     </div>
@@ -103,7 +103,7 @@ export const Nav = ({ navdata }) => {
                 <ul className="flex flex-col mt-4 space-y-2">
                     <li><Link to="/" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
                     <li><Link to="/orderhistory" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
-                    <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li>
+                    {/* <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li> */}
                     <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
 
                     {

@@ -1,42 +1,44 @@
 import { useContext, useEffect, useState } from "react"
 import { userContext } from '../Context Api/userManagment'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "./config";
 export const Categorie = () => {
+    const {id} =useParams();
+    console.log('avi wala id',id);
     const navigate = useNavigate();
     const { User } = useContext(userContext);
     const [selectcategori, setselectcategori] = useState("");
 
     const fetchalldata = async () => {
-        const response = await axios.get(`${BASE_URL}/item/menuitem`);
+        const response = await axios.get(`${BASE_URL}/item/menuitem/${id}`);
         return response.data;
     }
     const { data, isLoading } = useQuery({
         queryKey: ['menudata'],
         queryFn: fetchalldata,
     });
-    const categ = [
-        {
-            category: "All Drinks"
-        },
-        {
-            category: "Pepsi Products"
-        },
-        {
-            category: "Cola Drinks"
-        },
-        {
-            category: "Juices"
-        },
-        {
-            category: "Energy Drinks"
-        },
-        {
-            category: "Water"
-        },
-    ]
+    // const categ = [
+    //     {
+    //         category: "All Drinks"
+    //     },
+    //     {
+    //         category: "Pepsi Products"
+    //     },
+    //     {
+    //         category: "Cola Drinks"
+    //     },
+    //     {
+    //         category: "Juices"
+    //     },
+    //     {
+    //         category: "Energy Drinks"
+    //     },
+    //     {
+    //         category: "Water"
+    //     },
+    // ]
 
     // const userRole=User?.role || 'user';
 
@@ -47,7 +49,7 @@ export const Categorie = () => {
 
     const [count, setcount] = useState(JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {});
     const handlecount = (id, name, price, ownerid) => {
-        console.log("handle pe", ownerid);
+        // console.log("handle pe", ownerid);
         if (!User) {
             navigate(`/login/user`);
             return
@@ -103,7 +105,7 @@ export const Categorie = () => {
                 <div className="container mx-auto px-4">
 
                     {/* Categories */}
-                    <div className="flex flex-wrap justify-center gap-3 mb-10">
+                    {/* <div className="flex flex-wrap justify-center gap-3 mb-10">
                         {categ.map((cat) => (
                             <button
                                 key={cat.category}
@@ -117,7 +119,7 @@ export const Categorie = () => {
                                 {cat.category}
                             </button>
                         ))}
-                    </div>
+                    </div> */}
                     {
                         isLoading && (
                             <div className="flex justify-center "> <div className="flex justify-center border border-t-blue-500 border-4 border-gray-400 animate-spin rounded-full w-8 h-8 bg-blue">

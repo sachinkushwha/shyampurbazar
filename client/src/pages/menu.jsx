@@ -6,8 +6,8 @@ import { Whatsapp } from "../components/whatsapp"
 export const Menu=()=>{
     const headerdata=
         {
-            title:"Our Refreshing Menu",
-            dis:"Choose from our wide selection of cold drinks"
+            title:"Our Products ",
+            dis:"Choose from our wide selection of Products"
         }
     
     return <>

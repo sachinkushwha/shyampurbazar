@@ -1,60 +1,61 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import  { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../Context Api/userManagment';
 import { BASE_URL } from '../components/config';
 
 export const OwnerOrders = () => {
-   const queryClient=useQueryClient();
+  const queryClient = useQueryClient();
   const [filter, setFilter] = useState('all');
-  const {User}=useContext(userContext);
-  
+  const { User } = useContext(userContext);
 
-  const OrderstatusMutation=async({orderId,newStatus})=>{
-    const response=await axios.post(`${BASE_URL}/protected/updatestatus`,{orderId,newStatus},{
-      headers:{'authorization':User.token}
+
+  const OrderstatusMutation = async ({ orderId, newStatus }) => {
+    const response = await axios.post(`${BASE_URL}/protected/updatestatus`, { orderId, newStatus }, {
+      headers: { 'authorization': User.token }
     });
     return response.data;
   }
 
-  const OrderMutation=useMutation({
-    mutationKey:['orderstatus'],
-    mutationFn:OrderstatusMutation,
-    onSuccess:()=>{
+  const OrderMutation = useMutation({
+    mutationKey: ['orderstatus'],
+    mutationFn: OrderstatusMutation,
+    onSuccess: () => {
       queryClient.invalidateQueries(['orderData'])
     }
   });
 
   const updateOrderStatus = (orderId, newStatus) => {
     OrderMutation.mutate({
-      orderId:orderId,
-      newStatus:newStatus});
-    
+      orderId: orderId,
+      newStatus: newStatus
+    });
+
   };
 
-  const getorderData=async()=>{
-    const response =await axios.get(`${BASE_URL}/protected/ownergetOrder`,{
-      headers:{'authorization':User?.token}
+  const getorderData = async () => {
+    const response = await axios.get(`${BASE_URL}/protected/ownergetOrder`, {
+      headers: { 'authorization': User?.token }
     });
     return response.data;
   }
 
-  const {data,isLoading}=useQuery({
-    queryKey:['orderData'],
-    queryFn:getorderData
+  const { data, isLoading } = useQuery({
+    queryKey: ['orderData'],
+    queryFn: getorderData
   });
 
-  const filterdOrders=data?.result?.filter(orders=>filter==='all'?orders:orders.orderstatus===filter);
+  const filterdOrders = data?.result?.filter(orders => filter === 'all' ? orders : orders.orderstatus === filter);
 
 
-  const sum=data?.result?.reduce((acc,result)=>{
-    return acc+Number(result.orderstatus==="completed"?result.totalPayment:0);
-  },0);
+  const sum = data?.result?.reduce((acc, result) => {
+    return acc + Number(result.orderstatus === "completed" ? result.totalPayment : 0);
+  }, 0);
 
 
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'completed': return 'bg-green-100 text-green-800';
       case 'pending': return 'bg-yellow-100 text-yellow-800';
       case 'processing': return 'bg-blue-100 text-blue-800';
@@ -64,7 +65,7 @@ export const OwnerOrders = () => {
   };
 
   const getStatusText = (status) => {
-    switch(status) {
+    switch (status) {
       case 'completed': return 'Completed';
       case 'pending': return 'Pending';
       case 'processing': return 'Processing';
@@ -124,8 +125,8 @@ export const OwnerOrders = () => {
             <div className="bg-white rounded-xl shadow p-4">
               <div className="flex items-center">
                 <div className="p-3 bg-green-100 rounded-lg">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg width="24" height="24">
+                    <text x="5" y="20" fontSize="20" fill="green">₹</text>
                   </svg>
                 </div>
                 <div className="ml-4">
@@ -196,7 +197,7 @@ export const OwnerOrders = () => {
                 Completed
               </button>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <div className="relative">
                 <input
@@ -257,23 +258,23 @@ export const OwnerOrders = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{order.username}</div>
+                          <div className="text-sm font-medium text-gray-900">{order.user}</div>
                           <div className="text-sm text-gray-500">{order.email}</div>
                           <div className="text-sm text-gray-500">{order.number}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-900">
-                          {order?.item?.map((item, index) => (
+                          {order?.items?.map((item, index) => (
                             <div key={index} className="flex justify-between">
                               <span>{item.name} x{item.qty}</span>
-                              <span className="text-gray-600">${item.price * item.qty}</span>
+                              <span className="text-gray-600">₹{item.price * item.qty}</span>
                             </div>
                           ))}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-lg font-bold text-gray-900">${order.totalPayment}</div>
+                        <div className="text-lg font-bold text-gray-900">₹{order.totalPayment}</div>
                         <div className="text-sm text-gray-500">{order.paymentmode}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -327,7 +328,7 @@ export const OwnerOrders = () => {
               </table>
             </div>
           )}
-          
+
           {!isLoading && data?.result?.length === 0 && (
             <div className="text-center py-12">
               <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

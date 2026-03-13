@@ -16,6 +16,7 @@ export const PlaceOrder = () => {
     const cartItems = Object.entries(cart);
 
     // Calculate total
+
     let total = 0;
     cartItems.forEach(([id, item]) => {
         total += item.price * item.qty;
@@ -28,25 +29,54 @@ export const PlaceOrder = () => {
                 return;
             }
 
-            const items = Object.values(cart).map((n) => (
-                {
-                    ownerid: n.ownerid,
-                    name: n.name,
-                    qty: n.qty,
-                    price: n.price
-                }
-            ));
-           
+            // const items = Object.values(cart).map((n) => (
+            //     {
+            //         ownerid: n.ownerid,
+            //         name: n.name,
+            //         qty: n.qty,
+            //         price: n.price
+            //     }
+            // ));
 
-            let finalorder = {
-                user: User?.username,
-                number:User?.number,
-                item: items,
-                address: Address,
-                totalPayment: total
-            }
+            const venderOrders = {};
+
+            Object.entries(cart).forEach(([id, item]) => {
+                if (!venderOrders[item.ownerid]) {
+                    venderOrders[item.ownerid] = [];
+                }
+
+                venderOrders[item.ownerid].push({
+                    productId: id,
+                    name: item.name,
+                    qty: item.qty,
+                    price: item.price
+                })
+
+            });
+
+            const finalorder = Object.entries(venderOrders).map(([vendorId, items]) => {
+                const vendorTotal = items.reduce(
+                    (sum, i) => sum + i.price * i.qty, 0
+                );
+                return {
+                    vendorId: vendorId,
+                    user: User?.username,
+                    number: User?.number,
+                    address: Address,
+                    items: items,
+                    totalPayment: vendorTotal
+                }
+            })
+
+            // let finalorder = {
+            //     user: User?.username,
+            //     number: User?.number,
+            //     item: items,
+            //     address: Address,
+            //     totalPayment: total
+            // }
             localStorage.setItem(User?.username + "orderpepsicart", JSON.stringify(finalorder));
-           
+
             navigate("/payment");
         } else {
             alert("Please select an address");

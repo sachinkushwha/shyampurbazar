@@ -39,7 +39,7 @@ export const OrderHistory = () => {
                         {
                             data?.orderdata?.map(dat => (
                                 <tr key={dat._id} className="bg-white shadow rounded">
-                                    <td className="p-3">{dat.item[0]?.name}</td>
+                                    <td className="p-3">{dat.items[0]?.name}</td>
                                     <td className="p-3">{dat.orderdate}</td>
                                     <td className="p-3 flex justify-between">{dat.orderstatus}
                                         <Link to={`/orderhistory/${dat._id}`} className="cursor-pointer ml-auto hover:text-blue-500 mr-10 bg-blue-100  rounded-lg px-3 py-1">👁️view</Link></td>
@@ -62,7 +62,7 @@ export const OrderHistory = () => {
                     <div key={dat._id} className="bg-white shadow p-4 rounded-lg">
                         <p>
                             <span className="font-semibold">Item:</span>{" "}
-                            {dat.item[0]?.name}
+                            {dat.items[0]?.name}
                         </p>
                         <p>
                             <span className="font-semibold">Date:</span>{" "}

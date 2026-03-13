@@ -4,7 +4,8 @@ const user = require('../model/user');
 // for all user frontend ke liye
 exports.MenuItem = async (req, res) => {
     try {
-        const result = await MenuItemdb.find().sort({ _id: -1 });
+        const id=req.params;
+        const result = await MenuItemdb.find({ownerId:id.id}).sort({ _id: -1 });
         return res.status(200).json({ itemdata: result });
     } catch (err) {
         return res.status(200).json({ message: "internal server error" });
