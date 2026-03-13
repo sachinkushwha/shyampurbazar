@@ -40,7 +40,7 @@ export const Hero = () => {
                         Become a Vendor
                     </Link>
                     <Link
-                        href="https://shyampurbazar.vercel.app/menu"
+                        href="https://shyampurbazar.vercel.app"
                         className="
             bg-pepsi-red hover:bg-green-700 text-white font-bold
             py-2.5 px-4 sm:py-2 sm:px-5 bg-green-400
