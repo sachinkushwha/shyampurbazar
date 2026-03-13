@@ -23,7 +23,7 @@ export const Product = () => {
         queryKey: ['homepagedata'],
         queryFn: fetchalldata
     });
-
+console.log(data)
 
 
     return <>
