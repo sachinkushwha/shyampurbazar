@@ -5,6 +5,7 @@ const MenuItemSchema=new mongoose.Schema({
     price:{type:Number,required:true},
     Quantity:{type:String,require:true},
     ImageLink:{type:String,require:true},
+    public_id:{type:String,required:true},
     ownerId:{type:mongoose.Schema.Types.ObjectId,ref:"user"},
     dis:{type:String}
 });

@@ -2,9 +2,11 @@ const express=require('express');
 const { jwtauth } = require('../middleware/jwtMiddleware');
 const MenuItemController=require('../controller/menu Item');
 const homepageproductController=require('../controller/homepageproduct');
+const upload=require('../utils/multerCloudinaryStorage');
+
 const OwnerRouter=express.Router();
 
-OwnerRouter.post('/addmenuitem',jwtauth,MenuItemController.AddMenuItem);
+OwnerRouter.post('/addmenuitem',jwtauth,upload.single("Image"),MenuItemController.AddMenuItem);
 OwnerRouter.get('/menuitem/:id',MenuItemController.MenuItem);
 OwnerRouter.get('/Ownermenuitem',jwtauth,MenuItemController.Ownermenuitem);
 OwnerRouter.put('/update/:id',jwtauth,MenuItemController.UpdateItem);

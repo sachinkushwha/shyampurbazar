@@ -36,7 +36,10 @@ export const AddingMenuItem = () => {
         } else {
             try {
                 const response = await axios.post(`${BASE_URL}/item/addmenuitem`, formdata, {
-                    headers: { 'authorization': User.token }
+                    headers: {
+                        'authorization': User.token,
+                        'Content-Type': 'multipart/form-data'
+                    }
                 });
                 return response.data;
             } catch (err) {
@@ -55,132 +58,130 @@ export const AddingMenuItem = () => {
         }
     })
     const handlesubmit = (value) => {
-        FormSubmitMutation.mutate(value)
+        const formdata = new FormData();
+        formdata.append('name', value.name);
+        formdata.append('price', value.price);
+        formdata.append('Quantity', value.Quantity);
+        formdata.append('Image', value.Image);
+        formdata.append('dis', value.dis);
+        FormSubmitMutation.mutate(formdata)
     }
     return (
-        <div className="bg-gray-50 flex items-center justify-center">
-            <div className="bg-[linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)),url('https://t3.ftcdn.net/jpg/18/12/06/72/240_F_1812067284_a0L2rXGHwwHyEyWAhJ6QT3tZaWR5YOLX.jpg')] bg-cover bg-center rounded-xl shadow-lg p-6 md:p-8 w-full max-w-md">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-                    {id ? 'Update Menu Item' : 'Add Menu Item'}
-                </h1>
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+    
+    <h1 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+      {id ? "Update Menu Item" : "Add Menu Item"}
+    </h1>
 
-                <Formik
-                    enableReinitialize
+    <Formik
+      enableReinitialize
+      initialValues={{
+        name: data?.OneProduct?.name || "",
+        price: data?.OneProduct?.price || "",
+        Quantity: data?.OneProduct?.Quantity || "",
+        Image: null,
+        dis: data?.OneProduct?.dis || ""
+      }}
+      onSubmit={(value) => {
+        handlesubmit(value);
+      }}
+    >
+      {({ setFieldValue }) => (
+        <Form className="space-y-5">
 
-                    initialValues={{
-                        name: data?.OneProduct?.name || "",
-                        price: data?.OneProduct?.price || "",
-                        Quantity: data?.OneProduct?.Quantity || "",
-                        ImageLink: data?.OneProduct?.ImageLink || "",
-                        dis: data?.OneProduct?.dis || ""
-                    }}
-                    onSubmit={(value) => {
-                        handlesubmit(value);
-                    }}
-                    className="space-y-6 ">
-                    <Form>
-                        <div>
-                            <label
-                                htmlFor="productName"
-                                className="block text-sm font-medium text-black mb-2"
-                            >
-                                Enter product name
-                            </label>
-                            <Field
-                                type="text"
-                                id="productName"
-                                name="name"
-                                placeholder="Product Name"
-                                autoFocus
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition focus:bg-white"
-                            />
-                        </div>
+          {/* Product Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Product Name
+            </label>
+            <Field
+              type="text"
+              name="name"
+              placeholder="Enter product name"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-                        <div>
-                            <label
-                                htmlFor="price"
-                                className="block text-sm font-medium text-black mb-2"
-                            >
-                                Price
-                            </label>
-                            <Field
-                                type="number"
-                                id="price"
-                                name="price"
-                                placeholder="Price"
-                                required
-                                className="focus:bg-white w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            />
-                        </div>
+          {/* Price */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Price
+            </label>
+            <Field
+              type="number"
+              name="price"
+              placeholder="Enter price"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-                        <div>
-                            <label
-                                htmlFor="Quantity"
-                                className="block text-sm font-medium text-black mb-2"
-                            >
-                                Quantity
-                            </label>
-                            <Field
-                                type="text"
-                                id="Quantity"
-                                name="Quantity"
-                                required
-                                className="focus:bg-white w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            />
-                        </div>
+          {/* Quantity */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Quantity
+            </label>
+            <Field
+              type="text"
+              name="Quantity"
+              placeholder="Enter quantity"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-                        <div>
-                            <label
-                                htmlFor="ImageLink"
-                                className="block text-sm font-medium text-black mb-2"
-                            >
-                                ImageLink
-                            </label>
-                            <Field
-                                type="text"
-                                id="ImageLink"
-                                name="ImageLink"
-                                required
-                                className="focus:bg-white w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            />
-                        </div>
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Upload Image
+            </label>
 
-                        <div>
-                            <label
-                                htmlFor="dis"
-                                className="block text-sm font-medium text-black mb-2"
-                            >
-                                Describe your product
-                            </label>
-                            <Field
-                                as='textarea'
-                                type="text"
-                                id="dis"
-                                name="dis"
-                                className="focus:bg-white w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            />
-                        </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                setFieldValue("Image", e.target.files[0]);
+              }}
+              className="w-full border rounded-lg p-2 bg-gray-50"
+            />
+          </div>
 
-                        <div className="flex gap-4 pt-4">
-                            <button
-                                type="button"
-                                onClick={() => navigate('/owner/menuitem')}
-                                className="flex-1 py-3 px-4 bg-gray-200 text-black font-medium rounded-lg hover:bg-gray-300 transition-colors"
-                            >
-                                Cancel
-                            </button>
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
+            </label>
+            <Field
+              as="textarea"
+              name="dis"
+              rows="3"
+              placeholder="Describe your product..."
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-                            <button
-                                type="submit"
-                                className="flex-1 py-3 px-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                {id ? 'Update' : 'Add Item'}
-                            </button>
-                        </div>
-                    </Form>
-                </Formik>
-            </div>
-        </div>
+          {/* Buttons */}
+          <div className="flex gap-3 pt-3">
+            <button
+              type="button"
+              onClick={() => navigate("/owner/menuitem")}
+              className="flex-1 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="flex-1 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            >
+              {id ? "Update Item" : "Add Item"}
+            </button>
+          </div>
+
+        </Form>
+      )}
+    </Formik>
+
+  </div>
+</div>
     )
 }
