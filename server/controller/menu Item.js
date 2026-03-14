@@ -1,7 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const MenuItemdb = require('../model/menuItem');
 const user = require('../model/user');
-const cloudinary =require('../config/cloudinary');
+const cloudinary = require('../config/cloudinary');
 // for all user frontend ke liye
 exports.MenuItem = async (req, res) => {
     try {
@@ -54,8 +54,11 @@ exports.DeleteItem = async (req, res) => {
         if (!item) {
             return res.status(404).json({ message: "Item not found" });
         }
-        await cloudinary.uploader.destroy(item.public_id);
-        
+        if (item.public_id) {
+            await cloudinary.uploader.destroy(item.public_id);
+        }
+
+
         const result = await MenuItemdb.findByIdAndDelete(req.params.id);
         return res.status(200).json({ status: true });
     } catch (err) {
