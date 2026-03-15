@@ -6,6 +6,7 @@ import { userContext } from "../Context Api/userManagment";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../components/config";
+import PageLoader from "../components/PageLoader";
 export const AddingMenuItem = () => {
 
     const { id } = useParams();
@@ -87,7 +88,10 @@ export const AddingMenuItem = () => {
         handlesubmit(value);
       }}
     >
+     
       {({ setFieldValue }) => (
+        <>
+         {FormSubmitMutation.isPending && (<PageLoader/>)}
         <Form className="space-y-5">
 
           {/* Product Name */}
@@ -171,6 +175,7 @@ export const AddingMenuItem = () => {
 
             <button
               type="submit"
+              disabled={FormSubmitMutation.isPending}
               className="flex-1 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
             >
               {id ? "Update Item" : "Add Item"}
@@ -178,6 +183,7 @@ export const AddingMenuItem = () => {
           </div>
 
         </Form>
+        </>
       )}
     </Formik>
 
