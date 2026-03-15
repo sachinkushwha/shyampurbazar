@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../components/config";
 import PageLoader from "../components/PageLoader";
+import { CompressImage } from "../utils/ImageCompresser";
 export const AddingMenuItem = () => {
 
     const { id } = useParams();
@@ -142,8 +143,10 @@ export const AddingMenuItem = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => {
-                setFieldValue("Image", e.target.files[0]);
+              onChange={async(e) => {
+                const file=e.target.files[0];
+                const compressedImage=await CompressImage(file);
+                setFieldValue("Image", compressedImage);
               }}
               className="w-full border rounded-lg p-2 bg-gray-50"
             />

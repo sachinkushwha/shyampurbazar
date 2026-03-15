@@ -5,6 +5,7 @@ import { Formik, Form, Field } from "formik";
 import { BASE_URL } from "../components/config";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
+import { CompressImage } from "../utils/ImageCompresser";
 
 export const Signup = () => {
   const { User, logingUser } = useContext(userContext);
@@ -38,10 +39,14 @@ export const Signup = () => {
     },
   });
 
-  const handleBecomeseller = (value) => {
+  const handleBecomeseller = async(value) => {
+    let Image=value.Image;
+    if(value.Image){
+      Image=await CompressImage(value.Image);
+    }
     const formData = new FormData();
     formData.append("name", value.name);
-    formData.append("Image", value.Image);
+    formData.append("Image", Image);
     formData.append("role", value.role);
     becomesellerMutaion.mutate(formData);
   };

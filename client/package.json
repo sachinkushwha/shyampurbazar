@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.16",
     "axios": "^1.12.2",
+    "browser-image-compression": "^2.0.2",
     "formik": "^2.4.9",
     "lucide-react": "^0.556.0",
     "react": "^19.1.1",
