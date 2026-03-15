@@ -6,7 +6,8 @@ const userSchema=new mongoose.Schema({
     Mbnumber:{type:Number,required:true},
     password:{type:String,required:true},
     role:{type:String,enum:['user','seller'],default:'user',required:true},
-    storeName:{type:String,required:true,default:'NA'}
+    storeName:{type:String,required:true,default:'NA'},
+    storeImage:{type:String}
 });
 
 module.exports=mongoose.model('user',userSchema);

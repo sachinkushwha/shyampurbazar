@@ -3,7 +3,7 @@ const ProductDatabase = require('../model/homepageproduct');
 const user = require('../model/user');
 exports.Homepageproduct = async (req, res) => {
     try {
-        const product = await user.find({role:'seller'});
+        const product = await user.find({role:'seller'}).select('-password');
         // console.log(product)
         if (product.length === 0) {
             res.status(404).json({ message: "product not found" });

@@ -23,7 +23,7 @@ export const Product = () => {
         queryKey: ['homepagedata'],
         queryFn: fetchalldata
     });
-console.log(data)
+    console.log(data)
 
 
     return <>
@@ -44,7 +44,7 @@ console.log(data)
                         >
 
                             <img
-                                src="https://www.shutterstock.com/shutterstock/photos/230619400/display_1500/stock-vector-shop-icon-store-230619400.jpg"
+                                src={product.storeImage || 'https://img.freepik.com/free-vector/shop-with-sign-open-design_23-2148544029.jpg?semt=ais_hybrid&w=740&q=80'}
                                 alt={product.name}
                                 className="w-full h-20 object-contain"
                             />
