@@ -60,32 +60,8 @@ exports.getorder = async (req, res) => {
 //for owner
 exports.ownergetOrder = async (req, res) => {
     try {
-        const result =await Orderdb.find({vendorId:req.user.id});
-        // const result = await Orderdb.aggregate([
-        //     {
-        //         $match: {
-        //             "item.ownerid": new mongoose.Types.ObjectId(req.user.id)
-        //         }
-        //     },
-        //     {
-        //         $addFields: {
-        //             item: {
-        //                 $filter: {
-        //                     input: "$item",
-        //                     as: "i",
-        //                     cond: {
-        //                         $eq: ["$$i.ownerid", new mongoose.Types.ObjectId(req.user.id)]
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $sort: {
-        //             _id: -1
-        //         }
-        //     }
-        // ]);
+        const result =await Orderdb.find({vendorId:req.user.id}).sort({_id:-1});
+       
         return res.status(200).json({ message: "data find", result });
     } catch (err) {
         return res.status(500).json({ message: "internal server error ", err });

@@ -9,7 +9,29 @@ export const PlaceOrder = () => {
     const { User } = useContext(userContext);
     const [cart, setCart] = useState({});
     const [Address, setAddress] = useState();
+    const [delevryCharge, setDeleveryCharge] = useState(40);
     const navigate = useNavigate();
+
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLat = position.coords.latitude;
+                const userlng = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+                console.log('lat=', userLat, 'lng=', userlng,'accuracy=',accuracy);
+                alert(`lat=${userLat},lng=${userlng},accuracy=${accuracy}`);
+            },
+            (error) => {
+                console.log(error);
+            },
+            {
+                enableHighAccuracy: true, // important
+                timeout: 15000,           // 15 seconds timeout
+                maximumAge: 0             // do not use cached location
+            }
+        )
+    }
 
     const getaddress = async () => {
         const response = await axios.get(`${BASE_URL}/getaddress`, {
@@ -20,9 +42,9 @@ export const PlaceOrder = () => {
         return response.data;
     }
 
-    const {data}=useQuery({
-        queryKey:['address'],
-        queryFn:getaddress
+    const { data } = useQuery({
+        queryKey: ['address'],
+        queryFn: getaddress
     });
 
     // Load cart from localStorage
@@ -135,11 +157,18 @@ export const PlaceOrder = () => {
                                         <span className="font-medium">₹{item.price * item.qty}</span>
                                     </div>
                                 ))}
+                                <div className="py-2 flex justify-between text-gray-700">
+                                    <span>
+                                        Delevry charge <span className="text-gray-500"></span>
+                                    </span>
+                                    {/* <span className="font-medium">₹{delevryCharge}</span> */}
+                                    <span className="font-medium">Free</span>
+                                </div>
                             </div>
 
                             <div className="flex justify-between mt-4 text-lg font-bold text-gray-800">
                                 <span>Total:</span>
-                                <span className="text-green-600">₹{total}
+                                <span className="text-green-600">₹{total + delevryCharge}
                                 </span>
                             </div>
 
