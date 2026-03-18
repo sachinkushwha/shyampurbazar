@@ -40,9 +40,25 @@ exports.AddMenuItem = async (req, res) => {
 // owner product ko update karega
 exports.UpdateItem = async (req, res) => {
     try {
+        const { name, price, Quantity, dis } = req.body;
+        if (req.file?.path) {
+            const item = await MenuItemdb.findOne({ _id: req.params.id });
+            console.log('item mila',item.public_id);
+            if (!item) {
+                return res.status(404).json({ message: "Item not found" });
+            }
+            if (item.public_id) {
+                await cloudinary.uploader.destroy(item.public_id);
+                console.log('delete huaa');
+            }
+            const result = await MenuItemdb.findByIdAndUpdate(req.params.id, { name, price, Quantity, ImageLink: req.file.path,public_id:req.file.filename, dis }, { new: true });
+            console.log('update huaa');
+            return res.status(200).json({ message: "data update successfuly", updatedData: result });
+        }
         const result = await MenuItemdb.findByIdAndUpdate(req.params.id, req.body, { new: true });
         return res.status(200).json({ message: "data update successfuly", updatedData: result });
     } catch (err) {
+        console.log(err)
         return res.status(500).json({ message: "internal server error" });
     }
 

@@ -281,7 +281,11 @@ export const OwnerOrders = () => {
                         <div className="text-sm text-gray-500">{order.paymentmode}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">{order.address}</div>
+                        <div className="text-sm text-gray-500">
+                          {order.address.split(',').map((part, index) => (
+                            <div key={index} className="break-words">{part.trim()},</div>
+                          ))}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.orderstatus)}`}>
@@ -296,7 +300,7 @@ export const OwnerOrders = () => {
                           <button
                             onClick={() => {
                               // Show order details modal
-                              alert(`Order Details for ${order._id}\nCustomer: ${order.username}\nAddress: ${order.address}\nItems: ${order?.item?.map(i => `${i.name} x${i.qty}`).join(', ')}`);
+                              alert(`Order Details for ${order._id}\nCustomer: ${order.user}\nAddress: ${order.address}\nItems: ${order?.items?.map(i => `${i.name} x${i.qty}`).join(', ')}`);
                             }}
                             className="text-blue-600 hover:text-blue-900"
                           >

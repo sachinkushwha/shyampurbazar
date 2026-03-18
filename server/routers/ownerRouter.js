@@ -9,7 +9,7 @@ const OwnerRouter=express.Router();
 OwnerRouter.post('/addmenuitem',jwtauth,upload.single("Image"),MenuItemController.AddMenuItem);
 OwnerRouter.get('/menuitem/:id',MenuItemController.MenuItem);
 OwnerRouter.get('/Ownermenuitem',jwtauth,MenuItemController.Ownermenuitem);
-OwnerRouter.put('/update/:id',jwtauth,MenuItemController.UpdateItem);
+OwnerRouter.put('/update/:id',jwtauth,upload.single("Image"),MenuItemController.UpdateItem);
 OwnerRouter.delete('/delete/:id',jwtauth,MenuItemController.DeleteItem);
 OwnerRouter.put('/homepageproduct/update/:id',jwtauth,homepageproductController.UpdateHomePageProduct);
 OwnerRouter.delete('/home/delete/:id',jwtauth,homepageproductController.HomePageProductDelete);

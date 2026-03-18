@@ -45,9 +45,6 @@ export const PlaceOrder = () => {
                 alert("Cart is empty!");
                 return;
             }
-
-
-
             const venderOrders = {};
 
             Object.entries(cart).forEach(([id, item]) => {
@@ -109,7 +106,7 @@ export const PlaceOrder = () => {
                                     type="radio"
                                     name="Address"
                                     id="shyampur"
-                                    value="shyampur bazar"
+                                    value={`${addres.village},${addres.street},${addres.city},${addres.landmark},${addres.pin}`}
                                     onChange={(e) => setAddress(e.target.value)}
                                     className="accent-blue-600"
                                 />

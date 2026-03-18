@@ -134,8 +134,8 @@ export const ViewOrder = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-gray-900 text-lg">${itm.price}</p>
-                      <p className="text-sm text-gray-500">${(itm.price * itm.qty).toFixed(2)} total</p>
+                      <p className="font-bold text-gray-900 text-lg">₹{itm.price}</p>
+                      <p className="text-sm text-gray-500">₹{(itm.price * itm.qty).toFixed(2)} total</p>
                     </div>
                   </div>
                 ))}
@@ -164,7 +164,7 @@ export const ViewOrder = () => {
                 </h3>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Shipping Address</p>
+                    {/* <p className="text-sm text-gray-500 mb-1">Shipping Address</p> */}
                     <p className="font-medium text-gray-900 break-words">{order.address}</p>
                   </div>
                 </div>
@@ -238,17 +238,17 @@ export const ViewOrder = () => {
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-lg font-semibold text-gray-700">Total Amount</span>
                     <div className="flex items-center gap-2">
-                      <DollarSign className="w-5 h-5 text-green-600" />
+                      {/* <DollarSign className="w-5 h-5 text-green-600" /> */}
                       <span className="text-2xl font-bold text-gray-900">
-                        ${order.totalPayment}
+                        ₹{order.totalPayment}
                       </span>
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4">
                     <div className="flex items-center justify-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
-                      <p className="text-green-700 font-medium">Payment Completed</p>
+                      {/* <CheckCircle className="w-5 h-5 text-green-600" />
+                      <p className="text-green-700 font-medium">Payment Completed</p> */}
                     </div>
                   </div>
                 </div>
