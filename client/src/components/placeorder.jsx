@@ -168,7 +168,7 @@ export const PlaceOrder = () => {
 
                             <div className="flex justify-between mt-4 text-lg font-bold text-gray-800">
                                 <span>Total:</span>
-                                <span className="text-green-600">₹{total + delevryCharge}
+                                <span className="text-green-600">₹{total }
                                 </span>
                             </div>
 

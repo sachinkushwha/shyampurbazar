@@ -26,8 +26,8 @@ exports.Order = async (req, res) => {
                     const saved = await order.save();
                     const useremail = await Userdb.findById(ord.vendorId).select("email");
                     if (useremail?.email) {
-                        console.log('email',useremail);
-                        sendEmail([useremail.email]);
+                        console.log('email',useremail.email);
+                      await sendEmail([useremail.email]);
                     }
                     return saved;
                 })
