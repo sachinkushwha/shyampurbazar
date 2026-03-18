@@ -13,25 +13,25 @@ export const PlaceOrder = () => {
     const navigate = useNavigate();
 
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userLat = position.coords.latitude;
-                const userlng = position.coords.longitude;
-                const accuracy = position.coords.accuracy;
-                console.log('lat=', userLat, 'lng=', userlng,'accuracy=',accuracy);
-                alert(`lat=${userLat},lng=${userlng},accuracy=${accuracy}`);
-            },
-            (error) => {
-                console.log(error);
-            },
-            {
-                enableHighAccuracy: true, // important
-                timeout: 15000,           // 15 seconds timeout
-                maximumAge: 0             // do not use cached location
-            }
-        )
-    }
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(
+    //         (position) => {
+    //             const userLat = position.coords.latitude;
+    //             const userlng = position.coords.longitude;
+    //             const accuracy = position.coords.accuracy;
+    //             console.log('lat=', userLat, 'lng=', userlng,'accuracy=',accuracy);
+    //             alert(`lat=${userLat},lng=${userlng},accuracy=${accuracy}`);
+    //         },
+    //         (error) => {
+    //             console.log(error);
+    //         },
+    //         {
+    //             enableHighAccuracy: true, // important
+    //             timeout: 15000,           // 15 seconds timeout
+    //             maximumAge: 0             // do not use cached location
+    //         }
+    //     )
+    // }
 
     const getaddress = async () => {
         const response = await axios.get(`${BASE_URL}/getaddress`, {
