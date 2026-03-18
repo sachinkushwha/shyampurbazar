@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import { userContext } from "../Context Api/userManagment";
 import { useContext } from "react";
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 
 
 export const Login = () => {

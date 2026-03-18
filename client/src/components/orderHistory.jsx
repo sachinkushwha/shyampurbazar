@@ -3,7 +3,7 @@ import { userContext } from "../Context Api/userManagment";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "./config";
+import { BASE_URL } from "../config/config";
 
 export const OrderHistory = () => {
     const { User } = useContext(userContext);
@@ -51,7 +51,7 @@ export const OrderHistory = () => {
                 </table>
                 <div className="flex justify-center">
                     {
-                        data?.orderdata?.length===0 && <p className="text-xl mt-5 mb-5">You Have No Active Order  <Link to='/menu' className="font-bold underline text-blue-500">Order Now</Link></p>
+                        data?.orderdata?.length===0 && <p className="text-xl mt-5 mb-5">You Have No Active Order  <Link to='/' className="font-bold underline text-blue-500">Order Now</Link></p>
                     }
                 </div>
             </div>

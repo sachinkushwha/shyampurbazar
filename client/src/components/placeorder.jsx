@@ -1,12 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../Context Api/userManagment";
+import axios from "axios";
+import { BASE_URL } from "../config/config";
+import { useQuery } from "@tanstack/react-query";
 
 export const PlaceOrder = () => {
     const { User } = useContext(userContext);
     const [cart, setCart] = useState({});
-    const [Address, getAddress] = useState();
+    const [Address, setAddress] = useState();
     const navigate = useNavigate();
+
+    const getaddress = async () => {
+        const response = await axios.get(`${BASE_URL}/getaddress`, {
+            headers: {
+                'authorization': User.token
+            }
+        });
+        return response.data;
+    }
+
+    const {data}=useQuery({
+        queryKey:['address'],
+        queryFn:getaddress
+    });
 
     // Load cart from localStorage
     useEffect(() => {
@@ -29,14 +46,7 @@ export const PlaceOrder = () => {
                 return;
             }
 
-            // const items = Object.values(cart).map((n) => (
-            //     {
-            //         ownerid: n.ownerid,
-            //         name: n.name,
-            //         qty: n.qty,
-            //         price: n.price
-            //     }
-            // ));
+
 
             const venderOrders = {};
 
@@ -68,13 +78,7 @@ export const PlaceOrder = () => {
                 }
             })
 
-            // let finalorder = {
-            //     user: User?.username,
-            //     number: User?.number,
-            //     item: items,
-            //     address: Address,
-            //     totalPayment: total
-            // }
+
             localStorage.setItem(User?.username + "orderpepsicart", JSON.stringify(finalorder));
 
             navigate("/payment");
@@ -90,30 +94,30 @@ export const PlaceOrder = () => {
 
                 {/* Address Selection */}
                 <div className="mb-8">
-                    <h3 className="text-xl font-semibold text-gray-700 mb-4">Select Address</h3>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-4 flex justify-between items-center">Select Address
+                        <Link
+                            to='/addadress'
+                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+                        >
+                            Add
+                        </Link>
+                    </h3>
                     <form className="space-y-3">
-                        <label className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-blue-600">
-                            <input
-                                type="radio"
-                                name="Address"
-                                id="shyampur"
-                                value="shyampur bazar"
-                                onChange={(e) => getAddress(e.target.value)}
-                                className="accent-blue-600"
-                            />
-                            Shyampur Bazar
-                        </label>
-                        <label className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-blue-600">
-                            <input
-                                type="radio"
-                                name="Address"
-                                id="gopalganj"
-                                value="gopalganj"
-                                onChange={(e) => getAddress(e.target.value)}
-                                className="accent-blue-600"
-                            />
-                            Gopalganj
-                        </label>
+                        {data?.address.map((addres) => (
+                            <label key={addres._id} className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-blue-600">
+                                <input
+                                    type="radio"
+                                    name="Address"
+                                    id="shyampur"
+                                    value="shyampur bazar"
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    className="accent-blue-600"
+                                />
+                                {addres.village},{addres.street},{addres.city},{addres.landmark},{addres.pin}
+                            </label>
+                        ))}
+
+
                     </form>
                 </div>
 

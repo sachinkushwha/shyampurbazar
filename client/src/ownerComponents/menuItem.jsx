@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 
 
 

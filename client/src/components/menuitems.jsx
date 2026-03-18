@@ -3,7 +3,7 @@ import { userContext } from '../Context Api/userManagment'
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "./config";
+import { BASE_URL } from "../config/config";
 export const Categorie = () => {
     const {id} =useParams();
     console.log('avi wala id',id);

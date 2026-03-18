@@ -25,7 +25,8 @@ exports.Login = async (req, res) => {
             username: user.name,
             token,
             role: user.role,
-            number: user.Mbnumber
+            number: user.Mbnumber,
+            address:user.address
         });
     } else {
         res.status(401).json({
@@ -60,7 +61,24 @@ exports.BecomeSeller = async (req, res) => {
                 'storeImage': req.file?.path || ""
             },
             { new: true, runValidators: true });
-        return res.status(200).json({ message: "congratulation your are now a seller " ,userrole:user.role});
+        return res.status(200).json({ message: "congratulation your are now a seller ", userrole: user.role });
     }
     return res.status(500).json({ message: "kuch to garbad hai bhai" });
+}
+
+exports.AddAdress = async (req, res) => {
+    const updated = await User.findByIdAndUpdate(req.user.id, {
+        $push: {
+            address: req.body
+        }
+    },
+        { new: true }
+    )
+    res.status(200).json({ message: 'address add successfuly' });
+}
+
+exports.getAddress=async(req,res)=>{
+    const userAddress=await User.findOne({_id:req.user.id},{address:1,_id:0});
+    const address=userAddress.address;
+    res.status(200).json({address});
 }

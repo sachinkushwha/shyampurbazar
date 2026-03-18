@@ -26,6 +26,7 @@ import { Homepageproducts } from './ownerComponents/home page product.jsx'
 import { MenuItem } from './ownerComponents/menuItem.jsx';
 import { OwnerOrders } from './ownerComponents/orderpage.jsx'
 import { CheckRole } from './security/checking user role.jsx'
+import { AddAddressForm } from './CommonUi/AddressForm.jsx'
 
 const queryClient = new QueryClient();
 
@@ -77,6 +78,9 @@ const router = createBrowserRouter([
           },
           {
             path: 'payment', element: <PaymentMethod />
+          },
+          {
+            path:'addadress',element:<AddAddressForm/>
           }
         ]
       },

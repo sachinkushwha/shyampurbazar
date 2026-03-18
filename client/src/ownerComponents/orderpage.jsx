@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../Context Api/userManagment';
-import { BASE_URL } from '../components/config';
+import { BASE_URL } from '../config/config';
 
 export const OwnerOrders = () => {
   const queryClient = useQueryClient();
@@ -240,6 +240,9 @@ export const OwnerOrders = () => {
                       Total
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Address
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -276,6 +279,9 @@ export const OwnerOrders = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-lg font-bold text-gray-900">₹{order.totalPayment}</div>
                         <div className="text-sm text-gray-500">{order.paymentmode}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">{order.address}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.orderstatus)}`}>

@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Formik, Form, Field } from "formik";
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { CompressImage } from "../utils/ImageCompresser";

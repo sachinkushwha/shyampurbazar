@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../Context Api/userManagment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 import toast from "react-hot-toast";
 import { Edit, Trash2, Store } from "lucide-react";
 

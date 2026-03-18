@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast'
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 export const AddHomePageProduct = () => {
     const navigate = useNavigate();
     const { id } = useParams();

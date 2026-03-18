@@ -5,7 +5,7 @@ import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../components/config";
+import { BASE_URL } from "../config/config";
 import PageLoader from "../components/PageLoader";
 import { CompressImage } from "../utils/ImageCompresser";
 export const AddingMenuItem = () => {

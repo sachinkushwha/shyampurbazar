@@ -16,7 +16,7 @@ import {
 import axios from "axios";
 import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "./config";
+import { BASE_URL } from "../config/config";
 
 export const ViewOrder = () => {
   const { id } = useParams();

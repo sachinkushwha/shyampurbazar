@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { useNavigate } from "react-router-dom";
-import {BASE_URL} from './config';
+import {BASE_URL} from '../config/config';
 import axios from 'axios';
 import { useQueryClient } from "@tanstack/react-query";
 

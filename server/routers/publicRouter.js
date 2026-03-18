@@ -10,5 +10,7 @@ publicRouter.get('/',HomepageproductController.Homepageproduct);
 publicRouter.post('/login',authenticationController.Login);
 publicRouter.post('/signup',IsNormalUser,authenticationController.Signup);
 publicRouter.post('/bcoomeseller',jwtauth,upload.single('Image'),authenticationController.BecomeSeller);
+publicRouter.post('/addaddress',jwtauth,authenticationController.AddAdress);
+publicRouter.get('/getaddress',jwtauth,authenticationController.getAddress);
 // publicRouter.get('/:name',HomepageproductController.TrendingProducts)
 module.exports=publicRouter;

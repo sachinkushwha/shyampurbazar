@@ -10,13 +10,11 @@ export const Nav = ({ navdata }) => {
     const [selected, setselected] = useState(path.pathname.slice(1));
     const [mobilemenu, setmobilemenu] = useState(false);
     const [itemno, setitemno] = useState();
-    // console.log("nav", itemno);
     useEffect(() => {
         setselected(path.pathname.slice(1));
     }, [path]);
 
     useEffect(() => {
-        // console.log('nav');
         const cartitem = () => {
             const cartitem = JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {};
             const cartitems = Object.keys(cartitem).length;
@@ -95,32 +93,60 @@ export const Nav = ({ navdata }) => {
             </div>
 
             {/* Mobile menu */}
-            <div className={`fixed top-0 left-0 h-full w-55 bg-white shadow-lg transform ${mobilemenu ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-50`}>
-                <div className="flex justify-between items-center p-4 border-b">
-                    <span className="text-xl font-bold text-pepsi-blue">Drinks Shop</span>
-                    <button onClick={() => setmobilemenu(false)} className="cursor-pointer text-gray-500 font-bold">X</button>
-                </div>
-                <ul className="flex flex-col mt-4 space-y-2">
-                    <li><Link to="/" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
-                    <li><Link to="/orderhistory" className="px-4 py-3  hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
-                    {/* <li><Link to="/menu" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Menu</Link></li> */}
-                    <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
+            {/* Mobile menu */}
+            <div className={`fixed top-0 left-0 h-full w-55 bg-white shadow-lg transform ${mobilemenu ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-50 flex flex-col`}>
 
+                {/* Top section */}
+                <div>
+                    <div className="flex justify-between items-center p-4 border-b">
+                        <span className="text-xl font-bold text-pepsi-blue">Drinks Shop</span>
+                        <button onClick={() => setmobilemenu(false)} className="cursor-pointer text-gray-500 font-bold">X</button>
+                    </div>
+
+                    <ul className="flex flex-col mt-4 space-y-2">
+                        <li><Link to="/" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>Home</Link></li>
+                        <li><Link to="/orderhistory" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
+                        <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
+
+                        {User && (
+                            <li>
+                                <Link
+                                    to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'}
+                                    className="px-4 py-3 hover:bg-gray-100 font-semibold"
+                                    onClick={() => setmobilemenu(false)}
+                                >
+                                    {User?.role === 'user' ? 'become a seller' : 'your store'}
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
+                </div>
+
+                {/* Bottom section (Logout/Login) */}
+                <div className="mt-auto border-t">
                     {
                         User ? (
-                            <>
-                                <li><Link to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'} className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>{User?.role === 'user' ? 'become a seller' : 'your store'}</Link></li>
-                                <li><a href="/" className="px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold" onClick={() => {
+                            <button
+                                className="w-full text-left px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold"
+                                onClick={() => {
                                     setmobilemenu(false);
-                                    logOutUser()
-                                }}>Logout</a></li>
-                            </>
+                                    logOutUser();
+                                }}
+                            >
+                                Logout
+                            </button>
                         ) : (
-                            <li><Link to={navdata.loginlink} className="px-4 py-3 hover:bg-gray-100 text-green-500 font-semibold" onClick={() => setmobilemenu(false)}>Login </Link></li>
+                            <Link
+                                to={navdata.loginlink}
+                                className="block px-4 py-3 hover:bg-gray-100 text-green-500 font-semibold"
+                                onClick={() => setmobilemenu(false)}
+                            >
+                                Login
+                            </Link>
                         )
                     }
+                </div>
 
-                </ul>
             </div>
         </nav>
     )
