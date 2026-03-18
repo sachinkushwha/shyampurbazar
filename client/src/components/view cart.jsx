@@ -59,7 +59,7 @@ export const ViewCart = () => {
                     <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg shadow-md">
                         <p className="text-lg font-medium text-gray-700 mb-4">Your cart is empty!</p>
                         <Link
-                            to="/menu"
+                            to="/"
                             className="px-6 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition"
                         >
                             Add Item
