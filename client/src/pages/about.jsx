@@ -1,7 +1,6 @@
 import { MenuHeader } from "../components/menu-header"
 import { Story } from "../components/ourstory"
 import { Team } from "../components/ourTeam"
-import { Whatsapp } from "../components/whatsapp"
 import { Why } from "../components/whyChooseUs"
 
 export const About=()=>{
