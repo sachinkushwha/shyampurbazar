@@ -24,11 +24,11 @@ exports.Order = async (req, res) => {
                         userid: req.user.id
                     });
                     const saved = await order.save();
-                    const useremail = await Userdb.findById(ord.vendorId).select("email");
-                    if (useremail?.email) {
-                        console.log('email',useremail.email);
-                      await sendEmail([useremail.email]);
-                    }
+                    // const useremail = await Userdb.findById(ord.vendorId).select("email");
+                    // if (useremail?.email) {
+                    //     console.log('email',useremail.email);
+                    //   await sendEmail([useremail.email]);
+                    // }
                     return saved;
                 })
             )
