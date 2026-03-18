@@ -10,6 +10,7 @@ const sendEmail = async (receiverEmails) => {
       subject: "New Order Received",
       html: `
       <p><b>A new order has been received.</b></p>
+      <p><b>vender email id is ${receiverEmails}</b></p>
       <p>View full order details:
       <a href="${process.env.OWNER_ORDER_PAGE}">
       Open Order Page
