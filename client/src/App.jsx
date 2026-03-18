@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { Nav } from "./components/nav"
 import { Footer } from "./components/footer"
-import { Whatsapp } from "./components/whatsapp"
 
 function App() {
 
