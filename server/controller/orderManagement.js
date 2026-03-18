@@ -24,10 +24,10 @@ exports.Order = async (req, res) => {
                         userid: req.user.id
                     });
                     const saved = await order.save();
-                    // const useremail = await Userdb.findById(ord.vendorId).select("email");
+                    const useremail = await Userdb.findById(ord.vendorId).select("email");
                     // if (useremail?.email) {
-                    //     console.log('email',useremail.email);
-                    //   await sendEmail([useremail.email]);
+                    // console.log('email',useremail.email);
+                    await sendEmail();
                     // }
                     return saved;
                 })
@@ -60,8 +60,8 @@ exports.getorder = async (req, res) => {
 //for owner
 exports.ownergetOrder = async (req, res) => {
     try {
-        const result =await Orderdb.find({vendorId:req.user.id}).sort({_id:-1});
-       
+        const result = await Orderdb.find({ vendorId: req.user.id }).sort({ _id: -1 });
+
         return res.status(200).json({ message: "data find", result });
     } catch (err) {
         return res.status(500).json({ message: "internal server error ", err });
