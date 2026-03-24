@@ -13,7 +13,7 @@ const cookieParser =require('cookie-parser');
 
 const mongoose = require('mongoose');
 app.use(cors({
-    origin:['http://localhost:5173','http://localhost:5174'],
+    origin:[`${process.env.MAIN_FRONTEND_URL}`,`${process.env.DELIVERY_PARTNER_FRONTEND_URL}`],
     credentials:true
 })); 
 app.use(express.urlencoded());
