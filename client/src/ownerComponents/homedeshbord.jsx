@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useAuth } from "../hooks/auth"
 
 export const HomeDeshbord = () => {
+  const {data}=useAuth();
+  console.log('userdata',data);
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">

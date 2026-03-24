@@ -1,6 +1,5 @@
-import { useContext } from "react";
+
 import { useParams } from "react-router-dom";
-import { OrderDataContext } from "../Context Api/orderDataManagement";
 import {
   Package,
   User as UserIcon,
@@ -8,23 +7,20 @@ import {
   CreditCard,
   Calendar,
   CheckCircle,
-  DollarSign,
   Hash,
   Clipboard,
   Copy
 } from "lucide-react";
 import axios from "axios";
-import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
 
 export const ViewOrder = () => {
   const { id } = useParams();
-  const { User } = useContext(userContext);
 
   const fetchallOrderdata = async () => {
     const response = await axios.get(`${BASE_URL}/protected/order`, {
-      headers: { 'authorization': User.token }
+     withCredentials:true
     });
     return response.data;
   };
@@ -220,7 +216,7 @@ export const ViewOrder = () => {
                     <span>Order Status</span>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${statusColors[order.orderstatus?.toLowerCase()] || "bg-gray-100 text-gray-800"}`}>
-                    {order.orderstatus}
+                    {order.orderstatus==='searching'?'searching delivery partner':(order.orderstatus)}
                   </span>
                 </div>
 

@@ -2,19 +2,14 @@
 import { Formik, Form, Field } from "formik";
 import axios from 'axios'
 import { BASE_URL } from "../config/config";
-import { useContext } from "react";
-import { userContext } from "../Context Api/userManagment";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 export const AddAddressForm = () => {
     const navigate=useNavigate();
-    const { User } = useContext(userContext)
     const addAdress = async (formData) => {
         const response = await axios.post(`${BASE_URL}/addaddress`, formData, {
-            headers: {
-                'authorization': User?.token
-            }
+            withCredentials:true
         });
         return response.data;
     }

@@ -8,4 +8,8 @@ orderManagementRouter.post('/updatestatus',jwtauth,userProtectedController.Updat
 orderManagementRouter.get('/order',jwtauth,userProtectedController.getorder);
 orderManagementRouter.get('/ownergetOrder',jwtauth,userProtectedController.ownergetOrder);
 
+//for deliveryPartner
+
+orderManagementRouter.get('/deliverypartnerorder',jwtauth,userProtectedController.getDeliveryPrtnerOrder);
+
 module.exports=orderManagementRouter;

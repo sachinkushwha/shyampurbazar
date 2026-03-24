@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useContext } from "react";
-import { Plus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { userContext } from "../Context Api/userManagment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
@@ -19,7 +18,12 @@ export const Homepageproducts = () => {
 
     const deleteFunction = async (id) => {
         const response = await axios.delete(`${BASE_URL}/item/home/delete/${id}`,
-            { headers: { "authorization": User.token } });
+            { 
+              headers: { "authorization": User.token },
+              withCredentials:true
+            
+            }
+          );
         return response.data;
     }
 
@@ -41,7 +45,8 @@ export const Homepageproducts = () => {
             const response = await axios.get(`${BASE_URL}/sellerprofile/profile`,{
                headers:{
                 'authorization':User?.token
-               }
+               },
+               withCredentials:true
             });
             return response.data;
         } catch (error) {

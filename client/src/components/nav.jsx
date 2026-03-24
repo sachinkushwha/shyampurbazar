@@ -69,7 +69,7 @@ export const Nav = ({ navdata }) => {
                         {User ? (<button onClick={() => { logOutUser() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
                             :
                             (
-                                <Link to={navdata.loginlink} className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">Login</Link>
+                                <Link to= '/login' className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">Login</Link>
                             )
                         }
 
@@ -111,7 +111,7 @@ export const Nav = ({ navdata }) => {
                         {User && (
                             <li>
                                 <Link
-                                    to={User?.role === 'user' ? `/signup/${'seller'}` : '/owner'}
+                                    to={User?.role === 'user' ? `/becomeseller` : '/owner'}
                                     className="px-4 py-3 hover:bg-gray-100 font-semibold"
                                     onClick={() => setmobilemenu(false)}
                                 >
@@ -137,7 +137,7 @@ export const Nav = ({ navdata }) => {
                             </button>
                         ) : (
                             <Link
-                                to={navdata.loginlink}
+                                to='/login'
                                 className="block px-4 py-3 hover:bg-gray-100 text-green-500 font-semibold"
                                 onClick={() => setmobilemenu(false)}
                             >

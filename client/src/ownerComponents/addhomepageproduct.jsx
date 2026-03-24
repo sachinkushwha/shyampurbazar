@@ -1,6 +1,5 @@
-import { useContext } from "react"
+
 import axios from "axios";
-import { userContext } from "../Context Api/userManagment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -9,13 +8,10 @@ import { BASE_URL } from "../config/config";
 export const AddHomePageProduct = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { User } = useContext(userContext)
     const getOneHomePageData = async () => {
         if(!id) return null;
         const response = await axios.get(`${BASE_URL}/OneHomepagedata/${id}`, {
-            headers: {
-                'authorization': User?.token
-            }
+           withCredentials:true
         });
         return response.data;
     }
@@ -32,12 +28,12 @@ export const AddHomePageProduct = () => {
     const handlesubmitdata = async (value) => {
         if (id) {
             const response = await axios.put(`http://localhost:3001/item/homepageproduct/update/${id}`, value, {
-                headers: { 'authorization': User.token }
+                withCredentials:true
             });
             return response.data;
         } else {
             const response = await axios.post('http://localhost:3001/addhomepageproduct', value, {
-                headers: { 'authorization': User.token }
+                withCredentials:true
             });
             return response.data;
         }

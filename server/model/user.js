@@ -13,7 +13,7 @@ const userSchema=new mongoose.Schema({
     email:{type:String,required:true},
     Mbnumber:{type:Number,required:true},
     password:{type:String,required:true},
-    role:{type:String,enum:['user','seller'],default:'user',required:true},
+    role:{type:String,enum:['user','seller','deliverypartner'],default:'user',required:true},
     storeName:{type:String,required:true,default:'NA'},
     storeImage:{type:String},
     address:{type:[address],default:[]}

@@ -35,9 +35,7 @@ export const PlaceOrder = () => {
 
     const getaddress = async () => {
         const response = await axios.get(`${BASE_URL}/getaddress`, {
-            headers: {
-                'authorization': User.token
-            }
+           withCredentials:true
         });
         return response.data;
     }

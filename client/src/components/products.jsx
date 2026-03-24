@@ -1,21 +1,20 @@
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
-import { useContext } from "react";
-import { userContext } from "../Context Api/userManagment";
+// import { useContext } from "react";
+// import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
 export const Product = () => {
-    const { setitem } = useContext(userContext);
+    // const { setitem } = useContext(userContext);
     const navigate = useNavigate();
     const handleproduct = async (id) => {
-        // //abhi ish ka response off hai backend se 
-        // const response = await axios.get(`http://localhost:3000/${p}`);
-        // setitem([response.data]);
         navigate(`/menu/${id}`);
     }
 
     const fetchalldata = async () => {
-        const response = await axios.get(BASE_URL);
+        const response = await axios.get(BASE_URL,{
+            withCredentials:true 
+        });
         return response.data;
     }
 
@@ -23,8 +22,7 @@ export const Product = () => {
         queryKey: ['homepagedata'],
         queryFn: fetchalldata
     });
-    console.log(data)
-
+    // console.log(data);
 
     return <>
         <section className="py-16 bg-white">

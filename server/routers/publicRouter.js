@@ -12,5 +12,11 @@ publicRouter.post('/signup',IsNormalUser,authenticationController.Signup);
 publicRouter.post('/bcoomeseller',jwtauth,upload.single('Image'),authenticationController.BecomeSeller);
 publicRouter.post('/addaddress',jwtauth,authenticationController.AddAdress);
 publicRouter.get('/getaddress',jwtauth,authenticationController.getAddress);
-// publicRouter.get('/:name',HomepageproductController.TrendingProducts)
+publicRouter.get('/me',jwtauth,(req,res)=>{
+    return res.status(200).json({
+        id:req.user.id,
+        role:req.user.role,
+        name:req.user.username
+    });
+})
 module.exports=publicRouter;

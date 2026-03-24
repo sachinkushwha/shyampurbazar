@@ -23,7 +23,7 @@ export const PaymentMethod = () => {
       // item.paymentmode = paymentmode;
       console.log(finalorder)
       const response=await axios.post(`${BASE_URL}/protected/order`,finalorder,{
-        headers:{"authorization":User?.token}
+        withCredentials:true
       })
       
       localStorage.removeItem(User?.username + "orderpepsicart");

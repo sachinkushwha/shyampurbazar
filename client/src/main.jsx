@@ -11,7 +11,7 @@ import { ViewCart } from './components/view cart.jsx'
 import { PlaceOrderbtn } from './components/placeorderbtn.jsx'
 import { PlaceOrder } from './components/placeorder.jsx'
 import { Login } from './security/login.jsx'
-import { Protected } from './components/protected.jsx'
+import { Protected } from './security/protected.jsx'
 import { Signup } from './security/signup.jsx'
 import { UserProvider } from './Context Api/userManagment.jsx'
 import { OwnerDeshbord } from './OwnerDeshbordApp.jsx'
@@ -27,6 +27,7 @@ import { MenuItem } from './ownerComponents/menuItem.jsx';
 import { OwnerOrders } from './ownerComponents/orderpage.jsx'
 import { CheckRole } from './security/checking user role.jsx'
 import { AddAddressForm } from './CommonUi/AddressForm.jsx'
+import { Test } from './components/test.jsx'
 
 const queryClient = new QueryClient();
 
@@ -46,9 +47,9 @@ const router = createBrowserRouter([
         path: 'menu/:id', element: <Menu />
       },
 
-      {
-        path: 'about', element: <Menu />
-      },
+      // {
+      //   path: 'about', element: <Menu />
+      // },
 
       {
         path: 'viewcart', element: <>
@@ -58,11 +59,11 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'login/:role', element: <Login />
+        path: 'login', element: <Login />
       },
 
       {
-        path: 'signup/:role', element: <Signup />
+        path: 'signup', element: <Signup />
       },
 
       {
@@ -80,51 +81,53 @@ const router = createBrowserRouter([
             path: 'payment', element: <PaymentMethod />
           },
           {
-            path:'addadress',element:<AddAddressForm/>
-          }
+            path: 'addadress', element: <AddAddressForm />
+          },
+          {
+            path: 'becomeseller', element: <Test />
+          },
         ]
       },
 
     ]
   },
   {
-  element: <CheckRole />, children: [
-    {
-      element: <Protected role={'seller'} />, children: [
-        {
-          path: '/owner', element: <OwnerDeshbord />, children: [
-            {
-              index: true, element: <HomeDeshbord />
-            },
-            {
-              path: 'update/:id', element: <AddingMenuItem />
-            },
-            {
-              path: 'Home', element: <Homepageproducts />
-            },
-            {
-              path: 'Home/update/:id', element: <AddHomePageProduct />
-            },
-            {
-              path: 'addproduct', element: <AddHomePageProduct />
-            },
-            {
-              path: 'menuitem', element: <MenuItem />
-            },
-            {
-              path: 'orders', element: <OwnerOrders />
-            },
-            
-            {
-              path: 'addmenuitem', element: <AddingMenuItem />
-            }
-          ]
-        },
-      ]
-    },
+    element: <CheckRole />, children: [
+      {
+        element: <Protected role={'seller'} />, children: [
+          {
+            path: '/owner', element: <OwnerDeshbord />, children: [
+              {
+                index: true, element: <HomeDeshbord />
+              },
+              {
+                path: 'update/:id', element: <AddingMenuItem />
+              },
+              {
+                path: 'Home', element: <Homepageproducts />
+              },
+              {
+                path: 'Home/update/:id', element: <AddHomePageProduct />
+              },
+              {
+                path: 'addproduct', element: <AddHomePageProduct />
+              },
+              {
+                path: 'menuitem', element: <MenuItem />
+              },
+              {
+                path: 'orders', element: <OwnerOrders />
+              },
+              {
+                path: 'addmenuitem', element: <AddingMenuItem />
+              }
+            ]
+          },
+        ]
+      },
 
 
-  ]
+    ]
   }
 ])
 

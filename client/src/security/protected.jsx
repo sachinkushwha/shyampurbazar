@@ -7,7 +7,7 @@ export const Protected = ({role}) => {
     const navigate = useNavigate();
     useEffect(()=>{
         if(!User||!User?.token){
-            navigate(`/login/${role}`);
+            navigate(`/login`);
         }
     },[User,navigate]);
     return <>

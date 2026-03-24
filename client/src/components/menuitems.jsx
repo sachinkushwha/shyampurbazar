@@ -12,7 +12,9 @@ export const Categorie = () => {
     const [selectcategori, setselectcategori] = useState("");
 
     const fetchalldata = async () => {
-        const response = await axios.get(`${BASE_URL}/item/menuitem/${id}`);
+        const response = await axios.get(`${BASE_URL}/item/menuitem/${id}`,{
+            withCredentials:true
+        });
         return response.data;
     }
     const { data, isLoading } = useQuery({

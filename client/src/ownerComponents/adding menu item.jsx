@@ -1,8 +1,6 @@
 
-import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { userContext } from "../Context Api/userManagment";
 import { Formik, Form, Field } from 'formik';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
@@ -11,14 +9,11 @@ import { CompressImage } from "../utils/ImageCompresser";
 export const AddingMenuItem = () => {
 
   const { id } = useParams();
-  const { User } = useContext(userContext);
   const navigate = useNavigate()
   const getOneMenuItem = async () => {
     if (!id) return null;
     const response = await axios.get(`${BASE_URL}/item/onemenuitem/${id}`, {
-      headers: {
-        'authorization': User.token
-      }
+      withCredentials:true
     });
     return response.data;
   }
@@ -29,11 +24,14 @@ export const AddingMenuItem = () => {
   });
   const handlesubmitFormData = async (formdata) => {
     if (id) {
-      for (let pair of formdata.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-      }
+      
       try {
-        const response = await axios.put(`${BASE_URL}/item/update/${id}`, formdata, { headers: { 'authorization': User.token, 'Content-Type': 'multipart/form-data' } });
+        const response = await axios.put(`${BASE_URL}/item/update/${id}`, formdata, { 
+
+          headers: { 'Content-Type': 'multipart/form-data' } ,
+          withCredentials:true
+        
+        });
         return response.data;
       } catch (err) {
         console.log('menu item update karne me error aaya hai', err);
@@ -42,9 +40,9 @@ export const AddingMenuItem = () => {
       try {
         const response = await axios.post(`${BASE_URL}/item/addmenuitem`, formdata, {
           headers: {
-            'authorization': User.token,
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          withCredentials:true
         });
         return response.data;
       } catch (err) {

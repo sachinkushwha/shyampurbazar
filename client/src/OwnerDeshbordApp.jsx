@@ -1,6 +1,4 @@
 import { Outlet } from "react-router-dom";
-import { MenuDataProvider } from "./ownerComponents/ownerContexApi/menuDataManagement";
-// import { HomePageDataProvider } from "./ownerComponents/ownerContexApi/HomePageDataManagement";
 import { Nav } from "./components/nav";
 import { Toaster } from 'react-hot-toast'
 export const OwnerDeshbord = () => {
@@ -14,11 +12,8 @@ export const OwnerDeshbord = () => {
 
     return <>
         <Toaster position="top-right" reverseOrder={false} />
-        {/* <HomePageDataProvider> */}
-            <MenuDataProvider>
-                <Nav navdata={navdata} />
-                <Outlet />
-            </MenuDataProvider>
-        {/* </HomePageDataProvider> */}
+
+        <Nav navdata={navdata} />
+        <Outlet />
     </>
 }

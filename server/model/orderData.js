@@ -14,7 +14,7 @@ const OrderSchema = new mongoose.Schema({
     number: { type: Number, required: true },
     address: { type: String, required: true },
     items: [{
-        productId:String,
+        productId: String,
         name: String,
         qty: Number,
         price: Number
@@ -23,12 +23,17 @@ const OrderSchema = new mongoose.Schema({
     paymentmode: { type: String, required: true },
     orderstatus: { type: String, required: true, default: "pending" },
     orderdate: { type: String, default: getFormatDate },
+    acceptedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'deliverypartneraccount',
+        default: null
+    },
 
     userid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
         required: true
     }
-},{timestamps:true});
+}, { timestamps: true });
 
 module.exports = mongoose.model('orders', OrderSchema);

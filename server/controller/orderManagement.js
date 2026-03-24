@@ -27,7 +27,7 @@ exports.Order = async (req, res) => {
                     const useremail = await Userdb.findById(ord.vendorId).select("email");
                     // if (useremail?.email) {
                     // console.log('email',useremail.email);
-                    await sendEmail(useremail.email);
+                    // await sendEmail(useremail.email);
                     // }
                     return saved;
                 })
@@ -57,11 +57,11 @@ exports.getorder = async (req, res) => {
     }
 }
 
-//for owner
+//for vender
 exports.ownergetOrder = async (req, res) => {
     try {
-        const result = await Orderdb.find({ vendorId: req.user.id }).sort({ _id: -1 });
-
+        const result = await Orderdb.find({ vendorId: req.user.id }).sort({ _id: -1 }).populate('acceptedBy','name Mbnumber');
+console.log(result);
         return res.status(200).json({ message: "data find", result });
     } catch (err) {
         return res.status(500).json({ message: "internal server error ", err });
@@ -70,11 +70,27 @@ exports.ownergetOrder = async (req, res) => {
 
 exports.UpdateOrderStatus = async (req, res) => {
     try {
-        const { orderId, newStatus } = req.body;
-        await Orderdb.findByIdAndUpdate(orderId, { orderstatus: newStatus }, { new: true, runValidators: true });
+        const { orderId, newStatus,dpid } = req.body;
+        console.log(req.body);
+        await Orderdb.findByIdAndUpdate(orderId, { orderstatus: newStatus,acceptedBy:dpid }, { new: true, runValidators: true });
         return res.status(200).json({ message: "status changed" });
     } catch (err) {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 
+}
+
+//get order data for Delivery partner
+
+exports.getDeliveryPrtnerOrder = async (req, res) => {
+    try {
+        const orderData = await Orderdb.find({ orderstatus: 'searching' });
+        if (orderData.length === 0) {
+            return res.status(404).json({ message: 'no order found' });
+        }
+        return res.status(200).json({ orderData });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'server error ' });
+    }
 }

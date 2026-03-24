@@ -1,20 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react"
 import axios from "axios";
-import { userContext } from "../Context Api/userManagment";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
+import PageLoader from "../components/PageLoader";
 
 
 
 export const MenuItem = () => {
     const queryClient = useQueryClient();
-    const { User } = useContext(userContext);
     const navigate = useNavigate();
 
     const getMenuItem = async () => {
         const response = await axios.get(`${BASE_URL}/item/Ownermenuitem`, {
-            headers: { 'authorization': User?.token }
+            withCredentials:true
         });
         return response.data;
     }
@@ -30,7 +28,7 @@ export const MenuItem = () => {
 
     const handlDelete = async ({ id }) => {
         const response = await axios.delete(`${BASE_URL}/item/delete/${id}`, {
-            headers: { 'authorization': User.token }
+           withCredentials:true
         });
     }
 
@@ -56,10 +54,6 @@ export const MenuItem = () => {
         <div className="container mx-auto px-4 py-8">
             {/* Add Item Button (Side) */}
 
-            
-                
-            
-
             <Link
                 to="/owner/addmenuitem"
                 className="fixed top-6 right-6 cursor-pointer bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-3 mt-15 rounded-full shadow-lg transition-all duration-300"
@@ -70,6 +64,7 @@ export const MenuItem = () => {
 
             {/* Grid layout for menu items */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {deleteMutation.isPending && <PageLoader/>}
                 {data?.itemdata?.map((item, index) => (
                     <div
                         key={index}
@@ -115,7 +110,7 @@ export const MenuItem = () => {
                                 <button onClick={() => handleUpdate(item._id)} className="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
                                     Update
                                 </button>
-                                <button onClick={() => handleDelete(item._id)} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
+                                <button disabled={deleteMutation.isPending}  onClick={() => handleDelete(item._id)} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
                                     Delete
                                 </button>
                             </div>

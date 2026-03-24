@@ -1,19 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { userContext } from '../Context Api/userManagment';
 import { BASE_URL } from '../config/config';
 
 export const OwnerOrders = () => {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState('all');
-  const { User } = useContext(userContext);
 
 
+
+// status updation
   const OrderstatusMutation = async ({ orderId, newStatus }) => {
     const response = await axios.post(`${BASE_URL}/protected/updatestatus`, { orderId, newStatus }, {
-      headers: { 'authorization': User.token }
+      withCredentials: true
     });
     return response.data;
   }
@@ -33,10 +33,10 @@ export const OwnerOrders = () => {
     });
 
   };
-
+// Get orders
   const getorderData = async () => {
     const response = await axios.get(`${BASE_URL}/protected/ownergetOrder`, {
-      headers: { 'authorization': User?.token }
+      withCredentials: true
     });
     return response.data;
   }
@@ -46,9 +46,9 @@ export const OwnerOrders = () => {
     queryFn: getorderData
   });
 
+console.log(data,'accep');
+
   const filterdOrders = data?.result?.filter(orders => filter === 'all' ? orders : orders.orderstatus === filter);
-
-
   const sum = data?.result?.reduce((acc, result) => {
     return acc + Number(result.orderstatus === "completed" ? result.totalPayment : 0);
   }, 0);
@@ -251,10 +251,14 @@ export const OwnerOrders = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Actions
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Delivery Partner
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filterdOrders?.map((order) => (
+                  
                     <tr key={order._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-purple-600">{order._id}</div>
@@ -306,6 +310,17 @@ export const OwnerOrders = () => {
                           >
                             View
                           </button>
+                          {
+                            order.orderstatus !== 'cancelled' && (
+                               <button
+                                onClick={() => updateOrderStatus(order._id, 'cancelled')}
+                                className="text-red-600 hover:text-red-900"
+                              >
+                                Cancel
+                              </button>
+                            )
+                          }
+
                           {order.orderstatus === 'pending' && (
                             <>
                               <button
@@ -314,23 +329,43 @@ export const OwnerOrders = () => {
                               >
                                 Accept
                               </button>
-                              <button
-                                onClick={() => updateOrderStatus(order._id, 'cancelled')}
-                                className="text-red-600 hover:text-red-900"
-                              >
-                                Cancel
-                              </button>
+                             
                             </>
                           )}
-                          {order.orderstatus === 'processing' && (
+                          {/* {order.orderstatus === 'processing' && (
                             <button
                               onClick={() => updateOrderStatus(order._id, 'completed')}
                               className="text-green-600 hover:text-green-900"
                             >
                               Complete
                             </button>
-                          )}
+                          )} */}
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {
+                          order.orderstatus === 'processing' && (
+                            <button onClick={() => updateOrderStatus(order._id, 'searching')}>
+                              Find
+                            </button>
+                          )
+                        }
+                        {
+                          order.orderstatus === 'searching' && (
+                            <button >
+                              Watting...
+                            </button>
+                          )
+                        }
+                        {
+                          order.orderstatus === 'Picked' && (
+                            <>
+                            <p>{order?.acceptedBy?.name}</p>
+                            <p>{order?.acceptedBy?.Mbnumber}</p>
+                            </>
+                          )
+                        }
+
                       </td>
                     </tr>
                   ))}

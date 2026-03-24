@@ -25,7 +25,8 @@ export const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(`${BASE_URL}/login`, formdata, {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        withCredentials:true
       });
 
       if (res?.data?.status) {
@@ -97,7 +98,7 @@ export const Login = () => {
         >
           Login
         </button>
-        <p>if you don't have account <span className="text-blue-500 cursor-pointer"><Link to={`/signup/${role}`}>Signup</Link></span></p>
+        <p>if you don't have account <span className="text-blue-500 cursor-pointer"><Link to={`/signup`}>Signup</Link></span></p>
       </form>
     </div>
   );
