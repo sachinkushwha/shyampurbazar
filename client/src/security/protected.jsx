@@ -1,15 +1,12 @@
-import { useContext, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom"
-import { userContext } from "../Context Api/userManagment";
 
-export const Protected = ({role}) => {
-    const {User}=useContext(userContext);
-    const navigate = useNavigate();
-    useEffect(()=>{
-        if(!User||!User?.token){
-            navigate(`/login`);
-        }
-    },[User,navigate]);
+import { Navigate, Outlet, } from "react-router-dom";
+import { useAuth } from "../hooks/auth";
+
+export const Protected = () => {
+    const { data, isLoading } = useAuth();
+    if (isLoading) return <p>Loading...</p>
+    if (!data) return <Navigate to='/login' />
+
     return <>
         <Outlet />
     </>
