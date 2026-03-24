@@ -1,15 +1,40 @@
 import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu } from 'react-icons/fi';
 import { FiShoppingCart } from "react-icons/fi";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
+import axios from 'axios';
+import { BASE_URL } from "../config/config";
+import {useMutation,useQueryClient} from '@tanstack/react-query';
+import { useAuth } from "../hooks/auth";
 export const Nav = ({ navdata }) => {
-    const { User, logOutUser } = useContext(userContext);
+    const queryClient=useQueryClient();
+    const { User,  } = useContext(userContext);
+    const {data} =useAuth();
+    console.log(data,'nav')
     const path = useLocation();
     const [selected, setselected] = useState(path.pathname.slice(1));
     const [mobilemenu, setmobilemenu] = useState(false);
     const [itemno, setitemno] = useState();
+    const navigate=useNavigate();
+    const postLogout=async()=>{
+        const response=await axios.post(`${BASE_URL}/logout`,{},{
+            withCredentials:true
+        });
+        return response.data;
+    }
+    const LogoutMutation=useMutation({
+        mutationFn:postLogout,
+        onSuccess:(data)=>{
+            alert(data.message);
+            queryClient.removeQueries(['me']);
+            navigate('/')
+        }
+    });
+    const logOutUser=()=>{
+        LogoutMutation.mutate();
+    }
     useEffect(() => {
         setselected(path.pathname.slice(1));
     }, [path]);
@@ -66,7 +91,7 @@ export const Nav = ({ navdata }) => {
                         </Link>}
                         {navdata.pagetype !== 'owner' && <Link to="viewcart" className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">View Cart</Link>}
 
-                        {User ? (<button onClick={() => { logOutUser() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
+                        {data ? (<button onClick={() => { logOutUser() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
                             :
                             (
                                 <Link to= '/login' className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">Login</Link>
