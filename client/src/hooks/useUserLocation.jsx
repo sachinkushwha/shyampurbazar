@@ -15,7 +15,7 @@ export default function useUserLocation() {
       },
       () => setError("Location permission denied"),
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: true, 
         timeout: 10000,
         maximumAge: 0
       }
