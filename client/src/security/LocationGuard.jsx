@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import useUserLocation from "../hooks/useUserLocation";
-import { getDistance } from "../utils/distance";
+import  getDistance  from "../utils/distance";
 
 const vendorLocation = {
   lat: 26.487357,
