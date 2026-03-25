@@ -28,6 +28,8 @@ import { OwnerOrders } from './ownerComponents/orderpage.jsx'
 import { CheckRole } from './security/checking user role.jsx'
 import { AddAddressForm } from './CommonUi/AddressForm.jsx'
 import { Test } from './components/test.jsx'
+import ServiceUnavailable from './components/ServiceUnavilable.jsx';
+import LocationGuard from './security/LocationGuard.jsx'
 
 const queryClient = new QueryClient();
 
@@ -36,7 +38,12 @@ const router = createBrowserRouter([
 
     path: '/', element: <App />, children: [
       {
-        index: true, element: <Home />
+        index: true, element: <>
+          <LocationGuard>
+            <Home />
+          </LocationGuard>
+
+        </>
       },
 
       {
@@ -65,6 +72,7 @@ const router = createBrowserRouter([
       {
         path: 'signup', element: <Signup />
       },
+
 
       {
         element: <Protected />, children: [
@@ -128,6 +136,9 @@ const router = createBrowserRouter([
 
 
     ]
+  },
+  {
+    path: 'service-unavailable', element: <ServiceUnavailable />
   }
 ])
 

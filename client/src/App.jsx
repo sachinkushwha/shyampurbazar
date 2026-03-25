@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom"
 import { Nav } from "./components/nav"
-import { Footer } from "./components/footer"
-
+import { Footer } from "./components/footer";
 function App() {
 
-  const navdata={
+  const navdata = {
     pagetype:'client',
     homelink:'/',
     loginlink:`login/${'user'}`,
@@ -13,12 +12,11 @@ function App() {
 
   return (
     <>
-      <div className="bg-gray-50">
-        <Nav navdata={navdata} />
-        <Outlet />
-        <Footer/>
-      </div>
-
+        <div className="bg-gray-50">
+          <Nav navdata={navdata} />
+          <Outlet />
+          <Footer />
+        </div>
     </>
   )
 }
