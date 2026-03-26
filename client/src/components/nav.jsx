@@ -140,7 +140,7 @@ export const Nav = ({ navdata }) => {
                                     className="px-4 py-3 hover:bg-gray-100 font-semibold"
                                     onClick={() => setmobilemenu(false)}
                                 >
-                                    {User?.role === 'user' ? 'become a seller' : 'your store'}
+                                    {data?.role === 'user' ? 'become a seller' : 'your store'}
                                 </Link>
                             </li>
                         )}
