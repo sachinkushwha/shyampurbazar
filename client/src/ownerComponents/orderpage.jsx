@@ -311,7 +311,7 @@ console.log(data,'accep');
                             View
                           </button>
                           {
-                            order.orderstatus !== 'cancelled' && (
+                            order.orderstatus !== 'cancelled' && order.orderstatus !== 'completed' &&(
                                <button
                                 onClick={() => updateOrderStatus(order._id, 'cancelled')}
                                 className="text-red-600 hover:text-red-900"
