@@ -93,6 +93,7 @@ export const Signup = () => {
               <Field
                 type="text"
                 name="number"
+                required
                 maxLength={10}
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) {
