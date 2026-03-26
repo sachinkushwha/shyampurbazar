@@ -10,9 +10,8 @@ const vendorLocation = {
 export default function LocationGuard({ children }) {
 
   const { location, error } = useUserLocation();
-  console.log(location,'user loaction');
 
-  if (error) return <p>Please allow location access</p>;
+  if (error) return <p>{error}</p>;
 
   if (!location) return <p>Checking location...</p>;
 

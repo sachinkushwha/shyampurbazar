@@ -13,9 +13,29 @@ export default function useUserLocation() {
           accuracy: position.coords.accuracy
         });
       },
-      () => setError("Location permission denied"),
+      (err) => {
+
+        switch (err.code) {
+
+          case 1:
+            setError("Location permission denied. Please allow location 📍");
+            break;
+
+          case 2:
+            setError("Location unavailable. GPS ya internet check kare 📡");
+            break;
+
+          case 3:
+            setError("Location request timeout. Please try again ⏱️");
+            break;
+
+          default:
+            setError("Unknown error aayi hai. Please retry");
+        }
+
+      },
       {
-        enableHighAccuracy: true, 
+        enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0
       }
