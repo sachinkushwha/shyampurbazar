@@ -63,7 +63,8 @@ exports.LoginDeliveryPartner = async (req, res) => {
         );
         res.cookie('deliveryPartnerToken', token, {
             httpOnly: true,
-            secure: false
+            secure: true,
+            sameSite:"none"
         });
 
         res.status(200).json({
@@ -161,7 +162,8 @@ exports.Logout = (req, res) => {
 exports.DeliveryPartnerLogout = (req, res) => {
     res.clearCookie('deliveryPartnerToken', {
         httpOnly: true,
-        secure: false
+        secure: true,
+        sameSite:"none"
     });
     return res.status(200).json({ message: 'Logout Successful' });
 }
