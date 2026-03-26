@@ -133,7 +133,7 @@ export const Nav = ({ navdata }) => {
                         <li><Link to="/orderhistory" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>OrderHistory</Link></li>
                         <li><a href="/about" className="px-4 py-3 hover:bg-gray-100 font-semibold" onClick={() => setmobilemenu(false)}>About</a></li>
 
-                        {User && (
+                        {data && (
                             <li>
                                 <Link
                                     to={User?.role === 'user' ? `/becomeseller` : '/owner'}
