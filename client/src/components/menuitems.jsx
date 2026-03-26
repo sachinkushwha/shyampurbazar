@@ -4,11 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
+import { useAuth } from "../hooks/auth";
 export const Categorie = () => {
     const {id} =useParams();
     console.log('avi wala id',id);
     const navigate = useNavigate();
-    const { User } = useContext(userContext);
+    // const { User } = useContext(userContext);
+    const {data:User}=useAuth();
     const [selectcategori, setselectcategori] = useState("");
 
     const fetchalldata = async () => {
@@ -53,7 +55,7 @@ export const Categorie = () => {
     const handlecount = (id, name, price, ownerid) => {
         // console.log("handle pe", ownerid);
         if (!User) {
-            navigate(`/login/user`);
+            navigate(`/login`);
             return
         }
         setcount(pre => ({

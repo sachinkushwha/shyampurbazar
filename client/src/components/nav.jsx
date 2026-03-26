@@ -150,7 +150,7 @@ export const Nav = ({ navdata }) => {
                 {/* Bottom section (Logout/Login) */}
                 <div className="mt-auto border-t">
                     {
-                        User ? (
+                        data ? (
                             <button
                                 className="w-full text-left px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold"
                                 onClick={() => {
