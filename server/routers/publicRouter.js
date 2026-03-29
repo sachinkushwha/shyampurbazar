@@ -14,7 +14,7 @@ publicRouter.post('/bcoomeseller',jwtauth,upload.single('Image'),authenticationC
 publicRouter.post('/addaddress',jwtauth,authenticationController.AddAdress);
 publicRouter.get('/getaddress',jwtauth,authenticationController.getAddress);
 publicRouter.get('/me',jwtauth,(req,res)=>{
-    res.set('Cache-Control', 'no-store');
+    // res.set('Cache-Control', 'no-store');
     return res.status(200).json({
         id:req.user.id,
         role:req.user.role,
