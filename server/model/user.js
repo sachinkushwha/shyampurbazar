@@ -10,7 +10,7 @@ const address=new mongoose.Schema({
 
 const userSchema=new mongoose.Schema({
     name:{type:String,required:true},
-    email:{type:String,required:true},
+    email:{type:String,required:true,unique: true},
     Mbnumber:{type:Number,required:true},
     password:{type:String,required:true},
     role:{type:String,enum:['user','seller','deliverypartner'],default:'user',required:true},

@@ -7,6 +7,7 @@ const orderManagementRoute=require('./routers/orderManagement');
 const OwnerRouter=require('./routers/ownerRouter');
 const SellerProfileRouter=require('./routers/SellerProfileRouter');
 const DeliveryRouter=require('./routers/deliveryRouter');
+const UserDB=require('./model/user');
 const cors = require('cors');
 const cookieParser =require('cookie-parser');
 
@@ -27,8 +28,9 @@ app.use('/sellerprofile',SellerProfileRouter);
 // for delivery partner
 app.use('/deliverypartner',DeliveryRouter);
 mongoose.connect(process.env.MONGO_URL).then(() => {
-    app.listen(3001, () => {
+    app.listen(3001, async() => {
         console.log('server runing on http://localhost:3001');
+        await UserDB.init();
     })
 }).catch(err=>{
     console.log("mongodb connection error" ,err);

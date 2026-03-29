@@ -69,7 +69,7 @@ export const Nav = ({ navdata }) => {
                     </div>
                     <Link to={navdata.homelink} className="flex items-center py-2 px-2">
                         <img src="/image.png" alt="Pepsi Logo" className="h-10" />
-                        <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Shyampur Bazar</i>
+                        <i className="text-sm sm:text-xl font-bold ml-2 text-pepsi-blue">Rantik</i>
                     </Link>
 
                     {/* Desktop menu */}

@@ -64,7 +64,7 @@ exports.LoginDeliveryPartner = async (req, res) => {
         res.cookie('deliveryPartnerToken', token, {
             httpOnly: true,
             secure: true,
-            sameSite:"none"
+            sameSite: "none"
         });
 
         res.status(200).json({
@@ -102,11 +102,13 @@ exports.SignupDeliveryPartner = async (req, res) => {
 }
 
 exports.Signup = async (req, res) => {
-    const { name, email, number, password } = req.body;
+
     try {
+        let { name, email, number, password } = req.body;
+        email = email.trim().toLowerCase();
         const user = await User.findOne({ email });
         if (user) {
-            return res.status(409).json({ message: "user already exists", status: false });
+            return res.status(409).json({ message: "Email already registered", status: false });
         }
         const incryptpassword = await bcrypt.hash(password, 10);
         const newuser = new User({ name, email, Mbnumber: number, password: incryptpassword });
@@ -163,7 +165,7 @@ exports.DeliveryPartnerLogout = (req, res) => {
     res.clearCookie('deliveryPartnerToken', {
         httpOnly: true,
         secure: true,
-        sameSite:"none"
+        sameSite: "none"
     });
     return res.status(200).json({ message: 'Logout Successful' });
 }
