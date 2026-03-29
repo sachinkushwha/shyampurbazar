@@ -273,9 +273,21 @@ export const OwnerOrders = () => {
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-900">
                           {order?.items?.map((item, index) => (
-                            <div key={index} className="flex justify-between">
-                              <span>{item.name} x{item.qty}</span>
-                              <span className="text-gray-600">₹{item.price * item.qty}</span>
+                            <div
+                              key={index}
+                              className="flex justify-between items-center gap-3"
+                            >
+
+                              {/* item name */}
+                              <span className="font-medium">
+                                {item.name}
+                              </span>
+
+                              {/* price × qty */}
+                              <span className="text-gray-600 whitespace-nowrap">
+                                ₹{item.price} x{item.qty}
+                              </span>
+
                             </div>
                           ))}
                         </div>
