@@ -10,7 +10,7 @@ export const OwnerOrders = () => {
 
 
 
-// status updation
+  // status updation
   const OrderstatusMutation = async ({ orderId, newStatus }) => {
     const response = await axios.post(`${BASE_URL}/protected/updatestatus`, { orderId, newStatus }, {
       withCredentials: true
@@ -33,7 +33,7 @@ export const OwnerOrders = () => {
     });
 
   };
-// Get orders
+  // Get orders
   const getorderData = async () => {
     const response = await axios.get(`${BASE_URL}/protected/ownergetOrder`, {
       withCredentials: true
@@ -46,7 +46,7 @@ export const OwnerOrders = () => {
     queryFn: getorderData
   });
 
-console.log(data,'accep');
+  console.log(data, 'accep');
 
   const filterdOrders = data?.result?.filter(orders => filter === 'all' ? orders : orders.orderstatus === filter);
   const sum = data?.result?.reduce((acc, result) => {
@@ -258,7 +258,7 @@ console.log(data,'accep');
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filterdOrders?.map((order) => (
-                  
+
                     <tr key={order._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-purple-600">{order._id}</div>
@@ -311,8 +311,8 @@ console.log(data,'accep');
                             View
                           </button>
                           {
-                            order.orderstatus !== 'cancelled' && order.orderstatus !== 'completed' &&(
-                               <button
+                            order.orderstatus !== 'cancelled' && order.orderstatus !== 'completed' && (
+                              <button
                                 onClick={() => updateOrderStatus(order._id, 'cancelled')}
                                 className="text-red-600 hover:text-red-900"
                               >
@@ -329,7 +329,7 @@ console.log(data,'accep');
                               >
                                 Accept
                               </button>
-                             
+
                             </>
                           )}
                           {/* {order.orderstatus === 'processing' && (
@@ -345,8 +345,19 @@ console.log(data,'accep');
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {
                           order.orderstatus === 'processing' && (
-                            <button onClick={() => updateOrderStatus(order._id, 'searching')}>
-                              Find
+                            <button
+                              onClick={() => updateOrderStatus(order._id, 'searching')}
+                              className="inline-flex items-center gap-2 px-5 py-2.5 
+             bg-gradient-to-r from-blue-600 to-indigo-600 
+             text-white text-sm font-semibold 
+             rounded-xl shadow-md 
+             hover:from-blue-700 hover:to-indigo-700 
+             hover:shadow-lg 
+             active:scale-95 
+             transition-all duration-200 
+             focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            >
+                              🔍 Find
                             </button>
                           )
                         }
@@ -360,8 +371,8 @@ console.log(data,'accep');
                         {
                           order.orderstatus === 'Picked' && (
                             <>
-                            <p>{order?.acceptedBy?.name}</p>
-                            <p>{order?.acceptedBy?.Mbnumber}</p>
+                              <p>{order?.acceptedBy?.name}</p>
+                              <p>{order?.acceptedBy?.Mbnumber}</p>
                             </>
                           )
                         }

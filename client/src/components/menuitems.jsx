@@ -9,8 +9,8 @@ export const Categorie = () => {
     const {id} =useParams();
     console.log('avi wala id',id);
     const navigate = useNavigate();
-    // const { User } = useContext(userContext);
-    const {data:User}=useAuth();
+    const { User } = useContext(userContext);
+    const {data:UserData}=useAuth();
     const [selectcategori, setselectcategori] = useState("");
 
     const fetchalldata = async () => {
@@ -54,7 +54,7 @@ export const Categorie = () => {
     const [count, setcount] = useState(JSON.parse(localStorage.getItem(User?.username + 'pepsicart')) || {});
     const handlecount = (id, name, price, ownerid) => {
         // console.log("handle pe", ownerid);
-        if (!User) {
+        if (!UserData) {
             navigate(`/login`);
             return
         }

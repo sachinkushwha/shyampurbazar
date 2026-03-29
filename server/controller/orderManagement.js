@@ -77,7 +77,6 @@ exports.UpdateOrderStatus = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: "Internal Server Error" });
     }
-
 }
 
 //get order data for Delivery partner
