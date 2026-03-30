@@ -323,7 +323,7 @@ export const OwnerOrders = () => {
                             View
                           </button>
                           {
-                            order.orderstatus !== 'cancelled' && order.orderstatus !== 'completed' && (
+                            !['completed','outfordelivery','cancelled'].includes(order.orderstatus) && (
                               <button
                                 onClick={() => updateOrderStatus(order._id, 'cancelled')}
                                 className="text-red-600 hover:text-red-900"
@@ -374,20 +374,18 @@ export const OwnerOrders = () => {
                           )
                         }
                         {
-                          order.orderstatus === 'searching' && (
+                          order.orderstatus === 'searching' ? (
                             <button >
                               Watting...
                             </button>
-                          )
-                        }
-                        {
-                          order.orderstatus === 'Picked' && (
+                          ) : (
                             <>
                               <p>{order?.acceptedBy?.name}</p>
                               <p>{order?.acceptedBy?.Mbnumber}</p>
                             </>
                           )
                         }
+                        
 
                       </td>
                     </tr>

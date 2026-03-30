@@ -1,12 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Header';
-import OrderCard from '../components/Orders';
+import { Outlet } from 'react-router-dom';
 
 function Home() {
   return (
     <div>
       <Navbar />
-      <OrderCard/>
+      {/* </> */}
+      <Outlet/>
     </div>
 
   )

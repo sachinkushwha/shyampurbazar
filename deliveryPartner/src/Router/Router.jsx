@@ -3,6 +3,9 @@ import Home from '../pages/Home';
 import { Protected } from '../Authentication/Protected';
 import LoginPage from '../Authentication/Login';
 import SignupPage from '../Authentication/Signup';
+import  AcceptedOrderList  from '../components/Accepted';
+import OrderCard from '../components/Orders';
+
 export const Router = () => {
     const router = new createBrowserRouter([
         {
@@ -10,7 +13,10 @@ export const Router = () => {
                 {
                     path: '/', element: <Home />, children: [
                         {
-                            index: true, element: <Home />
+                            index: true, element: <OrderCard />
+                        },
+                        {
+                            path: 'accepted-orders/:accepteddata', element: <AcceptedOrderList />
                         },
 
                     ]

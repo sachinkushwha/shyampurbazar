@@ -15,16 +15,15 @@ import axios from 'axios'
 import { BASE_URL } from "../config/ServerUrlConfig";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { userAuth } from "../Hooks/userAuth";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const OrdersList = () => {
-
+const AcceptedOrderList = () => {
     const { data: user } = userAuth();
 
     // get deliverypartner accepted orders
     const getAcceptedOrders = async () => {
-        const response = await axios.get(`${BASE_URL}/deliverypartner/accepted-orders`,{
-            withCredentials:true
+        const response = await axios.get(`${BASE_URL}/deliverypartner/accepted-orders`, {
+            withCredentials: true
         });
         return response.data;
     }
@@ -52,112 +51,30 @@ const OrdersList = () => {
         acceptOrderMutation.mutate({ orderId, newStatus, dpid });
     }
 
-    // get all searching state products
-    const getOrder = async () => {
-        const response = await axios.get(`${BASE_URL}/protected/deliverypartnerorder`, {
-            withCredentials: true
-        });
-        return response.data;
-    }
 
-    const { data } = useQuery({
-        queryKey: ['deliveryPartnerorderdata'],
-        queryFn: getOrder
-    })
 
-    console.log(data)
+    // console.log('accepted page', acceptedOrders);
+    const pickked=acceptedOrders?.acceptedOrder?.filter(f=>f.orderstatus==='completed');
+    console.log('picked',pickked);
 
-    const stats = [
-        {
-            title: "New Orders",
-            value: data?.orderData.length,
-            icon: <Package className="w-6 h-6" />,
-            color: "from-blue-500 to-cyan-400",
-            shadow: "shadow-blue-500/20",
-            trend: "+12% vs yesterday",
-            link:'#'
-        },
-        {
-            title: "Completed",
-            value: "18",
-            icon: <CheckCircle2 className="w-6 h-6" />,
-            color: "from-emerald-500 to-teal-400",
-            shadow: "shadow-emerald-500/20",
-            trend: "85% success rate",
-            link:'#'
-        },
-        {
-            title: "Accepted Orders",
-            value: acceptedOrders?.acceptedOrder?.length,
-            icon: <Clock className="w-6 h-6" />,
-            color: "from-orange-500 to-amber-400",
-            shadow: "shadow-orange-500/20",
-            trend: "Requires attention",
-            link:`/accepted-orders/${'picked'}`
-        },
 
-        {
-            title: "Today Earnings",
-            value: "₹4,500",
-            icon: <IndianRupee className="w-6 h-6" />,
-            color: "from-indigo-600 to-purple-500",
-            shadow: "shadow-indigo-500/20",
-            trend: "+5.4% growth",
-            link:'#'
-        }
-    ];
 
     return (
         <>
-            <div className="grid grid-cols-2 mt-15 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 bg-[#f8fafc]">
-                {stats.map((item, index) => (
-                    <Link to={item.link}
-                        key={index}
-                        className="group relative bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                    >
-                        {/* Top Row: Icon & Trend */}
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={`p-3 rounded-2xl bg-gradient-to-br ${item.color} text-white shadow-lg ${item.shadow} group-hover:scale-110 transition-transform duration-300`}>
-                                {item.icon}
-                            </div>
-                            <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50 px-2 py-1 rounded-lg">
-                                <TrendingUp className="w-3 h-3 text-emerald-500" />
-                                Live
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="space-y-1">
-                            <h3 className="text-slate-500 text-sm font-medium tracking-wide">
-                                {item.title}
-                            </h3>
-                            <div className="flex items-baseline gap-2">
-                                <span className="text-3xl font-black text-slate-800 tracking-tight">
-                                    {item.value || 0}
-                                </span>
-                            </div>
-                        </div>
-
-
-                        {/* Decorative background element */}
-                        <div className={`absolute -right-4 -bottom-4 w-24 h-24 bg-gradient-to-br ${item.color} opacity-[0.03] rounded-full group-hover:scale-150 transition-transform duration-700`}></div>
-                    </Link>
-                ))}
-            </div>
-            <div className="max-w-xl mx-auto p-4 space-y-5 bg-[#f8fafc] min-h-screen font-sans">
+            <div className="max-w-xl mx-auto p-4 space-y-5 bg-[#f8fafc] min-h-screen font-sans mt-30">
                 <div className="flex justify-between items-end px-2 mb-2">
                     <div>
                         <h2 className="text-2xl font-black text-slate-900 tracking-tight">Orders</h2>
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Assignments</p>
                     </div>
                     <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-[10px] font-black border border-indigo-100 uppercase">
-                        {data?.orderData?.length} Jobs
+                        {acceptedOrders?.acceptedOrder?.length} Jobs
                     </div>
                 </div>
 
-                {data?.orderData?.map((order) => (
+                {acceptedOrders?.acceptedOrder?.map((order) => (
                     <div key={order._id} className="bg-white border border-slate-200 rounded-[2.5rem] p-6 shadow-sm hover:shadow-md transition-shadow">
-
+                        {/* {console.log('accepted page', ['Picked'].includes(order.orderstatus))} */}
                         {/* Header */}
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center gap-2">
@@ -224,7 +141,7 @@ const OrdersList = () => {
 
                             {order?.orderstatus === "Picked" && (
                                 <button
-                                    onClick={() => updateStatus(order?.id, "Delivered")}
+                                    onClick={() => updateStatus(order?._id, "outfordelivery")}
                                     className="flex-[4] bg-blue-600 text-white font-bold py-4 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all text-sm tracking-tight"
                                 >
                                     <Navigation size={16} className="rotate-45 fill-white" />
@@ -232,10 +149,36 @@ const OrdersList = () => {
                                 </button>
                             )}
 
-                            {order?.status === "Delivered" && (
+                            {order?.orderstatus === "outfordelivery" && (
+                                <>
+                                    <button
+                                        onClick={() => updateStatus(order?._id, "cancelled")}
+                                        className="flex-[4] bg-red-600 text-white font-bold py-4 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all text-sm tracking-tight"
+                                    >
+                                        {/* <Navigation size={16} className="rotate-45 fill-white" /> */}
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={() => updateStatus(order?._id, "completed")}
+                                        className="flex-[4] bg-blue-600 text-white font-bold py-4 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all text-sm tracking-tight"
+                                    >
+                                        {/* <Navigation size={16} className="rotate-45 fill-white" /> */}
+                                        Mark Delivered
+                                    </button>
+                                </>
+                            )}
+
+
+                            {order?.orderstatus === "completed" && (
                                 <div className="flex-[4] bg-emerald-50 text-emerald-600 font-bold py-4 rounded-[1.5rem] border border-emerald-100 flex items-center justify-center gap-2 text-sm">
                                     <PackageCheck size={18} />
                                     Completed
+                                </div>
+                            )}
+                            {order?.orderstatus === "cancelled" && (
+                                <div className="flex-[4] bg-red-300 text-red-500 font-bold py-4 rounded-[1.5rem] border border-emerald-100 flex items-center justify-center gap-2 text-sm">
+                                    <PackageCheck size={18} />
+                                    Cancelled
                                 </div>
                             )}
 
@@ -257,4 +200,4 @@ const OrdersList = () => {
     );
 };
 
-export default OrdersList;
+export default AcceptedOrderList;
