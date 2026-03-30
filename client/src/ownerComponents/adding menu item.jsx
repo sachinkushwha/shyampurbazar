@@ -30,7 +30,6 @@ export const AddingMenuItem = () => {
 
           headers: { 'Content-Type': 'multipart/form-data' } ,
           withCredentials:true
-        
         });
         return response.data;
       } catch (err) {

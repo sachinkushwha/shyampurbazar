@@ -121,13 +121,13 @@ exports.Signup = async (req, res) => {
 }
 
 exports.BecomeSeller = async (req, res) => {
-    const { name, role } = req.body;
+    const { storeName, role } = req.body;
     const isuser = await User.exists(new mongoose.Types.ObjectId(req.user.id));
-    if (name && role === 'seller', isuser) {
+    if (storeName && role === 'seller', isuser) {
         const user = await User.findOneAndUpdate(new mongoose.Types.ObjectId(req.user.id),
             {
                 'role': role,
-                'storeName': name,
+                'storeName': storeName,
                 'storeImage': req.file?.path || ""
             },
             { new: true, runValidators: true });

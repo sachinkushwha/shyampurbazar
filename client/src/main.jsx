@@ -27,7 +27,7 @@ import { MenuItem } from './ownerComponents/menuItem.jsx';
 import { OwnerOrders } from './ownerComponents/orderpage.jsx'
 import { CheckRole } from './security/checking user role.jsx'
 import { AddAddressForm } from './CommonUi/AddressForm.jsx'
-import { Test } from './components/test.jsx'
+import { BecomeSeller } from './components/BecomeSeller.jsx'
 import ServiceUnavailable from './components/ServiceUnavilable.jsx';
 import LocationGuard from './security/LocationGuard.jsx'
 
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
             path: 'addadress', element: <AddAddressForm />
           },
           {
-            path: 'becomeseller', element: <Test />
+            path: 'becomeseller', element: <BecomeSeller />
           },
         ]
       },

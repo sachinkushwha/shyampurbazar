@@ -4,7 +4,7 @@ import axios from 'axios';
 import { userContext } from "../Context Api/userManagment";
 import { useContext } from "react";
 import { BASE_URL } from "../config/config";
-
+import toast from "react-hot-toast";
 
 export const Login = () => {
   const { role } = useParams();
@@ -31,7 +31,7 @@ export const Login = () => {
 
       if (res?.data?.status) {
         logingUser(res.data);
-        alert('login successful');
+        toast.success('login successful');
         if (res?.data?.role === 'seller') {
           navigate('/owner');
         } else {

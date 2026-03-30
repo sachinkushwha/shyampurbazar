@@ -5,11 +5,13 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useContext } from "react";
 import { userContext } from "../Context Api/userManagment";
 import axios from 'axios';
-import { BASE_URL } from "../config/config";
-import {useMutation,useQueryClient} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 import { useAuth } from "../hooks/auth";
+import { useLogout } from "../api/Logout";
+
+
 export const Nav = ({ navdata }) => {
-    const queryClient=useQueryClient();
+    const logout=useLogout();
     const { User,  } = useContext(userContext);
     const {data} =useAuth();
     console.log(data,'nav')
@@ -18,23 +20,9 @@ export const Nav = ({ navdata }) => {
     const [mobilemenu, setmobilemenu] = useState(false);
     const [itemno, setitemno] = useState();
     const navigate=useNavigate();
-    const postLogout=async()=>{
-        const response=await axios.post(`${BASE_URL}/logout`,{},{
-            withCredentials:true
-        });
-        return response.data;
-    }
-    const LogoutMutation=useMutation({
-        mutationFn:postLogout,
-        onSuccess:(data)=>{
-            alert(data.message);
-            queryClient.removeQueries(['me']);
-            navigate('/')
-        }
-    });
-    const logOutUser=()=>{
-        LogoutMutation.mutate();
-    }
+
+ 
+  
     useEffect(() => {
         setselected(path.pathname.slice(1));
     }, [path]);
@@ -91,7 +79,7 @@ export const Nav = ({ navdata }) => {
                         </Link>}
                         {navdata.pagetype !== 'owner' && <Link to="viewcart" className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">View Cart</Link>}
 
-                        {data ? (<button onClick={() => { logOutUser() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
+                        {data ? (<button onClick={() => { logout() }} className="cursor-pointer  py-2 px-2 font-medium text-white bg-red-400 rounded hover:bg-red-700 transition duration-300">LogOut</button>)
                             :
                             (
                                 <Link to= '/login' className="py-2 px-2 font-medium text-white bg-blue-400 rounded hover:bg-blue-700 transition duration-300">Login</Link>
@@ -136,7 +124,7 @@ export const Nav = ({ navdata }) => {
                         {data && (
                             <li>
                                 <Link
-                                    to={User?.role === 'user' ? `/becomeseller` : '/owner'}
+                                    to={data?.role === 'user' ? `/becomeseller` : '/owner'}
                                     className="px-4 py-3 hover:bg-gray-100 font-semibold"
                                     onClick={() => setmobilemenu(false)}
                                 >
