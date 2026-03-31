@@ -79,16 +79,16 @@ const OrdersList = () => {
         },
         {
             title: "Completed",
-            value: "18",
+            value: acceptedOrders?.acceptedOrder?.filter(item=>item.orderstatus==='completed').length,
             icon: <CheckCircle2 className="w-6 h-6" />,
             color: "from-emerald-500 to-teal-400",
             shadow: "shadow-emerald-500/20",
             trend: "85% success rate",
-            link:'#'
+            link:`accepted-orders/${'completed'}`
         },
         {
             title: "Accepted Orders",
-            value: acceptedOrders?.acceptedOrder?.length,
+            value: acceptedOrders?.acceptedOrder?.filter(order=>order.orderstatus==='picked').length,
             icon: <Clock className="w-6 h-6" />,
             color: "from-orange-500 to-amber-400",
             shadow: "shadow-orange-500/20",
@@ -98,7 +98,7 @@ const OrdersList = () => {
 
         {
             title: "Today Earnings",
-            value: "₹4,500",
+            value: acceptedOrders?.acceptedOrder?.filter(item=>item.orderstatus==='completed')?.reduce((sum,order)=>sum+order.totalPayment*0.08,0),
             icon: <IndianRupee className="w-6 h-6" />,
             color: "from-indigo-600 to-purple-500",
             shadow: "shadow-indigo-500/20",

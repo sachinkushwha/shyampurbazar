@@ -16,7 +16,7 @@ export const Router = () => {
                             index: true, element: <OrderCard />
                         },
                         {
-                            path: 'accepted-orders/:accepteddata', element: <AcceptedOrderList />
+                            path: 'accepted-orders/:start', element: <AcceptedOrderList />
                         },
 
                     ]

@@ -19,7 +19,8 @@ import { useParams } from "react-router-dom";
 
 const AcceptedOrderList = () => {
     const { data: user } = userAuth();
-
+    const {start}=useParams();
+    console.log(start);
     // get deliverypartner accepted orders
     const getAcceptedOrders = async () => {
         const response = await axios.get(`${BASE_URL}/deliverypartner/accepted-orders`, {
@@ -54,8 +55,8 @@ const AcceptedOrderList = () => {
 
 
     // console.log('accepted page', acceptedOrders);
-    const pickked=acceptedOrders?.acceptedOrder?.filter(f=>f.orderstatus==='completed');
-    console.log('picked',pickked);
+    const OrderData=acceptedOrders?.acceptedOrder?.filter(f=>f.orderstatus===start);
+    console.log('picked',OrderData);
 
 
 
@@ -68,11 +69,11 @@ const AcceptedOrderList = () => {
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Assignments</p>
                     </div>
                     <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-[10px] font-black border border-indigo-100 uppercase">
-                        {acceptedOrders?.acceptedOrder?.length} Jobs
+                        {OrderData?.length} Jobs
                     </div>
                 </div>
 
-                {acceptedOrders?.acceptedOrder?.map((order) => (
+                {OrderData?.map((order) => (
                     <div key={order._id} className="bg-white border border-slate-200 rounded-[2.5rem] p-6 shadow-sm hover:shadow-md transition-shadow">
                         {/* {console.log('accepted page', ['Picked'].includes(order.orderstatus))} */}
                         {/* Header */}
