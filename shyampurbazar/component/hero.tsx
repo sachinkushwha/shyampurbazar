@@ -27,7 +27,7 @@ export const Hero = () => {
                 <div className="gap-5 flex justify-center ">
 
                     <Link
-                        href="https://shyampurbazar.vercel.app/signup/user"
+                        href="https://shyampurbazar.vercel.app/signup"
                         className="
             bg-pepsi-red hover:bg-gray-300 text-gray-700 font-bold
             py-2.5 px-6 sm:py-2 sm:px-5 bg-gray-100
