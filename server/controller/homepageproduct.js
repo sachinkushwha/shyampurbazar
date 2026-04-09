@@ -17,7 +17,7 @@ exports.Homepageproduct = async (req, res) => {
                 }
             }
         }).select('store');
-        // console.log('pp', product)
+        console.log('pp', product)
         if (product.length === 0) {
             res.status(404).json({ message: "product not found" });
         } else {
