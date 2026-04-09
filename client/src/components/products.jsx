@@ -6,10 +6,6 @@ import useUserLocation from "../hooks/useUserLocation";
 export const Product = () => {
     const navigate = useNavigate();
     const { location, error } = useUserLocation();
-    console.log(location, error, 'home page');
-    alert(location?.accuracy)
-    alert(location?.lng)
-    alert(location?.lat)
     const handleproduct = async (id) => {
         navigate(`/menu/${id}`);
     }
@@ -31,11 +27,11 @@ export const Product = () => {
         queryFn: fetchalldata,
         enabled: !!location,
     });
-    console.log('home page ke dukan', data)
+    // console.log('home page ke dukan', data)
     if(isError){
-        return alert(isError)
+        return <p>no shop found near you</p>
     }
-    console.log('home page ke dukan', data)
+    // console.log('home page ke dukan', data)
     if (error) return <p>{error}</p>
     if (!location) return <p>Please wait </p>
 
