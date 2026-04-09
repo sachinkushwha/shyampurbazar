@@ -121,16 +121,32 @@ exports.Signup = async (req, res) => {
 }
 
 exports.BecomeSeller = async (req, res) => {
-    const { storeName, role } = req.body;
-    const isuser = await User.exists(new mongoose.Types.ObjectId(req.user.id));
-    if (storeName && role === 'seller', isuser) {
+    const { storeName, role, location } = req.body;
+    console.log('role',role);
+    let locations = JSON.parse(location);
+    console.log(locations);
+    const isuser = await User.findOne(new mongoose.Types.ObjectId(req.user.id));
+    if(isuser.role==='seller'){
+        return res.status(409).json({message:'bhai tum to alredy ek seller ho'});
+    }
+    if (storeName && role === 'seller' && isuser) {
         const user = await User.findOneAndUpdate(new mongoose.Types.ObjectId(req.user.id),
             {
-                'role': role,
-                'storeName': storeName,
-                'storeImage': req.file?.path || ""
+                $push: {
+                    store: {
+                        storeName: storeName,
+                        storeImage: req.files?.path || '',
+                        location: {
+                            type: 'Point',
+                            coordinates: [locations.lng, locations.lat]
+                        }
+                    }
+                },
+                $set:{
+                    role:role
+                }
             },
-            { new: true, runValidators: true });
+            { new: true });
         return res.status(200).json({ message: "congratulation your are now a seller ", userrole: user.role });
     }
     return res.status(500).json({ message: "kuch to garbad hai bhai" });

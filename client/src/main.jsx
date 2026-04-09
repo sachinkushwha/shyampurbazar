@@ -92,7 +92,10 @@ const router = createBrowserRouter([
             path: 'addadress', element: <AddAddressForm />
           },
           {
-            path: 'becomeseller', element: <BecomeSeller />
+            path: 'becomeseller', element:
+              <>
+                  <BecomeSeller />
+              </>
           },
         ]
       },

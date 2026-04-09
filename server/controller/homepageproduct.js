@@ -3,8 +3,20 @@ const ProductDatabase = require('../model/homepageproduct');
 const user = require('../model/user');
 exports.Homepageproduct = async (req, res) => {
     try {
-        const product = await user.find({role:'seller'}).select('-password');
-        // console.log(product)
+        const { lng, lat } = req.query;
+        const product = await user.find({
+            role:'seller',
+            "store.location": {
+                $near: {
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: [Number(lng), Number(lat)]
+                    },
+                    $maxDistance: 3000
+                }
+            }
+        }).select('store');
+        console.log('pp', product)
         if (product.length === 0) {
             res.status(404).json({ message: "product not found" });
         } else {
@@ -18,8 +30,8 @@ exports.Homepageproduct = async (req, res) => {
 
 exports.AddProductToHomePage = async (req, res) => {
     try {
-        const { name, price,imagelink, dis } = req.body.value;
-        const result = new ProductDatabase({ name, price,imagelink, dis });
+        const { name, price, imagelink, dis } = req.body.value;
+        const result = new ProductDatabase({ name, price, imagelink, dis });
         await result.save();
         await user.findByIdAndUpdate(req.user.id, { $push: { homepageproducts: result._id } });
         res.status(200).json({ message: "new product added successfully", status: true, newitem: result });
@@ -37,14 +49,14 @@ exports.UpdateHomePageProduct = async (req, res) => {
 exports.HomePageProductDelete = async (req, res) => {
     try {
         const result = await ProductDatabase.findByIdAndDelete(req.params.id);
-        return res.status(200).json({"message":"product delete successfully"});
-    }catch(err){
-        return res.status(500).json({"message":"internal server error"});
+        return res.status(200).json({ "message": "product delete successfully" });
+    } catch (err) {
+        return res.status(500).json({ "message": "internal server error" });
     }
 }
 
-exports.getOneProduct=async(req,res)=>{
-    const id=req.params.id;
-    const product =await ProductDatabase.findOne(new mongoose.Types.ObjectId(id));
-    res.status(200).json({message:'product find successfuly',product});
+exports.getOneProduct = async (req, res) => {
+    const id = req.params.id;
+    const product = await ProductDatabase.findOne(new mongoose.Types.ObjectId(id));
+    res.status(200).json({ message: 'product find successfuly', product });
 }

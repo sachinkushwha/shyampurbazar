@@ -7,9 +7,16 @@ import { CompressImage } from '../utils/ImageCompresser';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import { useLogout } from "../api/Logout";
+import useUserLocation from '../hooks/useUserLocation';
+// import { useEffect } from 'react';
 export const BecomeSeller = () => {
+  const { location } = useUserLocation();
+
   const logout = useLogout();
   const navigate = useNavigate();
+  // useEffect(() => {
+    console.log('bcomselr', location?.lat, location?.lng);
+  // },[location]);
   const PostBecomeSeller = async (formData) => {
     const response = await axios.post(`${BASE_URL}/bcoomeseller`, formData, {
       headers: {
@@ -25,6 +32,9 @@ export const BecomeSeller = () => {
     onSuccess: (data) => {
       toast.success(data.message);
       logout();
+    },
+    onError:(data)=>{
+      toast.error(data?.response?.data?.message);
     }
   });
 
@@ -34,10 +44,12 @@ export const BecomeSeller = () => {
     formData.append("storeName", formValue.storeName);
     formData.append("Image", formValue.Image);
     formData.append("role", formValue.role);
-
+    formData.append('location',JSON.stringify(location));
     BecomeSellerMutation.mutate(formData);
 
   };
+
+  if (!location) return <p>location allow is mendatry</p>
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -46,6 +58,7 @@ export const BecomeSeller = () => {
           storeName: '',
           Image: null,
           role: 'seller'
+          // role: 'user'
         }}
         onSubmit={(formData, { resetForm }) => {
           handleSubmit(formData);

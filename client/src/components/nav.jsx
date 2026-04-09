@@ -64,9 +64,9 @@ export const Nav = ({ navdata }) => {
                     <div className="hidden md:flex items-center space-x-1">
                         <Link to={navdata.homelink} className={`py-4 px-2 ${selected === "home" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("home")}>Home</Link>
                         {/* <Link to={navdata.menulink} className={`py-4 px-2 ${selected === "menu" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("menu")}>Menu</Link> */}
-                        {navdata.pagetype !== 'owner' && <Link to="/about" className={`py-4 px-2 ${selected === "about" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("about")}>About</Link>}
+                        {/* {navdata.pagetype !== 'owner' && <Link to="/about" className={`py-4 px-2 ${selected === "about" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("about")}>About</Link>} */}
                         {/* <a href="#" className={`py-4 px-2 ${selected === "contact" ? 'border-b-4 border-blue-500 font-semibold' : 'text-gray-500'} font-semibold`} onClick={() => setselected("contact")}>Contact</a> */}
-                    </div>
+                    </div> 
 
                     {/* Cart + Order button (desktop) */}
                     <div className="hidden md:flex items-center space-x-3">

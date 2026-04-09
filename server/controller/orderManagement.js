@@ -5,11 +5,7 @@ const sendEmail = require('../utils/sendEmail');
 // create orders
 exports.Order = async (req, res) => {
     try {
-        // const { user, number, ownerid, item, address, totalPayment, paymentmode } = req.body;
-        // const ids = item.map(ids => ids.ownerid);
-        // console.log(ids);
         const orderData = req.body;
-        console.log(orderData);
         if (orderData) {
             const savedOrders = await Promise.all(
                 orderData.map(async (ord) => {
@@ -60,8 +56,8 @@ exports.getorder = async (req, res) => {
 //for vender
 exports.ownergetOrder = async (req, res) => {
     try {
-        const result = await Orderdb.find({ vendorId: req.user.id }).sort({ _id: -1 }).populate('acceptedBy','name Mbnumber');
-console.log(result);
+        const result = await Orderdb.find({ vendorId: req.user.id }).sort({ _id: -1 }).populate('acceptedBy', 'name Mbnumber');
+        // console.log(result);
         return res.status(200).json({ message: "data find", result });
     } catch (err) {
         return res.status(500).json({ message: "internal server error ", err });
@@ -70,9 +66,9 @@ console.log(result);
 
 exports.UpdateOrderStatus = async (req, res) => {
     try {
-        const { orderId, newStatus,dpid } = req.body;
-        console.log(req.body);
-        await Orderdb.findByIdAndUpdate(orderId, { orderstatus: newStatus,acceptedBy:dpid }, { new: true, runValidators: true });
+        const { orderId, newStatus, dpid } = req.body;
+        // console.log(req.body);
+        await Orderdb.findByIdAndUpdate(orderId, { orderstatus: newStatus, acceptedBy: dpid }, { new: true, runValidators: true });
         return res.status(200).json({ message: "status changed" });
     } catch (err) {
         return res.status(500).json({ message: "Internal Server Error" });

@@ -1,28 +1,38 @@
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
-// import { useContext } from "react";
-// import { userContext } from "../Context Api/userManagment";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config/config";
+import useUserLocation from "../hooks/useUserLocation";
 export const Product = () => {
-    // const { setitem } = useContext(userContext);
     const navigate = useNavigate();
+    const { location, error } = useUserLocation();
+    console.log(location, error, 'home page');
     const handleproduct = async (id) => {
         navigate(`/menu/${id}`);
     }
 
     const fetchalldata = async () => {
-        const response = await axios.get(BASE_URL,{
-            withCredentials:true 
+        const response = await axios.get(BASE_URL, {
+            params: {
+                lng: location.lng,
+                lat: location.lat
+            },
+            withCredentials: true
         });
         return response.data;
     }
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading,isError } = useQuery({
         queryKey: ['homepagedata'],
         queryFn: fetchalldata
     });
-    // console.log(data);
+    if(isError){
+        return <p>no shop found near you</p>
+    }
+    console.log('home page ke dukan', data)
+    if (error) return <p>{error}</p>
+    if (!location) return <p>Please wait </p>
+
 
     return <>
         <section className="py-16 bg-white">
@@ -42,14 +52,14 @@ export const Product = () => {
                         >
 
                             <img
-                                src={product.storeImage || 'https://img.freepik.com/free-vector/shop-with-sign-open-design_23-2148544029.jpg?semt=ais_hybrid&w=740&q=80'}
+                                src={product.store[0].storeImage || 'https://img.freepik.com/free-vector/shop-with-sign-open-design_23-2148544029.jpg?semt=ais_hybrid&w=740&q=80'}
                                 alt={product.name}
                                 className="w-full h-20 object-contain"
                             />
 
                             <div className="p-1 text-center">
                                 <h3 className="text-xs font-semibold text-gray-800 ">
-                                    {product.storeName}
+                                    {product.store[0].storeName}
                                 </h3>
                             </div>
 
