@@ -27,7 +27,7 @@ export const Product = () => {
         queryFn: fetchalldata
     });
     if(isError){
-        return <p>no shop found near you</p>
+        return alert(isError)
     }
     console.log('home page ke dukan', data)
     if (error) return <p>{error}</p>
