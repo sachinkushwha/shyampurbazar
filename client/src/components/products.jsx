@@ -15,6 +15,7 @@ export const Product = () => {
     }
 
     const fetchalldata = async () => {
+        if (!location) return null
         const response = await axios.get(BASE_URL, {
             params: {
                 lng: location.lng,
@@ -26,8 +27,9 @@ export const Product = () => {
     }
 
     const { data, isLoading,isError } = useQuery({
-        queryKey: ['homepagedata'],
-        queryFn: fetchalldata
+        queryKey: ['homepagedata',location],
+        queryFn: fetchalldata,
+        enabled: !!location,
     });
     console.log('home page ke dukan', data)
     if(isError){
