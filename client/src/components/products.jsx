@@ -26,6 +26,7 @@ export const Product = () => {
         queryKey: ['homepagedata'],
         queryFn: fetchalldata
     });
+    console.log('home page ke dukan', data)
     if(isError){
         return alert(isError)
     }
