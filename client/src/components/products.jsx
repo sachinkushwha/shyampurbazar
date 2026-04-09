@@ -7,6 +7,7 @@ export const Product = () => {
     const navigate = useNavigate();
     const { location, error } = useUserLocation();
     console.log(location, error, 'home page');
+    alert(location.accuracy)
     const handleproduct = async (id) => {
         navigate(`/menu/${id}`);
     }
