@@ -14,9 +14,7 @@ export const BecomeSeller = () => {
 
   const logout = useLogout();
   const navigate = useNavigate();
-  // useEffect(() => {
     console.log('bcomselr', location?.lat, location?.lng);
-  // },[location]);
   const PostBecomeSeller = async (formData) => {
     const response = await axios.post(`${BASE_URL}/bcoomeseller`, formData, {
       headers: {
@@ -58,7 +56,6 @@ export const BecomeSeller = () => {
           storeName: '',
           Image: null,
           role: 'seller'
-          // role: 'user'
         }}
         onSubmit={(formData, { resetForm }) => {
           handleSubmit(formData);
@@ -101,6 +98,7 @@ export const BecomeSeller = () => {
             {/* Submit */}
             <button
               type="submit"
+              disabled={!location}
               className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
             >
               Submit
