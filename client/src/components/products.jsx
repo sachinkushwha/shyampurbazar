@@ -8,6 +8,8 @@ export const Product = () => {
     const { location, error } = useUserLocation();
     console.log(location, error, 'home page');
     alert(location?.accuracy)
+    alert(location?.lng)
+    alert(location?.lat)
     const handleproduct = async (id) => {
         navigate(`/menu/${id}`);
     }
