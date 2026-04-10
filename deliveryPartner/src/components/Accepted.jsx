@@ -9,17 +9,21 @@ import {
     Package,
     CheckCircle2,
     Clock,
-    TrendingUp
+    TrendingUp,
+    User
 } from "lucide-react";
 import axios from 'axios'
 import { BASE_URL } from "../config/ServerUrlConfig";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { userAuth } from "../Hooks/userAuth";
 import { useParams } from "react-router-dom";
+
+
 
 const AcceptedOrderList = () => {
     const { data: user } = userAuth();
     const {start}=useParams();
+    const queryClient=useQueryClient();
     console.log(start);
     // get deliverypartner accepted orders
     const getAcceptedOrders = async () => {
@@ -46,6 +50,7 @@ const AcceptedOrderList = () => {
         mutationFn: acceptOrder,
         onSuccess: (data) => {
             alert(data.message);
+            queryClient.invalidateQueries(['acceptedOrders'])
         }
     })
     const updateStatus = (orderId, newStatus, dpid) => {
@@ -77,7 +82,7 @@ const AcceptedOrderList = () => {
                     <div key={order._id} className="bg-white border border-slate-200 rounded-[2.5rem] p-6 shadow-sm hover:shadow-md transition-shadow">
                         {/* {console.log('accepted page', ['Picked'].includes(order.orderstatus))} */}
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-6">
+                        <div className="flex justify-between items-center mb-2">
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                                 <span className="text-[11px] font-black text-slate-400 tracking-tighter uppercase">ID: {order?._id}</span>
@@ -85,6 +90,12 @@ const AcceptedOrderList = () => {
                             <div className="flex items-center text-emerald-600 font-black text-xl">
                                 <IndianRupee size={18} strokeWidth={3} />
                                 {order?.totalPayment}
+                            </div>
+                        </div>
+                        <div className="mb-2">
+                            <div className="flex items-center gap-2">
+                                <User size={14} strokeWidth />
+                                <span className="text-[11px] font-semibold text-slate-600 tracking-widest ">Name : {order?.user}</span>
                             </div>
                         </div>
 

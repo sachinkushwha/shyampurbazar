@@ -80,9 +80,9 @@ exports.UpdateOrderStatus = async (req, res) => {
 exports.getDeliveryPrtnerOrder = async (req, res) => {
     try {
         const orderData = await Orderdb.find({ orderstatus: 'searching' });
-        if (orderData.length === 0) {
-            return res.status(404).json({ message: 'no order found' });
-        }
+        // if (orderData.length === 0) {
+        //     return res.status(404).json({ message: 'no order found' });
+        // }
         return res.status(200).json({ orderData });
     } catch (error) {
         console.log(error);

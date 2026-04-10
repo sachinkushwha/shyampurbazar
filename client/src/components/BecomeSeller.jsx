@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import { useLogout } from "../api/Logout";
 import useUserLocation from '../hooks/useUserLocation';
-// import { useEffect } from 'react';
 export const BecomeSeller = () => {
   const { location } = useUserLocation();
 

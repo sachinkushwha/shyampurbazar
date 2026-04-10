@@ -13,18 +13,19 @@ import {
 } from "lucide-react";
 import axios from 'axios'
 import { BASE_URL } from "../config/ServerUrlConfig";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { userAuth } from "../Hooks/userAuth";
 import { Link } from "react-router-dom";
 
 const OrdersList = () => {
 
     const { data: user } = userAuth();
+    const queryClient = useQueryClient();
 
     // get deliverypartner accepted orders
     const getAcceptedOrders = async () => {
-        const response = await axios.get(`${BASE_URL}/deliverypartner/accepted-orders`,{
-            withCredentials:true
+        const response = await axios.get(`${BASE_URL}/deliverypartner/accepted-orders`, {
+            withCredentials: true
         });
         return response.data;
     }
@@ -46,6 +47,8 @@ const OrdersList = () => {
         mutationFn: acceptOrder,
         onSuccess: (data) => {
             alert(data.message);
+            queryClient.invalidateQueries(['deliveryPartnerorderdata']);
+            queryClient.invalidateQueries(['acceptedOrders']);
         }
     })
     const updateStatus = (orderId, newStatus, dpid) => {
@@ -65,7 +68,7 @@ const OrdersList = () => {
         queryFn: getOrder
     })
 
-    console.log(data)
+    console.log('od', data)
 
     const stats = [
         {
@@ -75,36 +78,46 @@ const OrdersList = () => {
             color: "from-blue-500 to-cyan-400",
             shadow: "shadow-blue-500/20",
             trend: "+12% vs yesterday",
-            link:'#'
+            link: '#'
         },
         {
             title: "Completed",
-            value: acceptedOrders?.acceptedOrder?.filter(item=>item.orderstatus==='completed').length,
+            value: acceptedOrders?.acceptedOrder?.filter(item => item.orderstatus === 'completed').length,
             icon: <CheckCircle2 className="w-6 h-6" />,
             color: "from-emerald-500 to-teal-400",
             shadow: "shadow-emerald-500/20",
             trend: "85% success rate",
-            link:`accepted-orders/${'completed'}`
+            link: `accepted-orders/${'completed'}`
         },
         {
             title: "Accepted Orders",
-            value: acceptedOrders?.acceptedOrder?.filter(order=>order.orderstatus==='picked').length,
+            value: acceptedOrders?.acceptedOrder?.filter(order => order.orderstatus === 'Picked').length,
             icon: <Clock className="w-6 h-6" />,
             color: "from-orange-500 to-amber-400",
             shadow: "shadow-orange-500/20",
             trend: "Requires attention",
-            link:`/accepted-orders/${'picked'}`
+            link: `/accepted-orders/${'Picked'}`
+        },
+        {
+            title: "Out For Delivery",
+            value: acceptedOrders?.acceptedOrder?.filter(order => order.orderstatus === 'outfordelivery').length,
+            icon: <Clock className="w-6 h-6" />,
+            color: "from-orange-500 to-amber-400",
+            shadow: "shadow-orange-500/20",
+            trend: "Requires attention",
+            link: `/accepted-orders/${'outfordelivery'}`
         },
 
         {
             title: "Today Earnings",
-            value: acceptedOrders?.acceptedOrder?.filter(item=>item.orderstatus==='completed')?.reduce((sum,order)=>sum+order.totalPayment*0.08,0),
+            value: acceptedOrders?.acceptedOrder?.filter(item => item.orderstatus === 'completed')?.reduce((sum, order) => sum + order.totalPayment * 0.08, 0),
             icon: <IndianRupee className="w-6 h-6" />,
             color: "from-indigo-600 to-purple-500",
             shadow: "shadow-indigo-500/20",
             trend: "+5.4% growth",
-            link:'#'
-        }
+            link: '#'
+        },
+
     ];
 
     return (
@@ -159,6 +172,7 @@ const OrdersList = () => {
                     <div key={order._id} className="bg-white border border-slate-200 rounded-[2.5rem] p-6 shadow-sm hover:shadow-md transition-shadow">
 
                         {/* Header */}
+
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -222,15 +236,15 @@ const OrdersList = () => {
                                 </button>
                             )}
 
-                            {order?.orderstatus === "Picked" && (
+                            {/* {order?.orderstatus === "Picked" && (
                                 <button
-                                    onClick={() => updateStatus(order?.id, "Delivered")}
+                                    onClick={() => updateStatus(order?._id, "Delivered")}
                                     className="flex-[4] bg-blue-600 text-white font-bold py-4 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-blue-100 active:scale-95 transition-all text-sm tracking-tight"
                                 >
                                     <Navigation size={16} className="rotate-45 fill-white" />
                                     Start Trip
                                 </button>
-                            )}
+                            )} */}
 
                             {order?.status === "Delivered" && (
                                 <div className="flex-[4] bg-emerald-50 text-emerald-600 font-bold py-4 rounded-[1.5rem] border border-emerald-100 flex items-center justify-center gap-2 text-sm">
@@ -252,6 +266,10 @@ const OrdersList = () => {
 
                     </div>
                 ))}
+                <div className="flex justify-center mt-40">
+                    {data?.orderData?.length === 0 && <p className="font-bold text-2xl">No Order</p>}
+                </div>
+
             </div>
         </>
     );

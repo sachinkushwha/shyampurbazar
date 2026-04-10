@@ -9,7 +9,11 @@ const getFormatDate = () => {
 
 }
 const OrderSchema = new mongoose.Schema({
-    vendorId: { type: String, required: true },
+    vendorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    },
     user: { type: String, required: true },
     number: { type: Number, required: true },
     address: { type: String, required: true },

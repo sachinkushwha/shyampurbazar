@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import { Menu, X, LayoutDashboard, LogIn,LogOut, UserPlus, Home, Smartphone } from "lucide-react";
+import { Menu, X, LayoutDashboard, LogIn, LogOut, UserPlus, Home, Smartphone } from "lucide-react";
 import { userAuth } from "../Hooks/userAuth";
 import axios from "axios";
 import { BASE_URL } from "../config/ServerUrlConfig";
 import { useMutation } from "@tanstack/react-query";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const { data } = userAuth();
-console.log('user',data)
-    const postHandlelogout=async()=>{
-        const response=await axios.post(`${BASE_URL}/deliverypartner/logout`,{},{
-            withCredentials:true
+    console.log('user', data)
+    const postHandlelogout = async () => {
+        const response = await axios.post(`${BASE_URL}/deliverypartner/logout`, {}, {
+            withCredentials: true
         });
         return response.data;
     }
 
-    const LogoutMutation=useMutation({
-        mutationFn:postHandlelogout,
-        onSuccess:(data)=>{
+    const LogoutMutation = useMutation({
+        mutationFn: postHandlelogout,
+        onSuccess: (data) => {
             alert(data.message);
             navigate('/login')
         }
     })
-    const handleLogout=()=>{
+    const handleLogout = () => {
         LogoutMutation.mutate();
     }
 
@@ -70,7 +70,7 @@ console.log('user',data)
                 <div className="p-6 space-y-4 flex flex-col">
                     <MobileNavLink href="/" icon={<Home size={18} />} label="Dashboard" onClick={() => setIsOpen(false)} />
                     {data ? (
-                        <MobileNavLink href="#"  icon={<LogOut size={18} />} label="LogOut" onClick={() => setIsOpen(false)} />
+                        <MobileNavLink href="#" icon={<LogOut size={18} />} label="LogOut" onClick={() => setIsOpen(false)} />
                     ) : (
                         <MobileNavLink href="/login" icon={<LogIn size={18} />} label="Login" onClick={() => setIsOpen(false)} />
                     )}
