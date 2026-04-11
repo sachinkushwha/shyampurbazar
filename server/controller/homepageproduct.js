@@ -13,7 +13,7 @@ exports.Homepageproduct = async (req, res) => {
                         type: 'Point',
                         coordinates: [Number(lng), Number(lat)]
                     },
-                    $maxDistance: 3000
+                    $maxDistance: 5000
                 }
             }
         }).select('store');

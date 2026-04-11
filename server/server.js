@@ -32,6 +32,12 @@ app.use("/protected", orderManagementRoute);
 app.use("/sellerprofile", SellerProfileRouter);
 // for delivery partner
 app.use("/deliverypartner", DeliveryRouter);
+// uptime - not mendatory
+app.use('/uptime',(req,res)=>{
+  res.send('now server is running...');
+});
+
+//connecting mongodb
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
