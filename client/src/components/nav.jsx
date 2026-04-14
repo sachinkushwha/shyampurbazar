@@ -140,10 +140,10 @@ export const Nav = ({ navdata }) => {
                     {
                         data ? (
                             <button
-                                className="w-full text-left px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold"
+                                className="cursor-pointer w-full text-left px-4 py-3 text-red-600 hover:bg-gray-100 font-semibold"
                                 onClick={() => {
                                     setmobilemenu(false);
-                                    logOutUser();
+                                    logout();
                                 }}
                             >
                                 Logout
