@@ -202,11 +202,12 @@ export const ViewOrder = () => {
                     <span>Order Date</span>
                   </div>
                   <span className="font-medium text-gray-900 text-sm sm:text-base">
-                    {new Date(order.orderdate).toLocaleDateString('en-US', {
+                    <span>{order.orderdate}</span>
+                    {/* {new Date(order.orderdate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric'
-                    })}
+                    })} */}
                   </span>
                 </div>
 

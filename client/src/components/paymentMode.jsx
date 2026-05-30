@@ -1,36 +1,98 @@
 import { useContext, useState } from "react";
 import { userContext } from "../Context Api/userManagment";
 import { useNavigate } from "react-router-dom";
-import {BASE_URL} from '../config/config';
+import { BASE_URL } from '../config/config';
 import axios from 'axios';
 import { useQueryClient } from "@tanstack/react-query";
 
 
 export const PaymentMethod = () => {
-  const queryClient=useQueryClient();
+  const queryClient = useQueryClient();
   const { User } = useContext(userContext);
   const [paymentmode, setpaymentmode] = useState();
   const navigate = useNavigate();
 
-  const handlsubmit =async (e) => {
+  const handlsubmit = async (e) => {
     e.preventDefault();
-    if (paymentmode) {
+    if (paymentmode === 'Cash On Delivery') {
       const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
-      // console.log('test')
-     const finalorder= item.map(orders=>({
-        ...orders,paymentmode:paymentmode
+
+      const finalorder = item.map(orders => ({
+        ...orders, paymentmode: paymentmode
       }));
-      // item.paymentmode = paymentmode;
       console.log(finalorder)
-      const response=await axios.post(`${BASE_URL}/protected/order`,finalorder,{
-        withCredentials:true
+      const response = await axios.post(`${BASE_URL}/protected/order`, finalorder, {
+        withCredentials: true
       })
-      
+
       localStorage.removeItem(User?.username + "orderpepsicart");
       localStorage.removeItem(User?.username + "pepsicart");
       alert("Congratulations! Your order has been submitted 🎉");
 
       navigate("/orderhistory");
+      // online payment 
+    } else if (paymentmode === 'Online Payment') {
+      const item = JSON.parse(localStorage.getItem(User?.username + "orderpepsicart"));
+      const finalorder = item.map(orders => ({
+        ...orders, paymentmode: paymentmode
+      }));
+      let finalorderpayment = 0
+      item.map((order) => (
+        finalorderpayment += order.totalPayment
+      ));
+      //create razorpay order
+      const { data: order } = await axios.post(`${BASE_URL}/payment/create-order`, {
+        amount: finalorderpayment
+      });
+      console.log(order)
+      const option = {
+        key: "rzp_test_RA3UwDYeO95xUZ",
+
+        amount: order.amount,
+
+        currency: order.currency,
+
+        name: "Shyampur Bazar Online",
+
+        description: "Order Payment",
+
+        order_id: order.id,
+
+        handler: async function (response) {
+          const verify = await axios.post(`${BASE_URL}/payment/verify-payment`,
+            response
+          );
+          if (verify.data.success) {
+            await axios.post(
+              `${BASE_URL}/protected/order`,
+              finalorder,
+              {
+                withCredentials: true,
+              }
+            );
+
+            localStorage.removeItem(
+              User?.username + "orderpepsicart"
+            );
+
+            localStorage.removeItem(
+              User?.username + "pepsicart"
+            );
+            alert("Payment Successful");
+            navigate("/orderhistory");
+          }
+        },
+        prefill: {
+          name: User?.username,
+        },
+
+        theme: {
+          color: "#2563eb",
+        },
+      };
+      const razor = new window.Razorpay(option);
+
+      razor.open();
     } else {
       alert("Please select a payment mode");
     }
@@ -64,10 +126,16 @@ export const PaymentMethod = () => {
 
           <label
             htmlFor="online"
-            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-400 cursor-not-allowed"
+            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-400 "
           >
-            <input type="radio" id="online" name="payment" disabled />
-            <span>Online Payment (coming soon)</span>
+            <input
+              type="radio"
+              id="online"
+              name="payment"
+              value='Online Payment'
+              onChange={(e) => setpaymentmode(e.target.value)}
+            />
+            <span>Online Payment </span>
           </label>
         </div>
 

@@ -4,7 +4,7 @@ const user = require('../model/user');
 exports.Homepageproduct = async (req, res) => {
     try {
         const { lng, lat } = req.query;
-        // console.log(Number(lng), Number(lat))
+        console.log(lng,lat)
         const product = await user.find({
             role:'seller',
             "store.location": {
@@ -13,11 +13,10 @@ exports.Homepageproduct = async (req, res) => {
                         type: 'Point',
                         coordinates: [Number(lng), Number(lat)]
                     },
-                    $maxDistance: 5000
+                    $maxDistance: 15000
                 }
             }
         }).select('store');
-        // console.log('pp', product)
         if (product.length === 0) {
             res.status(404).json({ message: "product not found" });
         } else {

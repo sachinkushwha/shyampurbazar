@@ -29,7 +29,6 @@ import { CheckRole } from './security/checking user role.jsx'
 import { AddAddressForm } from './CommonUi/AddressForm.jsx'
 import { BecomeSeller } from './components/BecomeSeller.jsx'
 import ServiceUnavailable from './components/ServiceUnavilable.jsx';
-import LocationGuard from './security/LocationGuard.jsx'
 
 const queryClient = new QueryClient();
 
@@ -39,9 +38,7 @@ const router = createBrowserRouter([
     path: '/', element: <App />, children: [
       {
         index: true, element: <>
-          {/* <LocationGuard> */}
           <Home />
-          {/* </LocationGuard> */}
 
         </>
       },

@@ -5,6 +5,7 @@ const publicRouter = require("./routers/publicRouter");
 const protectedRoute = require("./routers/adminProtectedRoute");
 const orderManagementRoute = require("./routers/orderManagement");
 const OwnerRouter = require("./routers/ownerRouter");
+const paymentRouter=require("./routers/payment");
 const SellerProfileRouter = require("./routers/SellerProfileRouter");
 const DeliveryRouter = require("./routers/deliveryRouter");
 const UserDB = require("./model/user");
@@ -30,6 +31,7 @@ app.use(protectedRoute);
 app.use("/item", OwnerRouter);
 app.use("/protected", orderManagementRoute);
 app.use("/sellerprofile", SellerProfileRouter);
+app.use("/payment",paymentRouter);
 // for delivery partner
 app.use("/deliverypartner", DeliveryRouter);
 // uptime - not mendatory
