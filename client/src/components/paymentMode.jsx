@@ -38,7 +38,7 @@ export const PaymentMethod = () => {
       }));
       let finalorderpayment = 0
       item.map((order) => (
-        finalorderpayment += order.totalPayment
+        finalorderpayment += order.totalPayment+order.delevryCharge
       ));
       //create razorpay order
       const { data: order } = await axios.post(`${BASE_URL}/payment/create-order`, {
@@ -126,13 +126,14 @@ export const PaymentMethod = () => {
 
           <label
             htmlFor="online"
-            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-400 "
+            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-400 cursor-not-allowed "
           >
             <input
               type="radio"
               id="online"
               name="payment"
               value='Online Payment'
+              disabled
               onChange={(e) => setpaymentmode(e.target.value)}
             />
             <span>Online Payment </span>

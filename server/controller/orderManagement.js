@@ -16,6 +16,7 @@ exports.Order = async (req, res) => {
                         address: ord.address,
                         items: ord.items,
                         totalPayment: ord.totalPayment,
+                        delevryCharge:ord.delevryCharge,
                         paymentmode: ord.paymentmode,
                         userid: req.user.id
                     });

@@ -24,6 +24,7 @@ const OrderSchema = new mongoose.Schema({
         price: Number
     }],
     totalPayment: { type: Number, required: true },
+    delevryCharge: { type: Number, required: true },
     paymentmode: { type: String, required: true },
     orderstatus: { type: String, required: true, default: "pending" },
     orderdate: { type: String, default: getFormatDate },

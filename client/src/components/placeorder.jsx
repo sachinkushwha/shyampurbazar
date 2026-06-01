@@ -56,7 +56,7 @@ export const PlaceOrder = () => {
 
     let total = 0;
     cartItems.forEach(([id, item]) => {
-        total += item.price * item.qty;
+        total += item.price * item.qty+delevryCharge;
     });
 
     const handlePlaceOrder = () => {
@@ -91,7 +91,8 @@ export const PlaceOrder = () => {
                     number: User?.number,
                     address: Address,
                     items: items,
-                    totalPayment: vendorTotal
+                    totalPayment: vendorTotal,
+                    delevryCharge:delevryCharge
                 }
             })
 
@@ -159,8 +160,8 @@ export const PlaceOrder = () => {
                                     <span>
                                         Delevry charge <span className="text-gray-500"></span>
                                     </span>
-                                    {/* <span className="font-medium">₹{delevryCharge}</span> */}
-                                    <span className="font-medium">Free</span>
+                                    <span className="font-medium">₹{delevryCharge}</span>
+                                    {/* <span className="font-medium">Free</span> */}
                                 </div>
                             </div>
 
