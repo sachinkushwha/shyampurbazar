@@ -112,7 +112,7 @@ const OrdersList = () => {
             title: "Today Earnings",
             value: acceptedOrders?.acceptedOrder?.filter(item => item.orderstatus === 'completed')?.reduce((sum, order) => sum + order.delevryCharge, 0),
             icon: <IndianRupee className="w-6 h-6" />,
-            color: "from-indigo-600 to-purple-500",
+            color: "from-indigo-600 to-purple-500", 
             shadow: "shadow-indigo-500/20",
             trend: "+5.4% growth",
             link: '#'
