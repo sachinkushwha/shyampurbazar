@@ -45,7 +45,7 @@ export const Product = () => {
                     </div></div>
                 }
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
-                    {data?.Homepageproduct?.slice(0, 6).map((product, p) => (
+                    {data?.Homepageproduct?.map((product, p) => (
 
                         <div
                             key={p}
@@ -69,11 +69,7 @@ export const Product = () => {
 
                     ))}
                 </div>
-                <div className="text-center mt-10">
-                    {/* <Link to="/menu" className="inline-flex items-center text-pepsi-red font-semibold hover:text-red-700 transition duration-300">
-                        View Full Menu <i data-feather="chevron-right" className="ml-1"></i>
-                    </Link> */}
-                </div>
+                
             </div>
         </section>
     </>
